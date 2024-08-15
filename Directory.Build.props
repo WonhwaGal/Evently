@@ -1,0 +1,29 @@
+<Project>
+	<PropertyGroup>
+		<!-- Установка версии .NET SDK -->
+		<TargetFramework>net8.0</TargetFramework>
+		<!-- Использование неявных using-директив -->
+		<ImplicitUsings>enable</ImplicitUsings>
+		<!-- Использование Nullable Reference Types -->
+		<Nullable>enable</Nullable>
+		<!-- Включение Code Analysis -->
+		<AnalysisLevel>latest</AnalysisLevel>
+		<!-- Анализ кода во время сборки -->
+		<AnalysisMode>All</AnalysisMode>
+		<!-- Преобразование предупреждений в ошибки -->
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<!-- Рассматривать предупреждения как ошибки -->
+		<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	</PropertyGroup>
+
+	<!-- Подключение SonarAnalyzer.CSharp, исключаем проект DockerCompose (.dcproj) в
+   рамках правила -->
+	<ItemGroup Condition="'$(MSBuildProjectExtension)' != '.dcproj'">
+		<!-- Установка версии SonarAnalyzer.CSharp -->
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.27.0.93347">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+</Project>
