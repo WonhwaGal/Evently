@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Evently.Module.Events.Api.Events;
 
-	public sealed class Event
-	{
+public sealed class Event
+{
     /// <summary>
     /// Мероприятие (концерт, фестиваль, выставка и т.д.)
     /// </summary>
@@ -38,9 +38,8 @@ namespace Evently.Module.Events.Api.Events;
     /// </summary>
     public DateTime EndAtUtc { get; set; }
 
-
     /// <summary>
-    /// Статус события
+    /// Статус мероприятия
     /// </summary>
     public EventStatus Status { get; set; }
-	}
+}
