@@ -385,6 +385,9 @@ dotnet_diagnostic.S3881.severity = none
 # S4136: Перегрузки методов должны быть сгруппированы вместе
 dotnet_diagnostic.S4136.severity = none
 
+# S125: Наличие комментариев внутри кода
+dotnet_diagnostic.S125.severity = none
+
 # S6605: Должен использоваться специфический для коллекции метод "Exists" вместо расширения "Any"
 dotnet_diagnostic.S6605.severity = none
 

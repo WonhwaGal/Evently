@@ -11,7 +11,6 @@ namespace Evently.Module.Events.Api.Events;
 
 /// <summary>
 /// Вертикальный слой мероприятий: создание мероприятия
-/// Вариант использования: создание мероприятия
 /// </summary>
 public static class CreateEvent
 {
@@ -63,3 +62,4 @@ public static class CreateEvent
         /// </summary>
         public DateTime EndAtUtc { get; set; }
     }
+}

@@ -1,0 +1,24 @@
+services:
+  evently.api:
+    image: evently.api
+    container_name: Evently.Api
+    depends_on:
+      - evently.database
+    build:
+      context: .
+      dockerfile: src/API/Evently.Api/Dockerfile
+    ports:
+      - "5100:8080"
+      - "5101:8081"
+  evently.database:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: Evently.Database
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=1234512345Aa$
+      - MSSQL_USER=SA
+      - MSSQL_PID=Developer
+    volumes:
+      - ./.containers/db:/var/lib/mssql/data
+    ports:
+      - "1433:1433"
