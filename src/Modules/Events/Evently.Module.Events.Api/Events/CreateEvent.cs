@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Module.Events.Api.Database;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Module.Events.Api.Events;
@@ -32,7 +33,7 @@ public static class CreateEvent
             context.Events.Add(@event);
 
             await context.SaveChangesAsync();
-        });
+        }).WithTags(Tags.Events);
     }
 
     internal sealed class CreateEventRequest

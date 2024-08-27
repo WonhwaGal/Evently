@@ -33,8 +33,7 @@ public static class GetEvent
                     .SingleOrDefaultAsync();
 
             return @event == null ? Results.NotFound() : Results.Ok(@event.Id);
-        });
-
+        }).WithTags(Tags.Events);
     }
     
     internal sealed class EventResponse
