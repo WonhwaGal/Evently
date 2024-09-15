@@ -20,11 +20,11 @@ public partial class Create_Database : Migration
             columns: table => new
             {
                 id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                start_at_utc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                end_at_utc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                starts_at_utc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                ends_at_utc = table.Column<DateTime>(type: "datetime2", nullable: true),
                 status = table.Column<int>(type: "int", nullable: false)
             },
             constraints: table =>

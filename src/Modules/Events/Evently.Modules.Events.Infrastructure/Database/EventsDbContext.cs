@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace Evently.Modules.Events.Infrastructure.Database;
-public sealed class EventsDbContext(DbContextOptions<EventsDbContext> options): DbContext(options)
+public sealed class EventsDbContext(DbContextOptions<EventsDbContext> options): DbContext(options), IUnitOfWork
 {
     /// <summary>
     /// Мероприятие (концерт, фестиваль, выставка и т.д.)

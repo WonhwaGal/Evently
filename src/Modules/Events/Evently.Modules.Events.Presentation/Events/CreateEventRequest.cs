@@ -3,11 +3,6 @@
 public sealed class CreateEventRequest
 {
     /// <summary>
-    /// Идентификатор категории
-    /// </summary>
-    public Guid CategoryId { get; set; }
-
-    /// <summary>
     /// Наименование
     /// </summary>
     public string Title { get; set; }

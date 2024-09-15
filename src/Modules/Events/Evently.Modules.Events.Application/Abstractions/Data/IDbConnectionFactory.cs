@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Evently.Modules.Events.Application.Abstractions.Data;
-public interface IUnitOfWork
+public interface IDbConnectionFactory
 {
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default); 
+    ValueTask<DbConnection> OpenConnectionAsync(CancellationToken cancellationToken = default);
 }

@@ -24,8 +24,8 @@ public sealed class Event
             Title = title,
             Description = description,
             Location = location,
-            StartAtUtc = startAtUtc,
-            EndAtUtc = endAtUtc,
+            StartsAtUtc = startAtUtc,
+            EndsAtUtc = endAtUtc,
             Status = EventStatus.Draft
         };
 
@@ -55,12 +55,12 @@ public sealed class Event
     /// <summary>
     ///  Дата и время мероприятия
     /// </summary>
-    public DateTime StartAtUtc { get; set; }
+    public DateTime StartsAtUtc { get; set; }
 
     /// <summary>
     /// Дата и время окончания мероприятия
     /// </summary>
-    public DateTime? EndAtUtc { get; set; }
+    public DateTime? EndsAtUtc { get; set; }
 
     /// <summary>
     /// Статус мероприятия
