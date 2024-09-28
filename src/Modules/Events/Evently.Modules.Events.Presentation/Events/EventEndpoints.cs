@@ -7,5 +7,10 @@ public static class EventEndpoints
     {
         CreateEvent.MapEndpoint(app);
         GetEvent.MapEndpoint(app);
+        CancelEvent.MapEndpoint(app);
+        PublishEvent.MapEndpoint(app);
+        RescheduleEvent.MapEndpoint(app);
+        GetEventsByPer.MapEndpoint(app);
+        SearchEvents.MapEndpoint(app);
     }
 }

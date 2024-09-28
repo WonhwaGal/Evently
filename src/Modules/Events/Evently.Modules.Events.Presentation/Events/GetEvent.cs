@@ -14,6 +14,7 @@ public static class GetEvent
         {
             var query = new GetEventQuery(id);
             EventResponse @event = await sender.Send(query);
+
             return @event == null ? Results.NotFound() : Results.Ok(@event);
 
         }).WithTags(Tags.Events);

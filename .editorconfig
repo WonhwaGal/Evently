@@ -66,8 +66,9 @@ csharp_style_expression_bodied_operators = true:error
 csharp_style_expression_bodied_properties = true:error
 csharp_style_expression_bodied_indexers = true:error
 csharp_style_expression_bodied_accessors = true:error
-csharp_style_expression_bodied_lambdas = true:error
+csharp_style_expression_bodied_lambdas = true:none
 csharp_style_expression_bodied_local_functions = true:error
+csharp_style_unused_value_assignment_preference = discard_variable:silent
 
 [*.{cs,vb}]
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
@@ -391,6 +392,9 @@ dotnet_diagnostic.S125.severity = none
 # S6605: Должен использоваться специфический для коллекции метод "Exists" вместо расширения "Any"
 dotnet_diagnostic.S6605.severity = none
 
+# S1481: Должен использовать объявленные переменные
+dotnet_diagnostic.S1481.severity = none
+
 [*.{cs,vb}]
 dotnet_diagnostic.IDE0055.severity = none
 [*.{cs,vb}]
@@ -405,5 +409,9 @@ dotnet_diagnostic.IDE0060.severity = none
 dotnet_diagnostic.IDE0061.severity = none
 [*.{cs,vb}]
 dotnet_diagnostic.CA1515.severity = none
+dotnet_style_operator_placement_when_wrapping = beginning_of_line
+tab_width = 4
+indent_size = 4
+end_of_line = crlf
 
 

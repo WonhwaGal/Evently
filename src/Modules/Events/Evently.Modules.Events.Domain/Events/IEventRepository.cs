@@ -8,7 +8,7 @@ namespace Evently.Modules.Events.Domain.Events;
 public interface IEventRepository
 {
     /// <summary>
-    /// Получить событие по идентификатору
+    /// Получить мероприятие по идентификатору
     /// </summary>
     /// <param name="id"></param>
     /// <param name="cancellationToken"></param>
@@ -16,8 +16,27 @@ public interface IEventRepository
     Task<Event?> GetAsync(Guid id, CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Добавить событие
+    /// Добавить мероприятие
     /// </summary>
     /// <param name="event"></param>
     void Insert(Event @event);
+
+    /// <summary>
+    /// Изменить статус мероприятия на Отменено
+    /// </summary>
+    void CancelEvent(Guid id);
+
+    /// <summary>
+    /// Изменить статус мероприятия на Опубликовано
+    /// </summary>
+    /// <param name="id"></param>
+    void PublishEvent(Guid id);
+
+    /// <summary>
+    /// Изменить даты мероприятия
+    /// </summary>
+    /// <param name="eventId"></param>
+    /// <param name="startsAtUtc"></param>
+    /// <param name="endsAtUtc"></param>
+    void Reschedule(Guid eventId, DateTime? startsAtUtc, DateTime? endsAtUtc);
 }

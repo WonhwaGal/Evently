@@ -1,26 +1,26 @@
 <Project>
 	<PropertyGroup>
-		<!-- Óñòàíîâêà âåðñèè .NET SDK -->
+		<!-- Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° Ð²ÐµÑ€ÑÐ¸Ð¸ .NET SDK -->
 		<TargetFramework>net8.0</TargetFramework>
-		<!-- Èñïîëüçîâàíèå íåÿâíûõ using-äèðåêòèâ -->
+		<!-- Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð½ÐµÑÐ²Ð½Ñ‹Ñ… using-Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¸Ð² -->
 		<ImplicitUsings>enable</ImplicitUsings>
-		<!-- Èñïîëüçîâàíèå Nullable Reference Types -->
+		<!-- Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ð½Ð¸Ðµ Nullable Reference Types -->
 		<Nullable>enable</Nullable>
-		<!-- Âêëþ÷åíèå Code Analysis -->
+		<!-- Ð’ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ Code Analysis -->
 		<AnalysisLevel>latest</AnalysisLevel>
-		<!-- Àíàëèç êîäà âî âðåìÿ ñáîðêè -->
+		<!-- ÐÐ½Ð°Ð»Ð¸Ð· ÐºÐ¾Ð´Ð° Ð²Ð¾ Ð²Ñ€ÐµÐ¼Ñ ÑÐ±Ð¾Ñ€ÐºÐ¸ -->
 		<AnalysisMode>All</AnalysisMode>
-		<!-- Ïðåîáðàçîâàíèå ïðåäóïðåæäåíèé â îøèáêè -->
+		<!-- ÐŸÑ€ÐµÐ¾Ð±Ñ€Ð°Ð·Ð¾Ð²Ð°Ð½Ð¸Ðµ Ð¿Ñ€ÐµÐ´ÑƒÐ¿Ñ€ÐµÐ¶Ð´ÐµÐ½Ð¸Ð¹ Ð² Ð¾ÑˆÐ¸Ð±ÐºÐ¸ -->
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<!-- Ðàññìàòðèâàòü ïðåäóïðåæäåíèÿ êàê îøèáêè -->
+		<!-- Ð Ð°ÑÑÐ¼Ð°Ñ‚Ñ€Ð¸Ð²Ð°Ñ‚ÑŒ Ð¿Ñ€ÐµÐ´ÑƒÐ¿Ñ€ÐµÐ¶Ð´ÐµÐ½Ð¸Ñ ÐºÐ°Ðº Ð¾ÑˆÐ¸Ð±ÐºÐ¸ -->
 		<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
-	<!-- Ïîäêëþ÷åíèå SonarAnalyzer.CSharp, èñêëþ÷àåì ïðîåêò DockerCompose (.dcproj) â
-   ðàìêàõ ïðàâèëà -->
+	<!-- ÐŸÐ¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ðµ SonarAnalyzer.CSharp, Ð¸ÑÐºÐ»ÑŽÑ‡Ð°ÐµÐ¼ Ð¿Ñ€Ð¾ÐµÐºÑ‚ DockerCompose (.dcproj) Ð²
+   Ñ€Ð°Ð¼ÐºÐ°Ñ… Ð¿Ñ€Ð°Ð²Ð¸Ð»Ð° -->
 	<ItemGroup Condition="'$(MSBuildProjectExtension)' != '.dcproj'">
-		<!-- Óñòàíîâêà âåðñèè SonarAnalyzer.CSharp -->
+		<!-- Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° Ð²ÐµÑ€ÑÐ¸Ð¸ SonarAnalyzer.CSharp -->
 		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.27.0.93347">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

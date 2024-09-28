@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Domain.Events;
 using Evently.Modules.Events.Infrastructure.Database;
@@ -18,5 +19,59 @@ internal sealed class EventRepository(EventsDbContext context) : IEventRepositor
     public void Insert(Event @event)
     {
         context.Events.Add(@event);
+    }
+
+    public void CancelEvent(Guid id)
+    {
+        Event? @event = context.Events.SingleOrDefault(e => e.Id == id);
+
+        if (@event is null)
+        {
+            throw new NotImplementedException();
+        }
+
+        if (@event.StartsAtUtc <= DateTime.Now)
+        {
+            throw new NotImplementedException();
+        }
+
+        @event.Status = EventStatus.Cancelled;
+    }
+
+    public void PublishEvent(Guid id)
+    {
+        Event? @event = context.Events.SingleOrDefault(e => e.Id == id);
+
+        if (@event is null)
+        {
+            throw new NotImplementedException();
+        }
+
+        if (@event.StartsAtUtc <= DateTime.Now)
+        {
+            throw new NotImplementedException();
+        }
+
+        @event.Status = EventStatus.Published;
+    }
+
+    public void Reschedule(Guid eventId, DateTime? startsAtUtc, DateTime? endsAtUtc)
+    {
+        Event? @event = context.Events.SingleOrDefault(e => e.Id == eventId);
+
+        if (@event is null)
+        {
+            throw new NotImplementedException();
+        }
+
+        if (startsAtUtc is not null)
+        {
+            @event.StartsAtUtc = (DateTime)startsAtUtc;
+        }
+
+        if(endsAtUtc is not null)
+        {
+            @event.EndsAtUtc = endsAtUtc;
+        }
     }
 }
