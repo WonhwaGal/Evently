@@ -1,6 +1,7 @@
 ﻿using Evently.Modules.Events.Application.Abstractions.Data;
+using Evently.Modules.Events.Application.Messaging;
+using Evently.Modules.Events.Domain.Abstractions;
 using Evently.Modules.Events.Domain.Events;
-using MediatR;
 
 namespace Evently.Modules.Events.Application.Events.CreateEvent;
 
@@ -9,9 +10,9 @@ namespace Evently.Modules.Events.Application.Events.CreateEvent;
 /// </summary>
 internal sealed class CreateEventCommandHandler(
     IEventRepository eventRepository,
-    IUnitOfWork unitOfWork) : IRequestHandler<CreateEventCommand, Guid>
+    IUnitOfWork unitOfWork) : ICommandHandler<CreateEventCommand, Guid>
 {
-    public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateEventCommand request, CancellationToken cancellationToken)
     {
         var @event = Event.Create(
             request.Title,
@@ -24,6 +25,7 @@ internal sealed class CreateEventCommandHandler(
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
+        //Result<Guid>.Success(@event.Id);
         return @event.Id;
     }
 }

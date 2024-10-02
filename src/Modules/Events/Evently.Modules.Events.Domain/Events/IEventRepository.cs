@@ -31,12 +31,4 @@ public interface IEventRepository
     /// </summary>
     /// <param name="id"></param>
     void PublishEvent(Guid id);
-
-    /// <summary>
-    /// Изменить даты мероприятия
-    /// </summary>
-    /// <param name="eventId"></param>
-    /// <param name="startsAtUtc"></param>
-    /// <param name="endsAtUtc"></param>
-    void Reschedule(Guid eventId, DateTime? startsAtUtc, DateTime? endsAtUtc);
 }

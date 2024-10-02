@@ -1,22 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Evently.Modules.Events.Application.Abstractions.Data;
+﻿using Evently.Modules.Events.Application.Abstractions.Data;
+using Evently.Modules.Events.Application.Messaging;
+using Evently.Modules.Events.Domain.Abstractions;
 using Evently.Modules.Events.Domain.Events;
-using MediatR;
 
 namespace Evently.Modules.Events.Application.Events.RescheduleEvent;
 
 public sealed class RescheduleEventCommandHandler(
     IEventRepository eventRepository,
-    IUnitOfWork unitOfWork) : IRequestHandler<RescheduleEventCommand>
+    IUnitOfWork unitOfWork) : ICommandHandler<RescheduleEventCommand>
 {
-    public async Task Handle(RescheduleEventCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RescheduleEventCommand request, CancellationToken cancellationToken)
     {
-        eventRepository.Reschedule(request.EventId, request.StartsAtUtc, request.EndsAtUtc);
+        Event? @event = await eventRepository.GetAsync(request.EventId, cancellationToken);
+        if (@event is null)
+        {
+            return Result.Failure(EventErrors.NotFound(request.EventId));
+        }
+
+        if (request.StartsAtUtc < DateTime.UtcNow)
+        {
+            return Result.Failure(EventErrors.StartDateInPast);
+        }
+
+        @event.Reschedule(request.StartsAtUtc, request.EndsAtUtc);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Success();
     }
 }

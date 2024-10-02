@@ -395,6 +395,9 @@ dotnet_diagnostic.S6605.severity = none
 # S1481: Должен использовать объявленные переменные
 dotnet_diagnostic.S1481.severity = none
 
+# S1135: Наличие TODO внутри кода
+dotnet_diagnostic.S1135.severity = none
+
 [*.{cs,vb}]
 dotnet_diagnostic.IDE0055.severity = none
 [*.{cs,vb}]

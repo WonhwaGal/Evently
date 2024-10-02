@@ -10,7 +10,7 @@ public sealed class RescheduleEventRequest
     /// <summary>
     ///  Новая дата и время мероприятия
     /// </summary>
-    public DateTime? NewStartAtUtc { get; set; }
+    public DateTime NewStartAtUtc { get; set; }
 
     /// <summary>
     /// Новая дата и время окончания мероприятия

@@ -1,13 +1,14 @@
 ﻿using System.Data.Common;
 using Dapper;
 using Evently.Modules.Events.Application.Abstractions.Data;
-using MediatR;
+using Evently.Modules.Events.Application.Messaging;
+using Evently.Modules.Events.Domain.Abstractions;
 
 namespace Evently.Modules.Events.Application.Events.GetEvent;
 
-internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFactory) : IRequestHandler<GetEventQuery, EventResponse?>
+internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetEventQuery, EventResponse?>
 {
-    public async Task<EventResponse?> Handle(GetEventQuery request, CancellationToken cancellationToken)
+    public async Task<Result<EventResponse?>> Handle(GetEventQuery request, CancellationToken cancellationToken)
     {
         await using DbConnection dbConnection = await dbConnectionFactory.OpenConnectionAsync(cancellationToken);
 

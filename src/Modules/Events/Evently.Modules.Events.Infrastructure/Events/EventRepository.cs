@@ -54,24 +54,4 @@ internal sealed class EventRepository(EventsDbContext context) : IEventRepositor
 
         @event.Status = EventStatus.Published;
     }
-
-    public void Reschedule(Guid eventId, DateTime? startsAtUtc, DateTime? endsAtUtc)
-    {
-        Event? @event = context.Events.SingleOrDefault(e => e.Id == eventId);
-
-        if (@event is null)
-        {
-            throw new NotImplementedException();
-        }
-
-        if (startsAtUtc is not null)
-        {
-            @event.StartsAtUtc = (DateTime)startsAtUtc;
-        }
-
-        if(endsAtUtc is not null)
-        {
-            @event.EndsAtUtc = endsAtUtc;
-        }
-    }
 }

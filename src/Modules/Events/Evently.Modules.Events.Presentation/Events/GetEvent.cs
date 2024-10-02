@@ -1,4 +1,5 @@
 ﻿using Evently.Modules.Events.Application.Events.GetEvent;
+using Evently.Modules.Events.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +14,16 @@ public static class GetEvent
         app.MapGet("events/{id}", async (Guid id, ISender sender) =>
         {
             var query = new GetEventQuery(id);
-            EventResponse @event = await sender.Send(query);
+            Result<EventResponse?> result = await sender.Send(query);
 
-            return @event == null ? Results.NotFound() : Results.Ok(@event);
+            if (result.IsSuccess)
+            {
+                return Results.Ok(result.Value);
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
 
         }).WithTags(Tags.Events);
     }

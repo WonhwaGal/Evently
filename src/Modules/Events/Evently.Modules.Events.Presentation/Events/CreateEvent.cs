@@ -1,4 +1,5 @@
 ﻿using Evently.Modules.Events.Application.Events.CreateEvent;
+using Evently.Modules.Events.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -19,8 +20,16 @@ public static class CreateEvent
                 request.StartAtUtc,
                 request.EndAtUtc);
             
-            Guid eventId = await sender.Send(command);
-            return Results.Ok(eventId);
+            Result<Guid> result = await sender.Send(command);
+
+            if (result.IsSuccess)
+            {
+                return Results.Ok(result.Value);
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
 
         }).WithTags(Tags.Events);
     }

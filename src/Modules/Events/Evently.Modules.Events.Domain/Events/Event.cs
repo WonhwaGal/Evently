@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Modules.Events.Domain.Events.Events;
 
 namespace Evently.Modules.Events.Domain.Events;
 
-public sealed class Event
+public sealed class Event : Entity
 {
     private Event() { }
 
@@ -30,6 +32,14 @@ public sealed class Event
         };
 
         return @event;
+    }
+
+    public void Reschedule(DateTime startsAtUtc, DateTime? endsAtUtc)
+    {
+        StartsAtUtc = startsAtUtc;
+        EndsAtUtc = endsAtUtc;
+
+        Raise(new EventRescheduledDomainEvent(Id, StartsAtUtc, EndsAtUtc));
     }
 
     /// <summary>
