@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Application.Events.CancelEvent;
+using Evently.Modules.Events.Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -19,9 +20,17 @@ public static class CancelEvent
         app.MapPatch("events/cancel/{id}", async (Guid id, ISender sender) =>
         {
             var command = new CancelEventCommand(id);
-            await sender.Send(command);
 
-            return Results.Ok();
+            Result result = await sender.Send(command);
+
+            if (result.IsSuccess)
+            {
+                return Results.Ok();
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
 
         }).WithTags(Tags.Events);
     }

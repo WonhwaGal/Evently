@@ -11,7 +11,7 @@ public static class CreateEvent
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("events", async (CreateEventRequest request, ISender sender) =>
+        app.MapPost("events/create", async (CreateEventRequest request, ISender sender) =>
         {
             var command = new CreateEventCommand(
                 request.Title,

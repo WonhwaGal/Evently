@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 using Dapper;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Application.Events.GetEvent;
+using Evently.Modules.Events.Application.Messaging;
+using Evently.Modules.Events.Domain.Abstractions;
 using MediatR;
 
 namespace Evently.Modules.Events.Application.Events.SearchEvents;
 public sealed class SearchEventsQueryHandler(
-    IDbConnectionFactory dbConnectionFactory) : IRequestHandler<SearchEventsQuery, SearchEventsResponse>
+    IDbConnectionFactory dbConnectionFactory) : IQueryHandler<SearchEventsQuery, SearchEventsResponse>
 {
-    public async Task<SearchEventsResponse> Handle(SearchEventsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<SearchEventsResponse>> Handle(SearchEventsQuery request, CancellationToken cancellationToken)
     {
         await using DbConnection dbConnection = await dbConnectionFactory.OpenConnectionAsync(cancellationToken);
 
@@ -57,7 +59,7 @@ public sealed class SearchEventsQueryHandler(
             eventsNumber = nextPageIndex < totalCount ? request.PageSize : totalCount - firstRequestedIndex;
         }
 
-        List <EventResponse> eventsInPage = @events.ToList().GetRange(firstRequestedIndex, eventsNumber);
+        List<EventResponse> eventsInPage = @events.ToList().GetRange(firstRequestedIndex, eventsNumber);
 
         var response = new SearchEventsResponse(
             request.Page,

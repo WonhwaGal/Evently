@@ -42,6 +42,13 @@ public sealed class Event : Entity
         Raise(new EventRescheduledDomainEvent(Id, StartsAtUtc, EndsAtUtc));
     }
 
+    public void UpdateStatus(EventStatus newStatus)
+    {
+        Status = newStatus;
+
+        Raise(new EventStatusChangedDomainEvent(Id, Status));
+    }
+
     /// <summary>
     /// Мероприятие (концерт, фестиваль, выставка и т.д.)
     /// </summary>

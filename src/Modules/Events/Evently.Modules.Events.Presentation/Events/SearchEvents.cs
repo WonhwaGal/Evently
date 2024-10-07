@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Evently.Modules.Events.Application.Events.SearchEvents;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Evently.Modules.Events.Domain.Abstractions;
 
 namespace Evently.Modules.Events.Presentation.Events;
 public static class SearchEvents
@@ -28,12 +29,19 @@ public static class SearchEvents
             var query = new SearchEventsQuery(
                 startDate,
                 endDate,
-                page,
-                pageSize);
+            page,
+            pageSize);
 
-            SearchEventsResponse response = await sender.Send(query);
+            Result<SearchEventsResponse> result = await sender.Send(query);
 
-            return Results.Ok(response);
+            if (result.IsSuccess)
+            {
+                return Results.Ok(result.Value);
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
 
         }).WithTags(Tags.Events);
     }

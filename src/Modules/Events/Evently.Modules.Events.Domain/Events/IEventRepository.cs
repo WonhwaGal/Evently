@@ -20,15 +20,4 @@ public interface IEventRepository
     /// </summary>
     /// <param name="event"></param>
     void Insert(Event @event);
-
-    /// <summary>
-    /// Изменить статус мероприятия на Отменено
-    /// </summary>
-    void CancelEvent(Guid id);
-
-    /// <summary>
-    /// Изменить статус мероприятия на Опубликовано
-    /// </summary>
-    /// <param name="id"></param>
-    void PublishEvent(Guid id);
 }

@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Evently.Modules.Events.Application.Events.PublishEvent;
+using Evently.Modules.Events.Domain.Abstractions;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
@@ -18,9 +19,16 @@ public static class PublishEvent
         app.MapPatch("events/publish/{id}", async (Guid id, ISender sender) =>
         {
             var command = new PublishEventCommand(id);
-            await sender.Send(command);
+            Result result = await sender.Send(command);
 
-            return Results.Ok();
+            if (result.IsSuccess)
+            {
+                return Results.Ok();
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
 
         }).WithTags(Tags.Events);
     }

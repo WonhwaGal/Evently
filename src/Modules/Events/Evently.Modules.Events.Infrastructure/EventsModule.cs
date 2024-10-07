@@ -8,12 +8,14 @@ using Evently.Modules.Events.Domain.Events;
 using Evently.Modules.Events.Infrastructure.Data;
 using Evently.Modules.Events.Infrastructure.Database;
 using Evently.Modules.Events.Infrastructure.Events;
+using Evently.Modules.Events.Infrastructure.Interceptors;
 using Evently.Modules.Events.Presentation.Events;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Evently.Modules.Events.Infrastructure;
 public static class EventsModule
@@ -49,12 +51,15 @@ public static class EventsModule
         services.AddSingleton<IDbConnectionFactory>(_ => new SqlConnectionFactory(databaseConnectionString));
 
 
-        services.AddDbContext<EventsDbContext>(options =>
+        services.AddDbContext<EventsDbContext>((sp, options) =>
             options.UseSqlServer(databaseConnectionString,
                     sqlOptions => sqlOptions
                         .MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Events))
-                .UseSnakeCaseNamingConvention()); // Использовать соглашение об именовании в стиле snake_case
+                .UseSnakeCaseNamingConvention()
+                .AddInterceptors(sp.GetService<PublishDomainEventsInterceptor>()!)
+        );
 
+        services.TryAddSingleton<PublishDomainEventsInterceptor>();
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<EventsDbContext>());
 

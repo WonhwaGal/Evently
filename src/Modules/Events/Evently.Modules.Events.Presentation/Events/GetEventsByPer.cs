@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Application.Events.GetEvent;
 using Evently.Modules.Events.Application.Events.GetEvents;
+using Evently.Modules.Events.Domain.Abstractions;
 using Evently.Modules.Events.Domain.Events;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -17,12 +18,20 @@ public static class GetEventsByPer
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("events/byPer", async(DateTime? StartsAtUtc, DateTime? EndsAtUtc, ISender sender) =>
+        app.MapGet("events/getByPer", async(DateTime? StartsAtUtc, DateTime? EndsAtUtc, ISender sender) =>
         {
             var query = new GetEventsByPerQuery(StartsAtUtc, EndsAtUtc);
-            IReadOnlyList<EventResponse> @events = await sender.Send(query);
 
-            return Results.Ok(@events);
+            Result<IReadOnlyList<EventResponse>> result = await sender.Send(query);
+
+            if (result.IsSuccess)
+            {
+                return Results.Ok(result.Value);
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
 
         }).WithTags(Tags.Events);
     }

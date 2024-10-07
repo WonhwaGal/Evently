@@ -20,38 +20,4 @@ internal sealed class EventRepository(EventsDbContext context) : IEventRepositor
     {
         context.Events.Add(@event);
     }
-
-    public void CancelEvent(Guid id)
-    {
-        Event? @event = context.Events.SingleOrDefault(e => e.Id == id);
-
-        if (@event is null)
-        {
-            throw new NotImplementedException();
-        }
-
-        if (@event.StartsAtUtc <= DateTime.Now)
-        {
-            throw new NotImplementedException();
-        }
-
-        @event.Status = EventStatus.Cancelled;
-    }
-
-    public void PublishEvent(Guid id)
-    {
-        Event? @event = context.Events.SingleOrDefault(e => e.Id == id);
-
-        if (@event is null)
-        {
-            throw new NotImplementedException();
-        }
-
-        if (@event.StartsAtUtc <= DateTime.Now)
-        {
-            throw new NotImplementedException();
-        }
-
-        @event.Status = EventStatus.Published;
-    }
 }

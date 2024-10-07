@@ -9,4 +9,8 @@ public static class EventErrors
     public static readonly Error StartDateInPast = Error.Problem(
         "Events.StartDateInPast", 
         $"The event start date is in the past");
+
+    public static readonly Error EndDateInPast = Error.Problem(
+    "Events.EndDateInPast",
+    $"The event end date is in the past");
 }
