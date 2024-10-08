@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Modules.Events.Domain.Category;
 using Evently.Modules.Events.Domain.Events;
-using MediatR;
+using Evently.Modules.Events.Domain.TicketTypes;
+using Evently.Modules.Events.Infrastructure.Events;
+using Evently.Modules.Events.Infrastructure.TicketTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace Evently.Modules.Events.Infrastructure.Database;
@@ -18,9 +20,15 @@ public sealed class EventsDbContext(
     /// </summary>
     internal DbSet<Event> Events { get; set; }
 
+    internal DbSet<Category> Categories { get; set; }
+
+    internal DbSet<TicketType> TicketTypes { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema(Schemas.Events);
+        modelBuilder.ApplyConfiguration(new EventConfiguration());
+        modelBuilder.ApplyConfiguration(new TicketTypeConfiguration());
     }
 
     //public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

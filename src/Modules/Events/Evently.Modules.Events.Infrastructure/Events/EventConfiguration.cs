@@ -1,0 +1,19 @@
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Evently.Modules.Events.Domain.Category;
+using Evently.Modules.Events.Domain.Events;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Evently.Modules.Events.Infrastructure.Events;
+internal sealed class EventConfiguration : IEntityTypeConfiguration<Event>
+{
+    public void Configure(EntityTypeBuilder<Event> builder)
+    {
+        builder.HasOne<Category>().WithMany().HasForeignKey(e => e.CategoryId);
+    }
+}

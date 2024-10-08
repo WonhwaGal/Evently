@@ -11,5 +11,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Database\Migrations\" />
+	  <Folder Include="Categories\" />
 	</ItemGroup>
 </Project>

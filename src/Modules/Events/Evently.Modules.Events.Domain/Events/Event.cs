@@ -55,6 +55,11 @@ public sealed class Event : Entity
     public Guid Id { get; set; }
 
     /// <summary>
+    /// Идентификатор категории мероприятия
+    /// </summary>
+    public Guid CategoryId { get; set; }
+
+    /// <summary>
     /// Идентификатор
     /// </summary>
     public string Title { get; set; }
