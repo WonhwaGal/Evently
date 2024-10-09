@@ -13,6 +13,14 @@ internal sealed class TicketTypeConfiguration : IEntityTypeConfiguration<TicketT
 {
     public void Configure(EntityTypeBuilder<TicketType> builder)
     {
+        builder.ToTable("ticket_types");
+        builder.HasKey(t => t.Id);
+
+        builder.Property(t => t.Name);
+        builder.Property(t => t.Price).HasColumnType("decimal(10,2)");
+        builder.Property(t => t.Currency);
+        builder.Property(t => t.Quantity).HasColumnType("decimal(18,0)");
+
         builder.HasOne<Event>().WithMany().HasForeignKey(t => t.EventId);
     }
 }
