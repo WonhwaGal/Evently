@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events.Events;
 
 namespace Evently.Modules.Events.Domain.Events;
@@ -13,6 +14,7 @@ public sealed class Event : Entity
     private Event() { }
 
     public static Event Create(
+        Guid categotyId,
         string title,
         string description,
         string location,
@@ -23,6 +25,7 @@ public sealed class Event : Entity
         var @event = new Event
         {
             Id = Guid.NewGuid(),
+            CategoryId = categotyId,
             Title = title,
             Description = description,
             Location = location,

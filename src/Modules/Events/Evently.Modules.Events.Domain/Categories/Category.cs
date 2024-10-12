@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Modules.Events.Domain.Categories.Categories;
 
-namespace Evently.Modules.Events.Domain.Category;
+namespace Evently.Modules.Events.Domain.Categories;
 public sealed class Category : Entity
 {
     /// <summary>
@@ -44,7 +45,7 @@ public sealed class Category : Entity
             IsArchived = false
         };
 
-        //category.Raise(new CategoryCreatedDomainEvent(category.Id));
+        category.Raise(new CategoryCreatedDomainEvent(category.Id));
 
         return category;
     }
@@ -56,7 +57,7 @@ public sealed class Category : Entity
     {
         IsArchived = true;
 
-        //Raise(new CategoryArchivedDomainEvent(Id));
+        Raise(new CategoryArchivedDomainEvent(Id));
     }
 
     /// <summary>
@@ -72,7 +73,6 @@ public sealed class Category : Entity
 
         Name = name;
 
-        //Raise(new CategoryNameChangedDomainEvent(Id, Name));
+        Raise(new CategoryNameChangedDomainEvent(Id, Name));
     }
 }
-

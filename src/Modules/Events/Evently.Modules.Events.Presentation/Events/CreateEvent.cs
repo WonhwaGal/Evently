@@ -14,6 +14,7 @@ public static class CreateEvent
         app.MapPost("events/create", async (CreateEventRequest request, ISender sender) =>
         {
             var command = new CreateEventCommand(
+                request.CategoryId,
                 request.Title,
                 request.Description,
                 request.Location,

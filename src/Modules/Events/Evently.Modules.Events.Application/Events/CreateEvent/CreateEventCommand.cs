@@ -1,7 +1,9 @@
 ﻿using Evently.Modules.Events.Application.Messaging;
+using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Application.Events.CreateEvent;
-public sealed record CreateEventCommand (string Title,
+public sealed record CreateEventCommand (Guid CategoryId,
+    string Title,
     string Description,
     string Location,
     DateTime StartsAtUtc,
