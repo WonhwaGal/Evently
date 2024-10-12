@@ -1,0 +1,4 @@
+﻿using Evently.Modules.Events.Application.Messaging;
+
+namespace Evently.Modules.Events.Application.TicketTypes.UpdateTicketTypePrice;
+public sealed record UpdateTicketTypePriceCommand(Guid TicketId, decimal NewPrice): ICommand;

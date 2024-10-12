@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Modules.Events.Domain.Abstractions;
 using Evently.Modules.Events.Domain.Events;
+using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
 
 namespace Evently.Modules.Events.Domain.TicketTypes;
 public sealed class TicketType : Entity
@@ -72,13 +68,13 @@ public sealed class TicketType : Entity
             Quantity = quantity
         };
 
-        //ticketType.Raise(new TicketTypeCreatedDomainEvent(ticketType.Id));
+        ticketType.Raise(new TicketTypeCreatedDomainEvent(ticketType.Id));
 
         return ticketType;
     }
 
     /// <summary>
-    /// 
+    /// Обновление цены на определенный тип билета
     /// </summary>
     /// <param name="price"></param>
     public void UpdatePrice(decimal price)
