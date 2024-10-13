@@ -5,28 +5,15 @@ namespace Evently.Modules.Events.Application.Events.GetEvent;
 
 public sealed class EventResponse
 {
-    //public EventResponse(
-    //    Guid id,
-    //    string title,
-    //    string description,
-    //    string location,
-    //    DateTime startsAtUtc,
-    //    DateTime endsAtUtc,
-    //    EventStatus status)
-    //{
-    //    Id = id;
-    //    Title = title;
-    //    Description = description;
-    //    Location = location;
-    //    StartsAtUtc = startsAtUtc;
-    //    EndsAtUtc = endsAtUtc;
-    //    Status = status;
-    //}
-
     /// <summary>
     /// Идентификатор
     /// </summary>
     public Guid Id { get; set; }
+
+    /// <summary>
+    /// Идентификатор категории мероприятия
+    /// </summary>
+    public Guid CategoryId { get; set; }
 
     /// <summary>
     /// Наименование мероприятия

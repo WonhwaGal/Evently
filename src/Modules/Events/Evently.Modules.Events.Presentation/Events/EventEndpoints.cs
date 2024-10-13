@@ -11,6 +11,7 @@ public static class EventEndpoints
         PublishEvent.MapEndpoint(app);
         RescheduleEvent.MapEndpoint(app);
         GetEventsByPer.MapEndpoint(app);
+        GetEventsByCategory.MapEndpoint(app);
         SearchEvents.MapEndpoint(app);
     }
 }

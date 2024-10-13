@@ -12,5 +12,6 @@ public static class TicketTypesEndpoints
     {
         CreateTicketType.MapEndpoint(app);
         UpdateTicketTypePrice.MapEndpoint(app);
+        GetTicketTypesByEvent.MapEndpoint(app);
     }
 }
