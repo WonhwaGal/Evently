@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Evently.Modules.Events.Application.Events.SearchEvents;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Domain;
 
 namespace Evently.Modules.Events.Presentation.Events;
 public static class SearchEvents

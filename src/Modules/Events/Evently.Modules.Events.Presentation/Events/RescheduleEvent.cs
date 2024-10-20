@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Application.Events.RescheduleEvent;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

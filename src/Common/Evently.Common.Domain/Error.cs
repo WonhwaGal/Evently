@@ -1,5 +1,5 @@
 ﻿
-namespace Evently.Modules.Events.Domain.Abstractions;
+namespace Evently.Common.Domain;
 public record Error
 {
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.Failure);

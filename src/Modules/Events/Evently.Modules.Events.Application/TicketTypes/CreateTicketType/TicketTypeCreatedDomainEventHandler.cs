@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Evently.Modules.Events.Application.Messaging;
+using Evently.Common.Application.Messaging;
 using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
 
 namespace Evently.Modules.Events.Application.TicketTypes.CreateTicketType;

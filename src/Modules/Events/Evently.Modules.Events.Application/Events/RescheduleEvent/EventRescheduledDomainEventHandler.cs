@@ -1,4 +1,4 @@
-﻿using Evently.Modules.Events.Application.Messaging;
+﻿using Evently.Common.Application.Messaging;
 using Evently.Modules.Events.Domain.Events.Events;
 
 namespace Evently.Modules.Events.Application.Events.RescheduleEvent;

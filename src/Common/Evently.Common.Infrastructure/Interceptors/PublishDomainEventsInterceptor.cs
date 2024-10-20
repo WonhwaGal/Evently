@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Evently.Modules.Events.Infrastructure.Interceptors;
+namespace Evently.Common.Infrastructure.Interceptors;
 public class PublishDomainEventsInterceptor (
     IServiceScopeFactory serviceScopeFactory): SaveChangesInterceptor
 {

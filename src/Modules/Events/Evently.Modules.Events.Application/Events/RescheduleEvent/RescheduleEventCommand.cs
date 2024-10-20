@@ -1,4 +1,4 @@
-﻿using Evently.Modules.Events.Application.Messaging;
+﻿using Evently.Common.Application.Messaging;
 
 namespace Evently.Modules.Events.Application.Events.RescheduleEvent;
 public sealed record RescheduleEventCommand(

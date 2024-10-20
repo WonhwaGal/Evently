@@ -8,7 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Evently.Modules.Events.Application.Events.PublishEvent;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Domain;
 
 namespace Evently.Modules.Events.Presentation.Events;
 

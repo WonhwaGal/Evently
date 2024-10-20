@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Evently.Modules.Events.Domain.Abstractions;
+namespace Evently.Common.Domain;
 public abstract class DomainEvent: IDomainEvent
 {
     protected DomainEvent()

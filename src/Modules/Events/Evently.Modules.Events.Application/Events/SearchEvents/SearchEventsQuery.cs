@@ -1,4 +1,4 @@
-﻿using Evently.Modules.Events.Application.Messaging;
+﻿using Evently.Common.Application.Messaging;
 using MediatR;
 
 namespace Evently.Modules.Events.Application.Events.SearchEvents;

@@ -1,7 +1,24 @@
 using Evently.Api.Extensions;
 using Evently.Modules.Events.Infrastructure;
+using Evently.Common.Application;
+using Evently.Common.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+#region [!] Решение сквозной проблемы: внедрение зависимостей
+
+builder.Services.AddApplication(
+    [Evently.Modules.Events.Application.AssemblyReference.Assembly]);
+
+builder.Services.AddInfrastructure(builder.Configuration);
+
+#endregion
+
+#region [!] Решение сквозной проблемы: конфигурирование
+
+builder.Configuration.AddModuleConfiguration(["events"]);
+
+#endregion
 
 // Events Module
 builder.Services.AddEventsModule(builder.Configuration);

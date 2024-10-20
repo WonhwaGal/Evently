@@ -2,8 +2,9 @@
 using Dapper;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Application.Events.GetEvent;
-using Evently.Modules.Events.Application.Messaging;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Application.Messaging;
+using Evently.Common.Domain;
+using Evently.Common.Application.Data;
 
 namespace Evently.Modules.Events.Application.Events.GetEventsByCategory;
 internal sealed class GetEventsByCategoryQueryHandler(

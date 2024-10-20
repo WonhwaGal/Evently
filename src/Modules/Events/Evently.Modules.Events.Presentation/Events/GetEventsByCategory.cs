@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Application.Events.GetEvent;
 using Evently.Modules.Events.Application.Events.GetEventsByCategory;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

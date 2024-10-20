@@ -5,6 +5,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Evently.Modules.Events.Application\Evently.Modules.Events.Application.csproj" />
+	  <ProjectReference Include="..\..\..\Common\Evently.Common.Domain\Evently.Common.Domain.csproj" />
+	  <ProjectReference Include="..\Evently.Modules.Events.Application\Evently.Modules.Events.Application.csproj" />
 	</ItemGroup>
 </Project>

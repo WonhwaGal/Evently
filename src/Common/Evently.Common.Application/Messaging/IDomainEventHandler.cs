@@ -1,7 +1,7 @@
-﻿using Evently.Modules.Events.Domain.Abstractions;
+﻿using Evently.Common.Domain;
 using MediatR;
 
-namespace Evently.Modules.Events.Application.Messaging;
+namespace Evently.Common.Application.Messaging;
 public interface IDomainEventHandler<in TDomainEvent> : INotificationHandler<TDomainEvent>
     where TDomainEvent : IDomainEvent;
 

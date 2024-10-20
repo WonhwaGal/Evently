@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Application.Messaging;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Application.Messaging;
+using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.Events;
 using MediatR;
 

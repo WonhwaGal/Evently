@@ -1,4 +1,4 @@
-﻿using Evently.Modules.Events.Application.Messaging;
+﻿using Evently.Common.Application.Messaging;
 
 namespace Evently.Modules.Events.Application.TicketTypes.CreateTicketType;
 public sealed record CreateTicketTypeCommand(Guid EventId,
