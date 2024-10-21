@@ -4,6 +4,7 @@ using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Common.Application.Data;
+using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Events.Application.Events.GetEvent;
 
@@ -33,6 +34,11 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
         {
             request.EventId
         });
+
+        //if(@event is null)
+        //{
+        //    return Result.Failure<EventResponse?>(EventErrors.NotFound(request.EventId));
+        //}
 
         return @event;
     }

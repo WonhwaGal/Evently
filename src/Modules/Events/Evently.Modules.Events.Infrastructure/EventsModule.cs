@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Application.Data;
+using Evently.Common.Infrastructure;
 using Evently.Common.Infrastructure.Interceptors;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
@@ -21,7 +22,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Evently.Modules.Events.Infrastructure;
 public static class EventsModule
@@ -36,8 +36,7 @@ public static class EventsModule
     public static IServiceCollection AddEventsModule(this IServiceCollection services,
         IConfiguration configuration)
     {
-
-        // Добавить сервисы инфраструктуры
+        // add module-specific settins
         services.AddInfrastructure(configuration);
 
         return services;

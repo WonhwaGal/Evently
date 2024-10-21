@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Evently.Common.Domain;
+using Evently.Modules.Users.Application.Users.UpdateUserName;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace Evently.Modules.Users.Presentation.Users;
+public static class UpdateUserFullName
+{
+    public static void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapPatch("users/updateFullName", async (UpdateUserFullNameRequest request, ISender sender) =>
+        {
+            var command = new UpdateUserFullNameCommand(request.Id,
+                request.FirstName,
+                request.LastName);
+
+            Result result = await sender.Send(command);
+
+            if (result.IsSuccess)
+            {
+                return Results.Ok();
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
+
+        }).WithTags(Tags.Users);
+    }
+}

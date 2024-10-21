@@ -2,13 +2,16 @@ using Evently.Api.Extensions;
 using Evently.Modules.Events.Infrastructure;
 using Evently.Common.Application;
 using Evently.Common.Infrastructure;
+using System.Reflection.Metadata;
+using Evently.Modules.Users.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 #region [!] Решение сквозной проблемы: внедрение зависимостей
 
 builder.Services.AddApplication(
-    [Evently.Modules.Events.Application.AssemblyReference.Assembly]);
+    [Evently.Modules.Events.Application.AssemblyReference.Assembly,
+     Evently.Modules.Users.Application.AssemblyReference.Assembly]);
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -16,12 +19,13 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 #region [!] Решение сквозной проблемы: конфигурирование
 
-builder.Configuration.AddModuleConfiguration(["events"]);
+builder.Configuration.AddModuleConfiguration(["events", "users"]);
 
 #endregion
 
-// Events Module
+// Modules
 builder.Services.AddEventsModule(builder.Configuration);
+builder.Services.AddUsersModule(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -36,7 +40,8 @@ if (app.Environment.IsDevelopment())
     app.ApplyMigrations();
 }
 
-//Register endpoints 
+//Register module endpoints 
 EventsModule.MapEndpoints(app);
+UsersModule.MapEndpoints(app);
 
 await app.RunAsync();
