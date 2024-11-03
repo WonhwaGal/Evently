@@ -32,11 +32,6 @@ internal sealed class GetUserQueryHandler(
                 request.UserId
             });
 
-        if (user is null)
-        {
-            return Result.Failure<UserResponse?>(UserErrors.NotFound(request.UserId));
-        }
-
         return user;
     }
 }

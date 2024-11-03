@@ -4,8 +4,16 @@ using Evently.Common.Application;
 using Evently.Common.Infrastructure;
 using System.Reflection.Metadata;
 using Evently.Modules.Users.Infrastructure;
+using Serilog;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+#region [!] –ешение сквозной проблемы: логирование (Serilog + Seq)
+
+builder.Host.UseSerilog((context, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+
+#endregion
 
 #region [!] –ешение сквозной проблемы: внедрение зависимостей
 
@@ -43,5 +51,11 @@ if (app.Environment.IsDevelopment())
 //Register module endpoints 
 EventsModule.MapEndpoints(app);
 UsersModule.MapEndpoints(app);
+
+#region [!] –ешение сквозной проблемы: логирование (Serilog + Seq)
+
+app.UseSerilogRequestLogging();
+
+#endregion
 
 await app.RunAsync();

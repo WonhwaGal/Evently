@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Evently.Common.Domain;
+using Evently.Modules.Events.Application.Categories.GetCategory;
+using Evently.Modules.Events.Domain.Categories;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace Evently.Modules.Events.Presentation.Categories;
+public static class GetCategory
+{
+    public static void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapGet("categories/get/{id}", async (Guid id, ISender sender) =>
+        {
+            var query = new GetCategoryQuery(id);
+
+            Result<CategoryResponse?> result = await sender.Send(query);
+
+            if (result.IsSuccess)
+            {
+                return Results.Ok(result.Value);
+            }
+            else
+            {
+                return Results.BadRequest(result.Error);
+            }
+
+        }).WithTags(Tags.Categories);
+    }
+}

@@ -8,5 +8,6 @@ public static class CategoriesEndpoints
         CreateCategory.MapEndpoint(app);
         ChangeCategoryName.MapEndpoint(app);
         ArchiveCategory.MapEndpoint(app);
+        GetCategory.MapEndpoint(app);
     }
 }

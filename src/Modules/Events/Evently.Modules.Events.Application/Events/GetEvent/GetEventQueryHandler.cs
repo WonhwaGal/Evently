@@ -35,11 +35,6 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
             request.EventId
         });
 
-        //if(@event is null)
-        //{
-        //    return Result.Failure<EventResponse?>(EventErrors.NotFound(request.EventId));
-        //}
-
         return @event;
     }
 }
