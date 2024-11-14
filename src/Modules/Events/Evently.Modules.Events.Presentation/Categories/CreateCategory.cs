@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Evently.Common.Presentation.ApiResults;
 
 namespace Evently.Modules.Events.Presentation.Categories;
 public static class CreateCategory
@@ -21,14 +22,7 @@ public static class CreateCategory
 
             Result<Guid> result = await sender.Send(command);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok(result.Value);
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(Results.Ok, ApiResults.Problem);
 
         }).WithTags(Tags.Categories);
     }

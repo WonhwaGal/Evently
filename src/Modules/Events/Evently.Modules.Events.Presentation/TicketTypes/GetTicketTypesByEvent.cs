@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Evently.Common.Presentation.ApiResults;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
 
@@ -22,14 +23,7 @@ public static class GetTicketTypesByEvent
 
             Result<IReadOnlyList<TicketTypeResponse>> result = await sender.Send(query);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok(result.Value);
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(Results.Ok, ApiResults.Problem);
 
         }).WithTags(Tags.TicketTypes);
     }

@@ -5,6 +5,7 @@ using Evently.Common.Infrastructure;
 using System.Reflection.Metadata;
 using Evently.Modules.Users.Infrastructure;
 using Serilog;
+using Evently.Api.Middleware;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,14 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+
+#endregion
+
+#region [!] Решение сквозной проблемы: обработка исключений
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+builder.Services.AddProblemDetails();
 
 #endregion
 
@@ -51,6 +60,12 @@ if (app.Environment.IsDevelopment())
 //Register module endpoints 
 EventsModule.MapEndpoints(app);
 UsersModule.MapEndpoints(app);
+
+#region [!] Решение сквозной проблемы: обработка исключений
+
+app.UseExceptionHandler();
+
+#endregion
 
 #region [!] Решение сквозной проблемы: логирование (Serilog + Seq)
 

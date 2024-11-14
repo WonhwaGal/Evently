@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Evently.Modules.Events.Application.Events.PublishEvent;
 using Evently.Common.Domain;
+using Evently.Common.Presentation.ApiResults;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
@@ -21,14 +22,7 @@ public static class PublishEvent
             var command = new PublishEventCommand(id);
             Result result = await sender.Send(command);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok();
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(TypedResults.Ok, ApiResults.Problem);
 
         }).WithTags(Tags.Events);
     }

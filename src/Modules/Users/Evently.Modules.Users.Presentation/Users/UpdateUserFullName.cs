@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
+using Evently.Common.Presentation.ApiResults;
 using Evently.Modules.Users.Application.Users.UpdateUserName;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -23,14 +24,7 @@ public static class UpdateUserFullName
 
             Result result = await sender.Send(command);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok();
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(TypedResults.Ok, ApiResults.Problem);
 
         }).WithTags(Tags.Users);
     }

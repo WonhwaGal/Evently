@@ -18,7 +18,13 @@ public static class ApplicationConfiguration
         {
             config.RegisterServicesFromAssemblies(moduleAssemblies);
 
+            // Регистрация поведения логирования запросов
+            // [!] Решение сквозной задачи: логирование
             config.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
+
+            // Регистрация поведения обработки исключений
+            // [!] Решение сквозной задачи: обработка исключений
+            config.AddOpenBehavior(typeof(ExceptionHandlingPipelineBehavior<,>));
         });
 
         return services;

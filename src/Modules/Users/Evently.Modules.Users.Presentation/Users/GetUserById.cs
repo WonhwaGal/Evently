@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
+using Evently.Common.Presentation.ApiResults;
 using Evently.Modules.Users.Application.Users.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -21,14 +22,8 @@ public static class GetUserById
 
             Result<UserResponse?> result = await sender.Send(query);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok(result.Value);
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(Results.Ok, ApiResults.Problem);
+
         }).WithTags(Tags.Users);
     }
 }

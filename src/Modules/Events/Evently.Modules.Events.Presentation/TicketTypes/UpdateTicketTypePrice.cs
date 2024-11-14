@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Evently.Common.Presentation.ApiResults;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
 public static class UpdateTicketTypePrice
@@ -21,14 +22,7 @@ public static class UpdateTicketTypePrice
 
             Result result = await sender.Send(command);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok();
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(TypedResults.Ok, ApiResults.Problem);
 
         }).WithTags(Tags.TicketTypes);
     }

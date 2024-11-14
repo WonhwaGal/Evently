@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using Evently.Common.Presentation.ApiResults;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
@@ -23,14 +24,7 @@ public static class CancelEvent
 
             Result result = await sender.Send(command);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok();
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(TypedResults.Ok, ApiResults.Problem);
 
         }).WithTags(Tags.Events);
     }

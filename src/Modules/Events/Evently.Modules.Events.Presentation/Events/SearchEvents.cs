@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Evently.Modules.Events.Application.Events.SearchEvents;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Evently.Common.Domain;
+using Evently.Common.Presentation.ApiResults;
 
 namespace Evently.Modules.Events.Presentation.Events;
 public static class SearchEvents
@@ -34,14 +35,7 @@ public static class SearchEvents
 
             Result<SearchEventsResponse> result = await sender.Send(query);
 
-            if (result.IsSuccess)
-            {
-                return Results.Ok(result.Value);
-            }
-            else
-            {
-                return Results.BadRequest(result.Error);
-            }
+            return result.Match(Results.Ok, ApiResults.Problem);
 
         }).WithTags(Tags.Events);
     }
