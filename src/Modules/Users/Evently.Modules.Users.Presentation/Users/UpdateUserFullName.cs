@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
-using Evently.Modules.Users.Application.Users.UpdateUserName;
+using Evently.Modules.Users.Application.Users.UpdateUserFullName;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

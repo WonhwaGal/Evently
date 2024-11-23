@@ -3,7 +3,7 @@ using Evently.Common.Domain;
 using Evently.Modules.Users.Application.Abstractions.Data;
 using Evently.Modules.Users.Domain.Users;
 
-namespace Evently.Modules.Users.Application.Users.UpdateUserName;
+namespace Evently.Modules.Users.Application.Users.UpdateUserFullName;
 internal sealed class UpdateUserFullNameCommandHandler(
     IUserRepository userRepository,
     IUnitOfWork unitOfWork) : ICommandHandler<UpdateUserFullNameCommand>

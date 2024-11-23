@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Application.Behaviors;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Evently.Common.Application;
@@ -25,7 +26,14 @@ public static class ApplicationConfiguration
             // Регистрация поведения обработки исключений
             // [!] Решение сквозной задачи: обработка исключений
             config.AddOpenBehavior(typeof(ExceptionHandlingPipelineBehavior<,>));
+
+            // Регистрация поведения валидации запросов
+            // [!] Решение сквозной задачи: валидация
+            config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
         });
+
+        services.AddValidatorsFromAssemblies(moduleAssemblies,
+            includeInternalTypes: true);
 
         return services;
     }
