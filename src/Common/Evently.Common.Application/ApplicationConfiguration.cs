@@ -18,14 +18,14 @@ public static class ApplicationConfiguration
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssemblies(moduleAssemblies);
+           
+            // Регистрация поведения обработки исключений
+            // [!] Решение сквозной задачи: обработка исключений
+            config.AddOpenBehavior(typeof(ExceptionHandlingPipelineBehavior<,>));
 
             // Регистрация поведения логирования запросов
             // [!] Решение сквозной задачи: логирование
             config.AddOpenBehavior(typeof(RequestLoggingPipelineBehavior<,>));
-
-            // Регистрация поведения обработки исключений
-            // [!] Решение сквозной задачи: обработка исключений
-            config.AddOpenBehavior(typeof(ExceptionHandlingPipelineBehavior<,>));
 
             // Регистрация поведения валидации запросов
             // [!] Решение сквозной задачи: валидация
