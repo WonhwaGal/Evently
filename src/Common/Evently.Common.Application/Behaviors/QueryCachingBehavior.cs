@@ -34,7 +34,7 @@ where TResponse : Result
 
         logger.LogInformation("Cache miss for {Query}", name);
 
-        var result = await next();
+        TResponse result = await next();
 
         if (result.IsSuccess)
         {

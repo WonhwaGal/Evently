@@ -30,6 +30,9 @@ public static class ApplicationConfiguration
             // Регистрация поведения валидации запросов
             // [!] Решение сквозной задачи: валидация
             config.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+
+            // [!] Решение сквозной задачи: кэширование
+            config.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
         });
 
         services.AddValidatorsFromAssemblies(moduleAssemblies,

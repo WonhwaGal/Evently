@@ -6,6 +6,7 @@ using System.Reflection.Metadata;
 using Evently.Modules.Users.Infrastructure;
 using Serilog;
 using Evently.Api.Middleware;
+using Evently.Modules.Ticketing.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,8 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddApplication(
     [Evently.Modules.Events.Application.AssemblyReference.Assembly,
-     Evently.Modules.Users.Application.AssemblyReference.Assembly]);
+     Evently.Modules.Users.Application.AssemblyReference.Assembly,
+     Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]);
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -36,13 +38,15 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 #region [!] Решение сквозной проблемы: конфигурирование
 
-builder.Configuration.AddModuleConfiguration(["events", "users"]);
+builder.Configuration.AddModuleConfiguration(["events", "users", "ticketing"]);
 
 #endregion
 
 // Modules
 builder.Services.AddEventsModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddTicketingModule(builder.Configuration);
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -60,6 +64,7 @@ if (app.Environment.IsDevelopment())
 //Register module endpoints 
 EventsModule.MapEndpoints(app);
 UsersModule.MapEndpoints(app);
+TicketingModule.MapEndpoints(app);
 
 #region [!] Решение сквозной проблемы: обработка исключений
 

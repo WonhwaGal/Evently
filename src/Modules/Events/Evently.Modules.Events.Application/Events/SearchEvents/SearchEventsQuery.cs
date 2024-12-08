@@ -1,9 +1,13 @@
-﻿using Evently.Common.Application.Messaging;
-using MediatR;
+﻿using Evently.Common.Application.Caching;
 
 namespace Evently.Modules.Events.Application.Events.SearchEvents;
 public sealed record SearchEventsQuery(
     DateTime? StartDate,
     DateTime? EndDate,
     int Page,
-    int PageSize) : IQuery<SearchEventsResponse>;
+    int PageSize) : ICachedQuery<SearchEventsResponse>
+{
+    public string CacheKey => $"searchEvents-{StartDate}-{EndDate}-{Page}-{PageSize}";
+
+    public TimeSpan? Expiration => TimeSpan.FromMinutes(4);
+}

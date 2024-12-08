@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
 using Evently.Modules.Events.Application.Categories.GetCategory;
-using Evently.Modules.Events.Domain.Categories;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +19,6 @@ public static class GetCategory
         app.MapGet("categories/get/{id}", async (Guid id, ISender sender) =>
         {
             var query = new GetCategoryQuery(id);
-
             Result<CategoryResponse?> result = await sender.Send(query);
 
             return result.Match(Results.Ok, ApiResults.Problem);

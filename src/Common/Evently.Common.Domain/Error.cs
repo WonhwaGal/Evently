@@ -8,10 +8,10 @@ public record Error
         "Null value was provided",
         ErrorType.Failure);
 
-    public Error (string code, string desctiption, ErrorType type)
+    public Error (string code, string description, ErrorType type)
     {
         Code = code;
-        Description = desctiption;
+        Description = description;
         Type = type;
     }
 

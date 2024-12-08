@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Evently.Common.Application.Caching;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Identity.Client;
+using Newtonsoft.Json;
 
 namespace Evently.Common.Infrastructure.Caching;
 internal sealed class CacheService : ICacheService
@@ -77,14 +78,11 @@ internal sealed class CacheService : ICacheService
     /// <returns> Значение в виде массива байт </returns>
     private static byte[] Serialize<T>(T value)
     {
-        // Создание буфера для записи
-        var buffer = new ArrayBufferWriter<byte>();
-        // Создание писателя
-        using var writer = new Utf8JsonWriter(buffer);
-        // Сериализация значения
-        JsonSerializer.Serialize(writer, value);
-        // Возврат массива байт
-        return buffer.WrittenSpan.ToArray();
+        return System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value,
+            new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            }));
     }
 
 
@@ -96,7 +94,10 @@ internal sealed class CacheService : ICacheService
     /// <returns> Значение в виде объекта </returns>
     private static T Deserialize<T>(byte[] bytes)
     {
-        // Десериализация значения
-        return JsonSerializer.Deserialize<T>(bytes)!;
+        return JsonConvert.DeserializeObject<T>(System.Text.Encoding.UTF8.GetString(bytes),
+            new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto
+            })!;
     }
 }

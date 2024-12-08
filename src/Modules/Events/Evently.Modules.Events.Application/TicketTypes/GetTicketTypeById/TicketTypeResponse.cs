@@ -1,5 +1,4 @@
-﻿
-namespace Evently.Modules.Events.Application.TicketTypes.GetByEvent;
+﻿namespace Evently.Modules.Events.Application.TicketTypes.GetTicketTypeById;
 public sealed class TicketTypeResponse
 {
     /// <summary>
@@ -25,7 +24,7 @@ public sealed class TicketTypeResponse
     /// <summary>
     /// Валюта билетов
     /// </summary>
-    public string Currency {  get; set; }
+    public string Currency { get; set; }
 
     /// <summary>
     /// Количество билетов

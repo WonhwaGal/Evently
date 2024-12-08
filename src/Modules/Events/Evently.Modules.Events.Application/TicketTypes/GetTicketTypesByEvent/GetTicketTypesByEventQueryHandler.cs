@@ -4,6 +4,7 @@ using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Common.Application.Data;
+using Evently.Modules.Events.Application.TicketTypes.GetTicketTypeById;
 
 namespace Evently.Modules.Events.Application.TicketTypes.GetByEvent;
 

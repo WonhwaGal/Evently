@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Modules.Events.Application.TicketTypes.GetTicketTypeById;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
 
