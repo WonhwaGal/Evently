@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Evently.Modules.Ticketing.Domain.Customers;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+
+namespace Evently.Modules.Ticketing.Infrastructure.Customers;
+internal sealed class CustomerConfiguration : IEntityTypeConfiguration<Customer>
+{
+    public void Configure(EntityTypeBuilder<Customer> builder)
+    {
+        builder.HasKey(c => c.Id);
+
+        builder.Property(c => c.FirstName).HasMaxLength(200);
+
+        builder.Property(c => c.LastName).HasMaxLength(200);
+
+        builder.Property(c => c.Email).HasMaxLength(300);
+    }
+}

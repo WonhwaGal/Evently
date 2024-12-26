@@ -17,7 +17,7 @@ public sealed class User : Entity
             LastName = lastName
         };
 
-        user.Raise(new UserCreatedDomainEvent(user.Id));
+        user.Raise(new UserRegisteredDomainEvent(user.Id));
 
         return user;
     }

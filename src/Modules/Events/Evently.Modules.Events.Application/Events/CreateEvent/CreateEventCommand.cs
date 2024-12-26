@@ -1,5 +1,4 @@
 ﻿using Evently.Common.Application.Messaging;
-using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Application.Events.CreateEvent;
 public sealed record CreateEventCommand (Guid CategoryId,

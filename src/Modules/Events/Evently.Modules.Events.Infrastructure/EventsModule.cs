@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Application.Data;
-using Evently.Common.Infrastructure;
 using Evently.Common.Infrastructure.Interceptors;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;

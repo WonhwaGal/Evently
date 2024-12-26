@@ -1,5 +1,5 @@
 ﻿
-namespace Evently.Common.Infrastructure;
+namespace Evently.Modules.Events.Infrastructure.Database;
 
 /// <summary>
 /// Схемы базы данных
@@ -10,9 +10,4 @@ public static class Schemas
     /// Схема events
     /// </summary>
     public const string Events = "events";
-
-    /// <summary>
-    /// Схема users
-    /// </summary>
-    public const string Users = "users";
 }

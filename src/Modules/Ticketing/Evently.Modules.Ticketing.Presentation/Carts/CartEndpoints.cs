@@ -12,5 +12,9 @@ public static class CartEndpoints
     public static void MapEndpoints(IEndpointRouteBuilder app)
     {
         AddToCart.MapEndpoint(app);
+        GetCart.MapEndpoint(app);
+        RemoveItemFromCart.MapEndpoint(app);
+        ClearCart.MapEndpoint(app);
+
     }
 }
