@@ -17,6 +17,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Evently.Modules.Ticketing.Infrastructure.Database;
 using Evently.Modules.Ticketing.Infrastructure.PublicApi;
 using Evently.Modules.Ticketing.PublicApi;
+using Evently.Modules.Ticketing.Domain.TicketTypes;
+using Evently.Modules.Ticketing.Infrastructure.TicketTypes;
+using Evently.Modules.Ticketing.Domain.Events;
+using Evently.Modules.Ticketing.Infrastructure.Events;
 
 namespace Evently.Modules.Ticketing.Infrastructure;
 
@@ -45,6 +49,8 @@ public static class TicketingModule
 
         // Регистрация репозиториев
         services.AddScoped<ICustomerRepository, CustomerRepository>();
+        services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
+        services.AddScoped<IEventRepository, EventRepository>();
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<TicketingDbContext>());
 

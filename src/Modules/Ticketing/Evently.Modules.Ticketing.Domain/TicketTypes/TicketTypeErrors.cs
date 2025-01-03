@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
 
-namespace Evently.Modules.Ticketing.Domain.Events;
+namespace Evently.Modules.Ticketing.Domain.TicketTypes;
 public static class TicketTypeErrors
 {
     public static Error NotFound(Guid ticketTypeId) =>

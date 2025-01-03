@@ -1,13 +1,14 @@
 ﻿using Evently.Common.Domain;
-using Evently.Modules.Events.Domain.Events.Events;
 
-namespace Evently.Modules.Events.Domain.Events;
-
-public sealed class Event : Entity
+namespace Evently.Modules.Ticketing.Domain.Events;
+public sealed class Event: Entity
 {
-    private Event() { }
+    private Event()
+    {
+    }
 
     public static Event Create(
+        Guid id,
         Guid categotyId,
         string title,
         string description,
@@ -18,7 +19,7 @@ public sealed class Event : Entity
     {
         var @event = new Event
         {
-            Id = Guid.NewGuid(),
+            Id = id,
             CategoryId = categotyId,
             Title = title,
             Description = description,
@@ -28,23 +29,7 @@ public sealed class Event : Entity
             Status = EventStatus.Draft
         };
 
-        @event.Raise(new EventCreatedDomainEvent(@event.Id));
         return @event;
-    }
-
-    public void Reschedule(DateTime startsAtUtc, DateTime? endsAtUtc)
-    {
-        StartsAtUtc = startsAtUtc;
-        EndsAtUtc = endsAtUtc;
-
-        Raise(new EventRescheduledDomainEvent(Id, StartsAtUtc, EndsAtUtc));
-    }
-
-    public void UpdateStatus(EventStatus newStatus)
-    {
-        Status = newStatus;
-
-        Raise(new EventStatusChangedDomainEvent(Id, Status));
     }
 
     /// <summary>

@@ -2,7 +2,7 @@
 using Evently.Common.Domain;
 using Evently.Modules.Events.PublicApi;
 using Evently.Modules.Ticketing.Domain.Customers;
-using Evently.Modules.Ticketing.Domain.Events;
+using Evently.Modules.Ticketing.Domain.TicketTypes;
 using Evently.Modules.Users.PublicApi;
 
 namespace Evently.Modules.Ticketing.Application.Carts.RemoveItemFromCart;

@@ -8,14 +8,17 @@ namespace Evently.Common.Infrastructure.Interceptors;
 public class PublishDomainEventsInterceptor (
     IServiceScopeFactory serviceScopeFactory): SaveChangesInterceptor
 {
-    public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result,
+    public override async ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        PublishDomainEventsAsync(eventData.Context!);
-        return base.SavedChangesAsync(eventData, result, cancellationToken);
+        if (eventData.Context is not null)
+        {
+            await PublishDomainEventsAsync(eventData.Context);
+        }
+        return await base.SavedChangesAsync(eventData, result, cancellationToken);
     }
 
-    private void PublishDomainEventsAsync(DbContext context)
+    private async Task PublishDomainEventsAsync(DbContext context)
     {
         var domainEvents = context.ChangeTracker
             .Entries<Entity>()
@@ -30,6 +33,9 @@ public class PublishDomainEventsInterceptor (
 
         using IServiceScope scope = serviceScopeFactory.CreateScope();
         IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
-        domainEvents.ForEach(async domainEvent => await publisher.Publish(domainEvent));
+        foreach (IDomainEvent domainEvent in domainEvents)
+        {
+            await publisher.Publish(domainEvent);
+        }
     }
 }

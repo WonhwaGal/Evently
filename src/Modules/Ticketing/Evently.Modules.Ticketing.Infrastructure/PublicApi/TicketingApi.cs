@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Evently.Modules.Ticketing.Application.Customers.CreateCustomer;
+﻿using Evently.Modules.Ticketing.Application.Customers.CreateCustomer;
+using Evently.Modules.Ticketing.Application.Events.CreateEvent;
+using Evently.Modules.Ticketing.Application.TicketTypes.CreateTicketType;
 using Evently.Modules.Ticketing.PublicApi;
 using MediatR;
 
@@ -18,10 +15,31 @@ internal sealed class TicketingApi(ISender sender) : ITicketingApi
         CancellationToken cancellationToken = default)
     {
         await sender.Send(new CreateCustomerCommand(
-                customerId,
-                email,
-                firstName,
-                lastName),
-            cancellationToken);
+                customerId, email, firstName, lastName), cancellationToken);
+    }
+
+    public async Task CreateEventAsync(Guid id, 
+        Guid categotyId, 
+        string title, 
+        string description, 
+        string location, 
+        DateTime startAtUtc, 
+        DateTime? endAtUtc, 
+        CancellationToken cancellationToken = default)
+    {
+        await sender.Send(new CreateEventCommand(
+            id, categotyId, title, description, location, startAtUtc, endAtUtc), cancellationToken);
+    }
+
+    public async Task CreateTicketTypeAsync(Guid ticketTypeId,
+        Guid eventId, 
+        string name, 
+        decimal price, 
+        string currency, 
+        decimal quantity, 
+        CancellationToken cancellationToken = default)
+    {
+        await sender.Send(new CreateTicketTypeCommand(
+            ticketTypeId, eventId, name, price, currency, quantity), cancellationToken);
     }
 }

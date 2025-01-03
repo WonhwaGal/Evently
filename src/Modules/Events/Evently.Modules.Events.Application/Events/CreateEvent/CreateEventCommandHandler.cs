@@ -23,7 +23,6 @@ internal sealed class CreateEventCommandHandler(
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        //Result<Guid>.Success(@event.Id);
         return @event.Id;
     }
 }

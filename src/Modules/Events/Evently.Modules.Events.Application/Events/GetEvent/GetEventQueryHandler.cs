@@ -18,6 +18,7 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
             $"""
             SELECT
                 id AS {nameof(EventResponse.Id)},
+                category_id AS {nameof(EventResponse.CategoryId)},
                 title AS {nameof(EventResponse.Title)},
                 description AS {nameof(EventResponse.Description)},
                 location AS {nameof(EventResponse.Location)},
