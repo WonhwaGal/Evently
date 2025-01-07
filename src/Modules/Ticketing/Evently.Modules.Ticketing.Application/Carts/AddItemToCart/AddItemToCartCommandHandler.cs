@@ -23,7 +23,6 @@ internal sealed class AddItemToCartCommandHandler(
             return Result.Failure(TicketTypeErrors.NotFound(request.TicketTypeId));
         }
 
-        // 3. Add item to cart (добавить товар в корзину)
         var cartItem = new CartItem
         {
             TicketTypeId = ticketType.Id,

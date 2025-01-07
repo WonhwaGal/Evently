@@ -21,6 +21,11 @@ using Evently.Modules.Ticketing.Domain.TicketTypes;
 using Evently.Modules.Ticketing.Infrastructure.TicketTypes;
 using Evently.Modules.Ticketing.Domain.Events;
 using Evently.Modules.Ticketing.Infrastructure.Events;
+using Evently.Common.Presentation.Endpoints;
+using MassTransit;
+using Evently.Modules.Ticketing.Presentation.Customers;
+using Evently.Modules.Ticketing.Presentation.Events;
+using Evently.Modules.Ticketing.Presentation.TicketTypes;
 
 namespace Evently.Modules.Ticketing.Infrastructure;
 
@@ -31,9 +36,20 @@ public static class TicketingModule
         CartEndpoints.MapEndpoints(app);
     }
 
+    public static void ConfigureConsumers(IRegistrationConfigurator configure)
+    {
+        configure.AddConsumer<UserRegisteredIntegrationEventConsumer>();
+        configure.AddConsumer<EventCreatedIntegrationEventConsumer>();
+        configure.AddConsumer<TicketTypeCreatedIntegrationEventConsumer>();
+    }
+
+
     public static IServiceCollection AddTicketingModule(this IServiceCollection services,
         IConfiguration configuration)
     {
+        // presentation layer endpoints registration
+        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
+
         string databaseConnectionString = configuration.GetConnectionString("Database")!;
 
         services.AddDbContext<TicketingDbContext>((sp, options) =>

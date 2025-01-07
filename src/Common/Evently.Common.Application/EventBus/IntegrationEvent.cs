@@ -18,7 +18,7 @@ public abstract class IntegrationEvent : IIntegrationEvent
     /// <param name="occurredOnUtc"> Дата и время возникновения события </param>
     protected IntegrationEvent(Guid id, DateTime occurredOnUtc)
     {
-        EventId = id;
+        IntegrationEventId = id;
         OccurredOnUtc = occurredOnUtc;
     }
 
@@ -29,7 +29,7 @@ public abstract class IntegrationEvent : IIntegrationEvent
     /// <summary>
     /// Идентификатор события
     /// </summary>
-    public Guid EventId { get; init; }
+    public Guid IntegrationEventId { get; init; }
 
     /// <summary>
     /// Дата и время возникновения события

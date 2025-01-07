@@ -10,7 +10,7 @@ public interface IIntegrationEvent
     /// <summary>
     /// Идентификатор события
     /// </summary>
-    Guid EventId { get; init; }
+    Guid IntegrationEventId { get; init; }
 
     /// <summary>
     /// Дата и время возникновения события

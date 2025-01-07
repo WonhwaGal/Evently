@@ -65,7 +65,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Events.Publ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Ticketing.PublicApi", "src\Modules\Ticketing\Evently.Modules.Ticketing.PublicApi\Evently.Modules.Ticketing.PublicApi.csproj", "{80EC9CE9-7CCE-4AB8-BD02-B7FF07F66928}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Modules.Users.IntegrationEvents", "src\Modules\Users\Evently.Modules.Users.IntegrationEvents\Evently.Modules.Users.IntegrationEvents.csproj", "{1E636A62-427A-407B-864C-9E9E9065414D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Users.IntegrationEvents", "src\Modules\Users\Evently.Modules.Users.IntegrationEvents\Evently.Modules.Users.IntegrationEvents.csproj", "{1E636A62-427A-407B-864C-9E9E9065414D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Modules.Events.IntegrationEvents", "src\Modules\Events\Evently.Modules.Events.IntegrationEvents\Evently.Modules.Events.IntegrationEvents.csproj", "{14733255-8A2E-4408-99EC-A7FD57C6A5A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,6 +163,10 @@ Global
 		{1E636A62-427A-407B-864C-9E9E9065414D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E636A62-427A-407B-864C-9E9E9065414D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E636A62-427A-407B-864C-9E9E9065414D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14733255-8A2E-4408-99EC-A7FD57C6A5A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14733255-8A2E-4408-99EC-A7FD57C6A5A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14733255-8A2E-4408-99EC-A7FD57C6A5A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14733255-8A2E-4408-99EC-A7FD57C6A5A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,6 +199,7 @@ Global
 		{537E7A5A-5DAD-4E21-A35A-9A713DEFC3DD} = {B76DAE39-A56A-4DCA-BAA2-D0A2B3481144}
 		{80EC9CE9-7CCE-4AB8-BD02-B7FF07F66928} = {84F46077-3C19-4467-90D8-0162A1A6074D}
 		{1E636A62-427A-407B-864C-9E9E9065414D} = {AB1A6779-DE08-4B17-A329-9A913B78FA9C}
+		{14733255-8A2E-4408-99EC-A7FD57C6A5A4} = {B76DAE39-A56A-4DCA-BAA2-D0A2B3481144}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71E0CF07-0638-4AC7-9568-843CBB9709AF}

@@ -9,6 +9,7 @@ using Evently.Common.Application.EventBus;
 using Evently.Common.Infrastructure.Caching;
 using Evently.Common.Infrastructure.Data;
 using Evently.Common.Infrastructure.Interceptors;
+using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -18,7 +19,9 @@ namespace Evently.Common.Infrastructure;
 
 public static class InfrastructureConfiguration
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services,
+        Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
+        IConfiguration configuration)
     {
         string databaseConnectionString = configuration.GetConnectionString("Database")!;
 
@@ -27,7 +30,30 @@ public static class InfrastructureConfiguration
 
         services.TryAddSingleton<PublishDomainEventsInterceptor>();
 
-        //services.TryAddSingleton<IEventBus, EventBus.EventBus>();
+        services.TryAddSingleton<IEventBus, EventBus.EventBus>();
+
+        // Регистрация сервиса массовой пересылки сообщений
+        services.AddMassTransit(configure =>
+        {
+            // Регистрация потребителей сообщений
+            foreach (Action<IRegistrationConfigurator> configureConsumer in moduleConfigureConsumers)
+            {
+                configureConsumer(configure);
+            }
+
+            // Форматирование названий конечных точек в стиле kebab-case
+            // (это сделает конечные точки более удобочитаемыми)
+            configure.SetKebabCaseEndpointNameFormatter();
+
+            // Конфигурация шины сообщений, делегат для настройки транспорта
+            // для использования в памяти
+            configure.UsingInMemory((context, cfg) =>
+            {
+                // Получение сообщений потребителями и регистрация требуемой топологии
+                // брокера сообщений
+                cfg.ConfigureEndpoints(context);
+            });
+        });
 
         AddCaching(services, configuration);
 

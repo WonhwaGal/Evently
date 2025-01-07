@@ -12,7 +12,7 @@ public interface IDomainEvent : INotification
     /// <summary>
     /// Идентификатор события
     /// </summary>
-    public Guid Id { get; }
+    public Guid DomainEventId { get; }
 
     /// <summary>
     /// Время возникновения события

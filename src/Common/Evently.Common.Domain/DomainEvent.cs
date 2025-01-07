@@ -9,11 +9,11 @@ public abstract class DomainEvent: IDomainEvent
 {
     protected DomainEvent()
     {
-        Id = Guid.NewGuid();
+        DomainEventId = Guid.NewGuid();
         OccurredOnUtc = DateTime.UtcNow;
     }
 
-    public Guid Id { get; init; }
+    public Guid DomainEventId { get; init; }
 
     public DateTime OccurredOnUtc { get; init; }
 }
