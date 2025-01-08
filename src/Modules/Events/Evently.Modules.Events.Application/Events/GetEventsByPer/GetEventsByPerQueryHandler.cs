@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Common;
 using Dapper;
-using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Application.Events.GetEvent;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;

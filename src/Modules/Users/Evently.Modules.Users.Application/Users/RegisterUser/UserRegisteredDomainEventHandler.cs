@@ -1,4 +1,5 @@
-﻿using Evently.Common.Application.EventBus;
+﻿using AutoMapper;
+using Evently.Common.Application.EventBus;
 using Evently.Common.Application.Exceptions;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
@@ -12,7 +13,8 @@ namespace Evently.Modules.Users.Application.Users.RegisterUser;
 
 internal sealed class UserCreatedDomainEventHandler(
     ISender sender,
-    IEventBus eventBus) : IDomainEventHandler<UserRegisteredDomainEvent>
+    IEventBus eventBus,
+    IMapper mapper) : IDomainEventHandler<UserRegisteredDomainEvent>
 {
     public async Task Handle(UserRegisteredDomainEvent notification, CancellationToken cancellationToken)
     {
@@ -22,15 +24,10 @@ internal sealed class UserCreatedDomainEventHandler(
             throw new EventlyException(nameof(GetUserQuery), result.Error);
         }
 
-        var userRegisteredIntegrationEvent = new UserRegisteredIntegrationEvent(
-            notification.DomainEventId,
-            notification.OccurredOnUtc,
-            notification.UserId,
-            result.Value.Email,
-            result.Value.FirstName,
-            result.Value.LastName);
+        UserRegisteredIntegrationEvent integrationEvent = mapper
+            .Map<UserRegisteredIntegrationEvent>((notification, result.Value));
 
-        await eventBus.PublishAsync(userRegisteredIntegrationEvent, cancellationToken);
+        await eventBus.PublishAsync(integrationEvent, cancellationToken);
     }
 }
 

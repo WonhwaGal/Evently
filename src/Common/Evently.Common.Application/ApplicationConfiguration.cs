@@ -33,6 +33,9 @@ public static class ApplicationConfiguration
 
             // [!] Решение сквозной задачи: кэширование
             config.AddOpenBehavior(typeof(QueryCachingBehavior<,>));
+
+            //AutoMapper
+            services.AddAutoMapper(moduleAssemblies);
         });
 
         services.AddValidatorsFromAssemblies(moduleAssemblies,

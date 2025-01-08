@@ -1,4 +1,5 @@
-﻿using Evently.Common.Application.EventBus;
+﻿using AutoMapper;
+using Evently.Common.Application.EventBus;
 using Evently.Common.Application.Exceptions;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
@@ -12,7 +13,8 @@ namespace Evently.Modules.Events.Application.TicketTypes.CreateTicketType;
 
 public class TicketTypeCreatedDomainEventHandler(
     ISender sender,
-    IEventBus eventBus) : IDomainEventHandler<TicketTypeCreatedDomainEvent>
+    IEventBus eventBus,
+    IMapper mapper) : IDomainEventHandler<TicketTypeCreatedDomainEvent>
 {
     public async Task Handle(TicketTypeCreatedDomainEvent notification, CancellationToken cancellationToken)
     {
@@ -22,16 +24,9 @@ public class TicketTypeCreatedDomainEventHandler(
             throw new EventlyException(nameof(GetTicketTypeByIdQuery), result.Error);
         }
 
-        var ticketTypeIntegrationEvent = new TicketTypeCreatedIntegrationEvent(
-            notification.DomainEventId,
-            notification.OccurredOnUtc,
-            notification.TicketTypeId,
-            result.Value.EventId,
-            result.Value.Name,
-            result.Value.Price,
-            result.Value.Currency,
-            result.Value.Quantity);
+        TicketTypeCreatedIntegrationEvent integrationEvent = mapper
+            .Map<TicketTypeCreatedIntegrationEvent>((notification, result.Value));
 
-        await eventBus.PublishAsync(ticketTypeIntegrationEvent, cancellationToken);
+        await eventBus.PublishAsync(integrationEvent, cancellationToken);
     }
 }
