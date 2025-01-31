@@ -13,8 +13,8 @@
 - **Паттерны:** CQRS, IUnitOfWork, Репозиторий, Assembly reference;
 - Проблемы возникновения исключений, валидации, кеширования и логирования решены на общем уровне через интерфейс (pipeline behavior) MediatR;
 - Использованы доменные и интеграционные события, а также интерсептор;
-- **FluentValidation, Redis, Serilog, AutoMapper, KeyCloak**;
-- Межмодульная коммуникация через PublicApi and шину событий (**MassTransit**);
+- Стек: **FluentValidation, Redis, Serilog, AutoMapper, KeyCloak**;
+- Межмодульная коммуникация через PublicApi или шину событий (**MassTransit**);
 
 <br>Изначально межмодульная коммуникация построена на доменных событиях и PublicApi.
 <br>Затем PublicApi заменено на интеграционные события.
