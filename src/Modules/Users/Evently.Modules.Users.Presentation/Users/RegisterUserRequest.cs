@@ -8,6 +8,11 @@ public sealed class RegisterUserRequest
     public string Email { get; set; }
 
     /// <summary>
+    /// Пароль пользователя
+    /// </summary>
+    public string Password { get; set; }
+
+    /// <summary>
     /// Имя пользователя
     /// </summary>
     public string FirstName { get; set; }

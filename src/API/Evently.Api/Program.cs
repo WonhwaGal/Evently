@@ -78,4 +78,11 @@ app.UseSerilogRequestLogging();
 
 #endregion
 
+#region [!] Решение сквозной проблемы: аутентификация и авторизация
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+#endregion
+
 await app.RunAsync();

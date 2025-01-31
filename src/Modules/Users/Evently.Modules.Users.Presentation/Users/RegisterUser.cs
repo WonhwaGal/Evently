@@ -19,6 +19,7 @@ public static class RegisterUser
         app.MapPost("users/register", async (RegisterUserRequest request, ISender sender) =>
         {
             var command = new RegisterUserCommand(request.Email,
+                request.Password,
                 request.FirstName,
                 request.LastName);
 
@@ -26,6 +27,8 @@ public static class RegisterUser
 
             return result.Match(Results.Ok, ApiResults.Problem);
 
-        }).WithTags(Tags.Users);
+        })
+        .AllowAnonymous()
+        .WithTags(Tags.Users);
     } 
 }

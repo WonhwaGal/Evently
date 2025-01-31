@@ -1,4 +1,5 @@
-﻿using Evently.Common.Domain;
+﻿using System.Globalization;
+using Evently.Common.Domain;
 using Evently.Modules.Users.Domain.Users.Users;
 
 namespace Evently.Modules.Users.Domain.Users;
@@ -15,6 +16,22 @@ public sealed class User : Entity
             Email = email,
             FirstName = firstName,
             LastName = lastName
+        };
+
+        user.Raise(new UserRegisteredDomainEvent(user.Id));
+
+        return user;
+    }
+
+    public static User Create(string email, string firstName, string lastName, string identityId)
+    {
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Email = email,
+            FirstName = firstName,
+            LastName = lastName,
+            IdentityId = identityId
         };
 
         user.Raise(new UserRegisteredDomainEvent(user.Id));
@@ -41,6 +58,11 @@ public sealed class User : Entity
     /// Фамилия пользователя
     /// </summary>
     public string LastName { get; private set; }
+
+    /// <summary>
+    /// Идентификатор пользователя в системе Identity
+    /// </summary>
+    public string IdentityId { get; private set; }
 
     public void UpdateEmail(string email)
     {

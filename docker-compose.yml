@@ -46,3 +46,36 @@ services:
       - REDIS_HOSTS=local:Evently.Redis:6379
     ports:
       - "8181:8081"
+  evently.idp.db:
+    image: postgres
+    container_name: Evently.Idp.Db
+    volumes:
+      #- ./.containers/database-idp:/var/lib/postgresql/data
+      - ./.containers/database-idp:/var/lib/postgres/data
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=password
+  evently.idp:
+    image: quay.io/keycloak/keycloak:26.0.0
+    container_name: Evently.Idp
+    environment:
+      - DB_VENDOR=POSTGRES
+      - DB_ADDR=evently-idp-db
+      - DB_DATABASE=keycloak
+      - DB_USER=keycloak
+      - DB_SCHEMA=public
+      - DB_PASSWORD=password
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    command: -v start-dev
+    volumes:
+      - ./.files:/opt/keycloak/data/import
+      - ./.providers:/opt/keycloak/providers
+    ports:
+      - "18080:8080"
+    depends_on:
+      - evently.database
+      - evently.idp.db
