@@ -9,7 +9,7 @@ internal sealed class RegisterUserCommandValidator : AbstractValidator<RegisterU
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Почтовый адрес пользователя не должен быть пустым")
             .EmailAddress().WithMessage("Указанное в поле не является почтовым адресом");
-        RuleFor(x => x.Name)
+        RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("Имя пользователя не должно быть пустым");
         RuleFor(x => x.LastName)
             .NotEmpty().WithMessage("Фамилия пользователя не должна быть пустой");

@@ -8,7 +8,7 @@ using Evently.Modules.Users.Domain.Users;
 namespace Evently.Modules.Users.Application.Users.RegisterUser;
 internal sealed class RegisterUserCommandHandler(
     IUserRepository userRepository,
-    IIdentityProviderService identityProviderService,
+    /*IIdentityProviderService identityProviderService,*/
     IUnitOfWork unitOfWork) : ICommandHandler<RegisterUserCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
