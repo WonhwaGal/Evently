@@ -1,17 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
 using Evently.Modules.Users.Application.Abstractions.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Evently.Modules.Users.Infrastructure.Identity;
 internal sealed class IdentityProviderService(
-    /*ILogger<IdentityProviderService> logger*/) : IIdentityProviderService
+    KeyCloakClient keyCloakClient,
+    ILogger<IdentityProviderService> logger) : IIdentityProviderService
 {
-    public Task<Result<string>> RegisterUserAsync(UserModel user, CancellationToken cancellationToken = default)
+    private const string PasswordCredentialType = "Password";
+
+    public async Task<Result<string>> RegisterUserAsync(UserModel user, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var userRepresentation = new UserRepresentation(
+            user.Email,
+            user.Email,
+            user.FirstName,
+            user.LastName,
+            true,
+            true,
+            [new CredentialRepresentation(PasswordCredentialType, user.Password, false)]);
+
+        try
+        {
+            string identityId = await keyCloakClient.RegisterUserAsync(userRepresentation, cancellationToken);
+
+            return identityId;
+        }
+        catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.Conflict)
+        {
+            logger.LogError(exception, "User registration failed");
+
+            return Result.Failure<string>(IdentityProviderErrors.EmailIsNotUnique);
+        }
     }
 }

@@ -12,7 +12,7 @@ public static class GetEvent
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("events/get/{id}", async (Guid id, ISender sender) =>
+        app.MapGet("events/{id}", async (Guid id, ISender sender) =>
         {
             var query = new GetEventQuery(id);
             Result<EventResponse?> result = await sender.Send(query);

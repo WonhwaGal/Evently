@@ -16,7 +16,7 @@ public static class GetCategory
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("categories/get/{id}", async (Guid id, ISender sender) =>
+        app.MapGet("categories/{id}", async (Guid id, ISender sender) =>
         {
             var query = new GetCategoryQuery(id);
             Result<CategoryResponse?> result = await sender.Send(query);

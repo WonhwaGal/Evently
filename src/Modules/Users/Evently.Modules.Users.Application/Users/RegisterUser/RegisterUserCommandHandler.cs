@@ -7,21 +7,24 @@ using Evently.Modules.Users.Domain.Users;
 
 namespace Evently.Modules.Users.Application.Users.RegisterUser;
 internal sealed class RegisterUserCommandHandler(
+    IUnitOfWork unitOfWork,
     IUserRepository userRepository,
-    /*IIdentityProviderService identityProviderService,*/
-    IUnitOfWork unitOfWork) : ICommandHandler<RegisterUserCommand, Guid>
+    IIdentityProviderService identityProviderService) : ICommandHandler<RegisterUserCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
-        // identityProviderService -> Register
+        Result<string> result = await identityProviderService.RegisterUserAsync(
+            new UserModel(request.Email, request.Password, request.FirstName, request.LastName), cancellationToken);
 
-        // identityId <- identityProviderService
-        string identityId = string.Empty;
+        if (result.IsFailure)
+        {
+            return Result.Failure<Guid>(result.Error);
+        }
 
         var user = User.Create(request.Email,
             request.FirstName,
             request.LastName,
-            identityId);
+            result.Value);
 
         userRepository.Insert(user);
 

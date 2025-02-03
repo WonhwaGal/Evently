@@ -16,7 +16,7 @@ internal static class GetTicketTypeById
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("ticketTypes/get/{id}", async (Guid id, ISender sender) =>
+        app.MapGet("ticketTypes/{id}", async (Guid id, ISender sender) =>
         {
             var query = new GetTicketTypeByIdQuery(id);
 

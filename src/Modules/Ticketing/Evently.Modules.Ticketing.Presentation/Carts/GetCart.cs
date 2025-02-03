@@ -17,7 +17,7 @@ public static class GetCart
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("carts/getby/{customerId}", async (Guid customerId, ISender sender) =>
+        app.MapGet("carts/{customerId}", async (Guid customerId, ISender sender) =>
         {
             var query = new GetCartQuery(customerId);
 
