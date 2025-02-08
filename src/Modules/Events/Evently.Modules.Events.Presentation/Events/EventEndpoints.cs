@@ -13,5 +13,6 @@ public static class EventEndpoints
         GetEventsByPer.MapEndpoint(app);
         GetEventsByCategory.MapEndpoint(app);
         SearchEvents.MapEndpoint(app);
+        GetEvents.MapEndpoint(app);
     }
 }

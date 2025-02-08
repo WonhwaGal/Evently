@@ -22,6 +22,7 @@ public sealed class GetEventsByPerQueryHandler(
             SELECT
                 e.Id AS {nameof(EventResponse.Id)},
                 e.Title AS {nameof(EventResponse.Title)},
+                e.Category_id As {nameof(EventResponse.CategoryId)},
                 e.Description AS {nameof(EventResponse.Description)},
                 e.Location AS {nameof(EventResponse.Location)},
                 e.Starts_at_utc AS {nameof(EventResponse.StartsAtUtc)},

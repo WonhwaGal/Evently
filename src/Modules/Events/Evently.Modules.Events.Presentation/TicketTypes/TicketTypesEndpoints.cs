@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
 public static class TicketTypesEndpoints
@@ -14,5 +9,6 @@ public static class TicketTypesEndpoints
         UpdateTicketTypePrice.MapEndpoint(app);
         GetTicketTypesByEvent.MapEndpoint(app);
         GetTicketTypeById.MapEndpoint(app);
+        GetTicketTypes.MapEndpoint(app);
     }
 }
