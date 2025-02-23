@@ -42,6 +42,14 @@ public static class UsersModule
         services.Configure<KeyCloakOptions>(configuration.GetSection("Users:KeyCloak"));
         services.AddTransient<KeyCloakAuthDelegatingHandler>();
 
+        services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
+        {
+            KeyCloakOptions keycloakOptions = serviceProvider
+                .GetRequiredService<IOptions<KeyCloakOptions>>().Value;
+
+            httpClient.BaseAddress = new Uri(keycloakOptions.TokenUrl);
+        });
+
         services.AddHttpClient<KeyCloakClient>((serviceProvider, httpClient) =>
         {
             KeyCloakOptions keyCloakOptions = serviceProvider

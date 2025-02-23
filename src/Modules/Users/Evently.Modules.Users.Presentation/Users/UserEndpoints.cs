@@ -10,5 +10,6 @@ public static class UserEndpoints
         UpdateUserEmail.MapEndpoint(app);
         UpdateUserFullName.MapEndpoint(app);
         GetUsers.MapEndpoint(app);
+        LoginUser.MapEndpoint(app);
     }
 }

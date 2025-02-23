@@ -7,6 +7,8 @@ using Evently.Modules.Users.Infrastructure;
 using Serilog;
 using Evently.Api.Middleware;
 using Evently.Modules.Ticketing.Infrastructure;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -49,7 +51,19 @@ builder.Services.AddTicketingModule(builder.Configuration);
 
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer"
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
 
 WebApplication app = builder.Build();
 
