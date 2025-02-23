@@ -5,11 +5,13 @@ using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Infrastructure.Interceptors;
+using Evently.Common.Infrastructure.Outbox;
 using Evently.Modules.Users.Application.Abstractions.Data;
 using Evently.Modules.Users.Application.Abstractions.Identity;
 using Evently.Modules.Users.Domain.Users;
 using Evently.Modules.Users.Infrastructure.Database;
 using Evently.Modules.Users.Infrastructure.Identity;
+using Evently.Modules.Users.Infrastructure.Outbox;
 using Evently.Modules.Users.Infrastructure.PublicApi;
 using Evently.Modules.Users.Infrastructure.Users;
 using Evently.Modules.Users.Presentation.Users;
@@ -66,7 +68,7 @@ public static class UsersModule
             options.UseSqlServer(connectionString, sqlOptions =>
             sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
             .UseSnakeCaseNamingConvention()
-            .AddInterceptors(sp.GetService<PublishDomainEventsInterceptor>()!));
+            .AddInterceptors(sp.GetService<InsertOutboxMessagesInterceptor>()!));
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UserDbContext>());
 
@@ -74,5 +76,8 @@ public static class UsersModule
         services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IUsersApi, UsersApi>();
+
+        services.Configure<OutboxOptions>(configuration.GetSection("Users:Outbox"));
+        services.ConfigureOptions<ConfigureProcessOutboxJob>();
     }
 }

@@ -10,10 +10,12 @@ using Evently.Common.Infrastructure.Authentication;
 using Evently.Common.Infrastructure.Caching;
 using Evently.Common.Infrastructure.Data;
 using Evently.Common.Infrastructure.Interceptors;
+using Evently.Common.Infrastructure.Outbox;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Quartz;
 using StackExchange.Redis;
 
 namespace Evently.Common.Infrastructure;
@@ -32,7 +34,8 @@ public static class InfrastructureConfiguration
         services.AddSingleton<IDbConnectionFactory>(_ => 
             new SqlConnectionFactory(databaseConnectionString));
 
-        services.TryAddSingleton<PublishDomainEventsInterceptor>();
+        //services.TryAddSingleton<PublishDomainEventsInterceptor>();
+        services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
 
         services.TryAddSingleton<IEventBus, EventBus.EventBus>();
 
@@ -58,6 +61,11 @@ public static class InfrastructureConfiguration
                 cfg.ConfigureEndpoints(context);
             });
         });
+
+        #region [!] Outbox pattern
+        services.AddQuartz();
+        services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+        #endregion
 
         AddCaching(services, configuration);
 
