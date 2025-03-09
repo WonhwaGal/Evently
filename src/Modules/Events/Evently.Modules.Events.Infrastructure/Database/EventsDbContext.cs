@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Infrastructure;
+using Evently.Common.Infrastructure.Outbox;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events;
@@ -27,6 +28,7 @@ public sealed class EventsDbContext(
         modelBuilder.HasDefaultSchema(Schemas.Events);
         modelBuilder.ApplyConfiguration(new EventConfiguration());
         modelBuilder.ApplyConfiguration(new TicketTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
     }
 
     //public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

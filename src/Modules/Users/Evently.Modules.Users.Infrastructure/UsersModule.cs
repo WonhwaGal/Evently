@@ -68,6 +68,7 @@ public static class UsersModule
             options.UseSqlServer(connectionString, sqlOptions =>
             sqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Users))
             .UseSnakeCaseNamingConvention()
+            //.AddInterceptors(sp.GetService<PublishDomainEventsInterceptor>()!));
             .AddInterceptors(sp.GetService<InsertOutboxMessagesInterceptor>()!));
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<UserDbContext>());

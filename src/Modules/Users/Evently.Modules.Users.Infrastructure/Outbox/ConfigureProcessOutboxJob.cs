@@ -24,7 +24,7 @@ internal sealed class ConfigureProcessOutboxJob(
     public void Configure(QuartzOptions options)
     {
         // Имя фоновой задачи
-        const string jobName = nameof(ProcessOutboxJob);
+        string jobName = typeof(ProcessOutboxJob).FullName!;
         // Добавить фоновую задачу обработки исходящих сообщений
         options
             .AddJob<ProcessOutboxJob>(configure => configure.WithIdentity(jobName)) // Добавить фоновую задачу

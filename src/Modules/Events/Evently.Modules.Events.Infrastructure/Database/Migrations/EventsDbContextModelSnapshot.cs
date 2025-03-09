@@ -23,7 +23,43 @@ namespace Evently.Modules.Events.Infrastructure.Database.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Evently.Modules.Events.Domain.Category.Category", b =>
+            modelBuilder.Entity("Evently.Common.Infrastructure.Outbox.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnName("content");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("error");
+
+                    b.Property<DateTime>("OccurredOnUtc")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("occurred_on_utc");
+
+                    b.Property<DateTime?>("ProcessedOnUtc")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("processed_on_utc");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("pk_outbox_messages");
+
+                    b.ToTable("outbox_messages", "events");
+                });
+
+            modelBuilder.Entity("Evently.Modules.Events.Domain.Categories.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,7 +169,7 @@ namespace Evently.Modules.Events.Infrastructure.Database.Migrations
 
             modelBuilder.Entity("Evently.Modules.Events.Domain.Events.Event", b =>
                 {
-                    b.HasOne("Evently.Modules.Events.Domain.Category.Category", null)
+                    b.HasOne("Evently.Modules.Events.Domain.Categories.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
