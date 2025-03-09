@@ -2,9 +2,9 @@
 using Evently.Modules.Events.Domain.Categories.Categories;
 
 namespace Evently.Modules.Events.Application.Categories.ChangeCategoryName;
-public class CategoryNameChangedDomainEventHandler : IDomainEventHandler<CategoryNameChangedDomainEvent>
+public class CategoryNameChangedDomainEventHandler : DomainEventHandler<CategoryNameChangedDomainEvent>
 {
-    public Task Handle(CategoryNameChangedDomainEvent notification, CancellationToken cancellationToken)
+    public override Task Handle(CategoryNameChangedDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }

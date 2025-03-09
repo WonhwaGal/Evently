@@ -14,18 +14,18 @@ namespace Evently.Modules.Users.Application.Users.RegisterUser;
 internal sealed class UserCreatedDomainEventHandler(
     ISender sender,
     IEventBus eventBus,
-    IMapper mapper) : IDomainEventHandler<UserRegisteredDomainEvent>
+    IMapper mapper) : DomainEventHandler<UserRegisteredDomainEvent>
 {
-    public async Task Handle(UserRegisteredDomainEvent notification, CancellationToken cancellationToken)
+    public override async Task Handle(UserRegisteredDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        Result<UserResponse?> result = await sender.Send(new GetUserQuery(notification.UserId), cancellationToken);
+        Result<UserResponse?> result = await sender.Send(new GetUserQuery(domainEvent.UserId), cancellationToken);
         if (result.IsFailure)
         {
             throw new EventlyException(nameof(GetUserQuery), result.Error);
         }
 
         UserRegisteredIntegrationEvent integrationEvent = mapper
-            .Map<UserRegisteredIntegrationEvent>((notification, result.Value));
+            .Map<UserRegisteredIntegrationEvent>((domainEvent, result.Value));
 
         await eventBus.PublishAsync(integrationEvent, cancellationToken);
     }

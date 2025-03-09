@@ -2,9 +2,9 @@
 using Evently.Modules.Events.Domain.Categories.Categories;
 
 namespace Evently.Modules.Events.Application.Categories.CreateCategory;
-public class CategoryCreatedDomainEventHandler : IDomainEventHandler<CategoryCreatedDomainEvent>
+public class CategoryCreatedDomainEventHandler : DomainEventHandler<CategoryCreatedDomainEvent>
 {
-    public Task Handle(CategoryCreatedDomainEvent notification, CancellationToken cancellationToken)
+    public override Task Handle(CategoryCreatedDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }

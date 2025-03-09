@@ -14,18 +14,18 @@ namespace Evently.Modules.Events.Application.TicketTypes.CreateTicketType;
 public class TicketTypeCreatedDomainEventHandler(
     ISender sender,
     IEventBus eventBus,
-    IMapper mapper) : IDomainEventHandler<TicketTypeCreatedDomainEvent>
+    IMapper mapper) : DomainEventHandler<TicketTypeCreatedDomainEvent>
 {
-    public async Task Handle(TicketTypeCreatedDomainEvent notification, CancellationToken cancellationToken)
+    public override async Task Handle(TicketTypeCreatedDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        Result<TicketTypeResponse?> result = await sender.Send(new GetTicketTypeByIdQuery(notification.TicketTypeId), cancellationToken);
+        Result<TicketTypeResponse?> result = await sender.Send(new GetTicketTypeByIdQuery(domainEvent.TicketTypeId), cancellationToken);
         if (result.IsFailure)
         {
             throw new EventlyException(nameof(GetTicketTypeByIdQuery), result.Error);
         }
 
         TicketTypeCreatedIntegrationEvent integrationEvent = mapper
-            .Map<TicketTypeCreatedIntegrationEvent>((notification, result.Value));
+            .Map<TicketTypeCreatedIntegrationEvent>((domainEvent, result.Value));
 
         await eventBus.PublishAsync(integrationEvent, cancellationToken);
     }

@@ -3,9 +3,9 @@ using Evently.Modules.Events.Domain.Events.Events;
 
 namespace Evently.Modules.Events.Application.Events.RescheduleEvent;
 
-public class EventRescheduledDomainEventHandler : IDomainEventHandler<EventRescheduledDomainEvent>
+public class EventRescheduledDomainEventHandler : DomainEventHandler<EventRescheduledDomainEvent>
 {
-    public Task Handle(EventRescheduledDomainEvent notification, CancellationToken cancellationToken)
+    public override Task Handle(EventRescheduledDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }

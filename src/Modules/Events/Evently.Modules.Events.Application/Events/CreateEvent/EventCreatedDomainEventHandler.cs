@@ -6,7 +6,6 @@ using Evently.Common.Domain;
 using Evently.Modules.Events.Application.Events.GetEvent;
 using Evently.Modules.Events.Domain.Events.Events;
 using Evently.Modules.Events.IntegrationEvents;
-using Evently.Modules.Ticketing.PublicApi;
 using MediatR;
 
 namespace Evently.Modules.Events.Application.Events.CreateEvent;
@@ -14,18 +13,18 @@ namespace Evently.Modules.Events.Application.Events.CreateEvent;
 public sealed class EventCreatedDomainEventHandler(
     ISender sender,
     IEventBus eventBus,
-    IMapper mapper) : IDomainEventHandler<EventCreatedDomainEvent>
+    IMapper mapper) : DomainEventHandler<EventCreatedDomainEvent>
 {
-    public async Task Handle(EventCreatedDomainEvent notification, CancellationToken cancellationToken)
+    public override async Task Handle(EventCreatedDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        Result<EventResponse?> result = await sender.Send(new GetEventQuery(notification.EventId), cancellationToken);
+        Result<EventResponse?> result = await sender.Send(new GetEventQuery(domainEvent.EventId), cancellationToken);
         if(result.IsFailure)
         {
             throw new EventlyException(nameof(GetEventQuery), result.Error);
         }
 
         EventCreatedIntegrationEvent integrationEvent = mapper
-            .Map<EventCreatedIntegrationEvent>((notification, result.Value));
+            .Map<EventCreatedIntegrationEvent>((domainEvent, result.Value));
         
         await eventBus.PublishAsync(integrationEvent, cancellationToken);
     }

@@ -20,6 +20,7 @@ public class UserDbContext(DbContextOptions<UserDbContext> options) : DbContext(
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
         modelBuilder.HasDefaultSchema(Schemas.Users);
     }
 }

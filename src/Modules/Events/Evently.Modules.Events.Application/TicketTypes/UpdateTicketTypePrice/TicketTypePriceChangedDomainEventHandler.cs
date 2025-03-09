@@ -2,9 +2,9 @@
 using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
 
 namespace Evently.Modules.Events.Application.TicketTypes.UpdateTicketTypePrice;
-public class TicketTypePriceChangedDomainEventHandler : IDomainEventHandler<TicketTypePriceChangedDomainEvent>
+public class TicketTypePriceChangedDomainEventHandler : DomainEventHandler<TicketTypePriceChangedDomainEvent>
 {
-    public Task Handle(TicketTypePriceChangedDomainEvent notification, CancellationToken cancellationToken)
+    public override Task Handle(TicketTypePriceChangedDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
         return Task.CompletedTask;
     }
