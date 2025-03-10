@@ -10,6 +10,8 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Quartz;
 using Dapper;
+using Evently.Common.Application.Messaging;
+using Evently.Common.Infrastructure.Outbox;
 
 namespace Evently.Modules.Events.Infrastructure.Outbox;
 /// <summary>
@@ -44,9 +46,16 @@ internal sealed class ProcessOutboxJob(
 
                 using IServiceScope scope = serviceScopeFactory.CreateScope();
 
-                IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
+                IEnumerable<IDomainEventHandler> domainEventHandlers =
+                    DomainEventHandlersFactory.GetHandlers(
+                        domainEvent.GetType(),
+                        scope.ServiceProvider,
+                        Application.AssemblyReference.Assembly);
 
-                await publisher.Publish(domainEvent);
+                foreach(IDomainEventHandler domainEventHandler in domainEventHandlers)
+                {
+                    await domainEventHandler.Handle(domainEvent);
+                }
             }
             catch (Exception caughtException)
             {

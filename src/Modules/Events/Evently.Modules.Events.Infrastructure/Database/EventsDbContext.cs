@@ -29,6 +29,7 @@ public sealed class EventsDbContext(
         modelBuilder.ApplyConfiguration(new EventConfiguration());
         modelBuilder.ApplyConfiguration(new TicketTypeConfiguration());
         modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
     }
 
     //public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
