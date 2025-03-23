@@ -11,7 +11,6 @@ namespace Evently.Common.Application.EventBus;
 /// </summary>
 public interface IEventBus
 {
-
     /// <summary>
     /// Опубликовать интеграционное событие
     /// </summary>

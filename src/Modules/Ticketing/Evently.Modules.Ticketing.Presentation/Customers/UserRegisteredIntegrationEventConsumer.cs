@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Evently.Common.Application.EventBus;
 using Evently.Common.Application.Exceptions;
 using Evently.Common.Domain;
 using Evently.Modules.Ticketing.Application.Customers.CreateCustomer;
@@ -9,12 +10,12 @@ using MediatR;
 namespace Evently.Modules.Ticketing.Presentation.Customers;
 public sealed class UserRegisteredIntegrationEventConsumer(
     ISender sender,
-    IMapper mapper) : IConsumer<UserRegisteredIntegrationEvent>
+    IMapper mapper) : IntegrationEventHandler<UserRegisteredIntegrationEvent>
 {
-    public async Task Consume(ConsumeContext<UserRegisteredIntegrationEvent> context)
+    public override async Task Handle(UserRegisteredIntegrationEvent integrationEvent, CancellationToken cancellationToken = default)
     {
-        Result result = await sender.Send(mapper.Map<CreateCustomerCommand>(context.Message), 
-            context.CancellationToken);
+        Result result = await sender.Send(mapper.Map<CreateCustomerCommand>(integrationEvent),
+            cancellationToken);
 
         if (result.IsFailure)
         {
@@ -22,3 +23,19 @@ public sealed class UserRegisteredIntegrationEventConsumer(
         }
     }
 }
+
+//public sealed class UserRegisteredIntegrationEventConsumer(
+//    ISender sender,
+//    IMapper mapper) : IConsumer<UserRegisteredIntegrationEvent>
+//{
+//    public async Task Consume(ConsumeContext<UserRegisteredIntegrationEvent> context)
+//    {
+//        Result result = await sender.Send(mapper.Map<CreateCustomerCommand>(context.Message),
+//            context.CancellationToken);
+
+//        if (result.IsFailure)
+//        {
+//            throw new EventlyException(nameof(CreateCustomerCommand), result.Error);
+//        }
+//    }
+//}
