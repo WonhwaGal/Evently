@@ -13,7 +13,8 @@ services:
       - "5100:8080"
       - "5101:8081"
   evently.database:
-    image: mcr.microsoft.com/mssql/server:latest
+    #image: mcr.microsoft.com/mssql/server:latest
+    image: mcr.microsoft.com/mssql/server:2022-CU16-ubuntu-22.04
     container_name: Evently.Database
     environment:
       - ACCEPT_EULA=Y
