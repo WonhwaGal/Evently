@@ -34,7 +34,13 @@ builder.Services.AddApplication(
      Evently.Modules.Users.Application.AssemblyReference.Assembly,
      Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]);
 
-builder.Services.AddInfrastructure([TicketingModule.ConfigureConsumers], builder.Configuration);
+builder.Services.AddInfrastructure(
+    [
+    TicketingModule.ConfigureConsumers, 
+    EventsModule.ConfigureConsumers,
+    UsersModule.ConfigureConsumers
+    ], 
+    builder.Configuration);
 
 #endregion
 

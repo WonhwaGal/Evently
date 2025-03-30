@@ -1,15 +1,18 @@
-﻿using Evently.Common.Application.Messaging;
+﻿using Evently.Common.Application.EventBus;
+using Evently.Common.Application.Messaging;
 using Evently.Common.Infrastructure.Outbox;
 using Evently.Modules.Users.Application.Abstractions.Data;
 using Evently.Modules.Users.Application.Abstractions.Identity;
 using Evently.Modules.Users.Domain.Users;
 using Evently.Modules.Users.Infrastructure.Database;
 using Evently.Modules.Users.Infrastructure.Identity;
+using Evently.Modules.Users.Infrastructure.Inbox;
 using Evently.Modules.Users.Infrastructure.Outbox;
 using Evently.Modules.Users.Infrastructure.PublicApi;
 using Evently.Modules.Users.Infrastructure.Users;
 using Evently.Modules.Users.Presentation.Users;
 using Evently.Modules.Users.PublicApi;
+using MassTransit;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -26,9 +29,15 @@ public static class UsersModule
         UserEndpoints.MapEndpoints(app);
     }
 
+    public static void ConfigureConsumers(IRegistrationConfigurator configure)
+    {
+        //configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
+    }
+
     public static IServiceCollection AddUsersModule(this IServiceCollection services,
         IConfiguration configuration)
     {
+        services.AddIntegrationEventHandlers();
         // add domain events handlers registration
         services.AddDomainEventHandlers();
 
@@ -78,6 +87,32 @@ public static class UsersModule
 
         services.Configure<OutboxOptions>(configuration.GetSection("Users:Outbox"));
         services.ConfigureOptions<ConfigureProcessOutboxJob>();
+        services.Configure<InboxOptions>(configuration.GetSection("Users:Inbox"));
+        services.ConfigureOptions<ConfigureProcessInboxJob>();
+    }
+
+    private static void AddIntegrationEventHandlers(this IServiceCollection services)
+    {
+        Type[] integrationEventHandlers = Presentation.AssemblyReference.Assembly
+            .GetTypes()
+            .Where(t => t.IsAssignableTo(typeof(IIntegrationEventHandler)))
+            .ToArray();
+
+        foreach (Type integrationEventHandler in integrationEventHandlers)
+        {
+            services.TryAddScoped(integrationEventHandler);
+
+            Type integrationEvent = integrationEventHandler
+                .GetInterfaces()
+                .Single(i => i.IsGenericType)
+                .GetGenericArguments()
+                .Single();
+
+            Type closedIdempotentHandler =
+                typeof(IdempotentIntegrationEventHandler<>).MakeGenericType(integrationEvent);
+
+            services.Decorate(integrationEventHandler, closedIdempotentHandler);
+        }
     }
 
     private static void AddDomainEventHandlers(this IServiceCollection services)

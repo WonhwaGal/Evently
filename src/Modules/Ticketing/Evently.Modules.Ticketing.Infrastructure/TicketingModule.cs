@@ -44,7 +44,6 @@ public static class TicketingModule
         configure.AddConsumer<TicketTypeCreatedIntegrationEventConsumer>();
     }
 
-
     public static IServiceCollection AddTicketingModule(this IServiceCollection services,
         IConfiguration configuration)
     {
