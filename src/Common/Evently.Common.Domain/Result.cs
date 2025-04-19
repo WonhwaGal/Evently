@@ -30,6 +30,11 @@ public class Result
 
     public static Result<TValue> Failure<TValue>(Error error) =>
         new(default, false, error);
+
+    public static Result Failure(object incorrectName)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class Result<TValue> : Result

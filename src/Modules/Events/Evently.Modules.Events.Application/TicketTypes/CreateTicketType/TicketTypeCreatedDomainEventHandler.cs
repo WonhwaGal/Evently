@@ -6,7 +6,6 @@ using Evently.Common.Domain;
 using Evently.Modules.Events.Application.TicketTypes.GetTicketTypeById;
 using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
 using Evently.Modules.Events.IntegrationEvents;
-using Evently.Modules.Ticketing.PublicApi;
 using MediatR;
 
 namespace Evently.Modules.Events.Application.TicketTypes.CreateTicketType;

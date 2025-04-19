@@ -13,36 +13,6 @@ public sealed class TicketType : Entity
     }
 
     /// <summary>
-    /// Идентификатор
-    /// </summary>
-    public Guid Id { get; private set; }
-
-    /// <summary>
-    /// Идентификатор события
-    /// </summary>
-    public Guid EventId { get; private set; }
-
-    /// <summary>
-    /// Название типа билета
-    /// </summary>
-    public string Name { get; private set; }
-
-    /// <summary>
-    /// Цена
-    /// </summary>
-    public decimal Price { get; private set; }
-
-    /// <summary>
-    /// Валюта
-    /// </summary>
-    public string Currency { get; private set; }
-
-    /// <summary>
-    /// Количество
-    /// </summary>
-    public decimal Quantity { get; private set; }
-
-    /// <summary>
     /// Создать тип билета
     /// </summary>
     /// <param name="event"> Событие </param>
@@ -77,16 +47,48 @@ public sealed class TicketType : Entity
     /// Обновление цены на определенный тип билета
     /// </summary>
     /// <param name="price"></param>
-    public void UpdatePrice(decimal price)
+    public Result UpdatePrice(decimal price)
     {
-        if (Price == price)
+        if (price.Scale > 2 || price <= 0)
         {
-            return;
+            return Result.Failure(TicketTypeErrors.IncorrentPrice);
         }
 
         Price = price;
 
         Raise(new TicketTypePriceChangedDomainEvent(Id, Price));
+
+        return Result.Success();
     }
+
+    /// <summary>
+    /// Идентификатор
+    /// </summary>
+    public Guid Id { get; private set; }
+
+    /// <summary>
+    /// Идентификатор события
+    /// </summary>
+    public Guid EventId { get; private set; }
+
+    /// <summary>
+    /// Название типа билета
+    /// </summary>
+    public string Name { get; private set; }
+
+    /// <summary>
+    /// Цена
+    /// </summary>
+    public decimal Price { get; private set; }
+
+    /// <summary>
+    /// Валюта
+    /// </summary>
+    public string Currency { get; private set; }
+
+    /// <summary>
+    /// Количество
+    /// </summary>
+    public decimal Quantity { get; private set; }
 }
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Evently.Modules.Events.Application.Abstractions.Data;
+﻿using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.TicketTypes;
@@ -22,7 +17,12 @@ internal sealed class UpdateTicketTypePriceCommandHandler(
             return Result.Failure(TicketTypeErrors.NotFound(request.TicketId));
         }
 
-        ticketType.UpdatePrice(request.NewPrice);
+        Result updateResult = ticketType.UpdatePrice(request.NewPrice);
+
+        if (updateResult.IsFailure)
+        {
+            return Result.Failure(updateResult.Error);
+        }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

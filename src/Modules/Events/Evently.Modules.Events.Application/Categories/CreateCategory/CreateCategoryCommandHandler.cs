@@ -17,12 +17,16 @@ internal sealed class CreateCategoryCommandHandler(
             return Result.Failure<Guid>(CategoryErrors.AlreadyExists(request.CategoryName));
         }
 
-        var category = Category.Create(request.CategoryName);
+        Result<Category> categoryResult = Category.Create(request.CategoryName);
+        if (categoryResult.IsFailure)
+        {
+            return Result.Failure<Guid>(categoryResult.Error);
+        }
 
-        categoryRepository.Insert(category);
+        categoryRepository.Insert(categoryResult.Value);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return category.Id;
+        return categoryResult.Value.Id;
     }
 }

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Application.Caching;
+using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.EventBus;
 using Evently.Common.Infrastructure.Authentication;
 using Evently.Common.Infrastructure.Caching;
+using Evently.Common.Infrastructure.Clock;
 using Evently.Common.Infrastructure.Data;
 using Evently.Common.Infrastructure.Interceptors;
 using Evently.Common.Infrastructure.Outbox;
@@ -26,6 +28,9 @@ public static class InfrastructureConfiguration
         Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
         IConfiguration configuration)
     {
+        // Регистрация сервиса поставщика текущего времени
+        services.TryAddSingleton<IDateTimeProvider, DateTimeProvider>();
+
         // Аутентификация
         services.AddAuthenticationInternal();
 

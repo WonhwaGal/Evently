@@ -106,3 +106,6 @@ app.UseAuthorization();
 #endregion
 
 await app.RunAsync();
+
+
+public partial class Program;

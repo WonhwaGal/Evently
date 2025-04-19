@@ -7,7 +7,7 @@ public sealed class Event : Entity
 {
     private Event() { }
 
-    public static Event Create(
+    public static Result<Event> Create(
         Guid categotyId,
         string title,
         string description,
@@ -28,8 +28,27 @@ public sealed class Event : Entity
             Status = EventStatus.Draft
         };
 
+        if (endAtUtc.HasValue && endAtUtc < startAtUtc)
+        {
+            return Result.Failure<Event>(EventErrors.EndDatePrecedesStartDate);
+        }
+
         @event.Raise(new EventCreatedDomainEvent(@event.Id));
         return @event;
+    }
+
+    public Result Publish()
+    {
+        if (Status != EventStatus.Draft)
+        {
+            return Result.Failure(EventErrors.NotDraft);
+        }
+
+        Status = EventStatus.Published;
+
+        Raise(new EventPublishedDomainEvent(Id));
+
+        return Result.Success();
     }
 
     public void Reschedule(DateTime startsAtUtc, DateTime? endsAtUtc)
