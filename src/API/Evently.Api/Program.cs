@@ -9,6 +9,7 @@ using Evently.Api.Middleware;
 using Evently.Modules.Ticketing.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Evently.Api.OpenTelemetry;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ builder.Services.AddApplication(
      Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]);
 
 builder.Services.AddInfrastructure(
+    builder.Logging,
+    DiagnosticsConfig.ServiceName,
     [
     TicketingModule.ConfigureConsumers, 
     EventsModule.ConfigureConsumers,

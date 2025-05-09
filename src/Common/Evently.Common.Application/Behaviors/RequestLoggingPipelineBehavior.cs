@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -27,6 +28,13 @@ internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>(
     {
         string requestName = typeof(TRequest).Name;
         string moduleName = GetModuleName(typeof(TRequest).FullName!);
+
+        #region OpenTelemetry
+
+        Activity.Current?.AddTag("request.module", moduleName);
+        Activity.Current?.AddTag("request.name", requestName);
+
+        #endregion
 
         using (LogContext.PushProperty("Module", moduleName))
         {

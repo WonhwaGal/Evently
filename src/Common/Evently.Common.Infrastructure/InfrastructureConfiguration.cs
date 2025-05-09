@@ -17,6 +17,9 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Quartz;
 using StackExchange.Redis;
 
@@ -25,6 +28,8 @@ namespace Evently.Common.Infrastructure;
 public static class InfrastructureConfiguration
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
+        ILoggingBuilder loggingBuilder,
+        string serviceName,
         Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
         IConfiguration configuration)
     {
@@ -74,6 +79,8 @@ public static class InfrastructureConfiguration
 
         AddCaching(services, configuration);
 
+        AddOpenTelemetry(serviceName, services, loggingBuilder);
+
         return services;
     }
 
@@ -102,5 +109,42 @@ public static class InfrastructureConfiguration
 
         // Регистрация сервиса кэширования
         services.TryAddSingleton<ICacheService, CacheService>();
+    }
+
+    /// <summary>
+    /// Добавить сервисы OpenTelemetry
+    /// </summary>
+    /// <param name="serviceName"></param>
+    /// <param name="services"></param>
+    /// <param name="loggingBuilder"></param>
+    private static void AddOpenTelemetry(string serviceName, IServiceCollection services,
+        ILoggingBuilder loggingBuilder)
+    {
+        // Зарегистрировать сервис OpenTelemetry
+        services.AddOpenTelemetry()
+            // Добавить ресурс по наименованию приложения
+            .ConfigureResource(resource => resource.AddService(serviceName))
+            // Настроить распределенную трассировку
+            .WithTracing(tracing =>
+            {
+                tracing
+                    // Добавить инструментарии для HttpClient и ASP.NET Core
+                    .AddHttpClientInstrumentation()
+                    .AddAspNetCoreInstrumentation()
+                    .AddEntityFrameworkCoreInstrumentation(
+                        options => options.SetDbStatementForStoredProcedure = false)
+                    .AddRedisInstrumentation()
+                    .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName)
+                    .AddSqlClientInstrumentation(
+                        options => options.SetDbStatementForText = true);
+                tracing.AddOtlpExporter();
+            });
+
+        // Настроить ведение журнала OpenTelemetry
+        loggingBuilder.AddOpenTelemetry(options =>
+        {
+            options.IncludeScopes = true;           // Включить области
+            options.IncludeFormattedMessage = true; // Включить форматированные сообщения
+        });
     }
 }
