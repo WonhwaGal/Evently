@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Policy;
 using Evently.Common.Application.Caching;
 using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
@@ -11,7 +7,7 @@ using Evently.Common.Infrastructure.Authentication;
 using Evently.Common.Infrastructure.Caching;
 using Evently.Common.Infrastructure.Clock;
 using Evently.Common.Infrastructure.Data;
-using Evently.Common.Infrastructure.Interceptors;
+using Evently.Common.Infrastructure.EventBus;
 using Evently.Common.Infrastructure.Outbox;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +26,8 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddInfrastructure(this IServiceCollection services,
         ILoggingBuilder loggingBuilder,
         string serviceName,
-        Action<IRegistrationConfigurator>[] moduleConfigureConsumers,
+        Action<IRegistrationConfigurator, string>[] moduleConfigureConsumers,
+        RabbitMqSettings rabbitMqSettings,
         IConfiguration configuration)
     {
         // Регистрация сервиса поставщика текущего времени
@@ -53,9 +50,14 @@ public static class InfrastructureConfiguration
         services.AddMassTransit(configure =>
         {
             // Регистрация потребителей сообщений
-            foreach (Action<IRegistrationConfigurator> configureConsumer in moduleConfigureConsumers)
+            //foreach (Action<IRegistrationConfigurator> configureConsumer in moduleConfigureConsumers)
+            //{
+            //    configureConsumer(configure);
+            //}
+            string instanceId = serviceName.ToLowerInvariant().Replace('.', '-');
+            foreach (Action<IRegistrationConfigurator, string> configureConsumer in moduleConfigureConsumers)
             {
-                configureConsumer(configure);
+                configureConsumer(configure, instanceId);
             }
 
             // Форматирование названий конечных точек в стиле kebab-case
@@ -64,8 +66,20 @@ public static class InfrastructureConfiguration
 
             // Конфигурация шины сообщений, делегат для настройки транспорта
             // для использования в памяти
-            configure.UsingInMemory((context, cfg) =>
+            //configure.UsingInMemory((context, cfg) =>
+            //{
+            //    // Получение сообщений потребителями и регистрация требуемой топологии
+            //    // брокера сообщений
+            //    cfg.ConfigureEndpoints(context);
+            //});
+            configure.UsingRabbitMq((context, cfg) =>
             {
+                cfg.Host(new Uri(rabbitMqSettings.Host), h =>
+                {
+                    h.Username(rabbitMqSettings.userName);
+                    h.Password(rabbitMqSettings.Password);
+                });
+
                 // Получение сообщений потребителями и регистрация требуемой топологии
                 // брокера сообщений
                 cfg.ConfigureEndpoints(context);

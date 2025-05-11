@@ -34,7 +34,7 @@ public static class EventsModule
         TicketTypesEndpoints.MapEndpoints(app);
     }
 
-    public static void ConfigureConsumers(IRegistrationConfigurator configure)
+    public static void ConfigureConsumers(IRegistrationConfigurator configure, string instanceId)
     {
         //configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
     }

@@ -31,7 +31,7 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "5341:5341"
-      - "8180:80" # for checking the results
+      - "8180:80" # for monitoring
   evently.redis:
     image: redis:latest
     container_name: Evently.Redis
@@ -87,4 +87,17 @@ services:
     ports:
       - "4317:4317" 
       - "4318:4318"
-      - "16686:16686" # for checking the results
+      - "16686:16686" # for monitoring
+  evently.queue:
+    image: rabbitmq:management-alpine
+    container_name: Evently.Queue
+    hostname: evently-queue # for connection string
+    #volumes:
+    #  - ./.containers/queue/data/:/var/lib/rabbitmq
+    #  - ./.containers/queue/log/:/var/log/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672" # for messages
+      - "15672:15672" # for monitoring

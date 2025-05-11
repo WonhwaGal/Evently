@@ -10,6 +10,8 @@ using Evently.Modules.Ticketing.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Evently.Api.OpenTelemetry;
+using Evently.Common.Infrastructure.Configuration;
+using Evently.Common.Infrastructure.EventBus;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +37,7 @@ builder.Services.AddApplication(
      Evently.Modules.Users.Application.AssemblyReference.Assembly,
      Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]);
 
+var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionStringOrThrow("Queue"));
 builder.Services.AddInfrastructure(
     builder.Logging,
     DiagnosticsConfig.ServiceName,
@@ -42,7 +45,8 @@ builder.Services.AddInfrastructure(
     TicketingModule.ConfigureConsumers, 
     EventsModule.ConfigureConsumers,
     UsersModule.ConfigureConsumers
-    ], 
+    ],
+    rabbitMqSettings,
     builder.Configuration);
 
 #endregion

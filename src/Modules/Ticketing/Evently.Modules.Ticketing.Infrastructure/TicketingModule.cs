@@ -37,11 +37,14 @@ public static class TicketingModule
         CartEndpoints.MapEndpoints(app);
     }
 
-    public static void ConfigureConsumers(IRegistrationConfigurator configure)
+    public static void ConfigureConsumers(IRegistrationConfigurator configure, string instanceId)
     {
-        configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
-        configure.AddConsumer<EventCreatedIntegrationEventConsumer>();
-        configure.AddConsumer<TicketTypeCreatedIntegrationEventConsumer>();
+        configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>()
+            .Endpoint(config => config.InstanceId = instanceId);
+        configure.AddConsumer<EventCreatedIntegrationEventConsumer>()
+            .Endpoint(config => config.InstanceId = instanceId);
+        configure.AddConsumer<TicketTypeCreatedIntegrationEventConsumer>()
+            .Endpoint(config => config.InstanceId = instanceId);
     }
 
     public static IServiceCollection AddTicketingModule(this IServiceCollection services,
