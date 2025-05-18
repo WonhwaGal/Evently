@@ -12,6 +12,17 @@ services:
     ports:
       - "5100:8080"
       - "5101:8081"
+  evently.gateway:
+    image: evently.gateway
+    container_name: Evently.Gateway
+    build:
+      context: .
+      dockerfile: src/API/Evently.Gateway/Dockerfile
+    #volumes:
+    #  - ./.logs/Evently/Dev.Logs:/logs
+    ports:
+      - "3100:8080"
+      - "3101:8081"
   evently.database:
     #image: mcr.microsoft.com/mssql/server:latest
     image: mcr.microsoft.com/mssql/server:2022-CU16-ubuntu-22.04
