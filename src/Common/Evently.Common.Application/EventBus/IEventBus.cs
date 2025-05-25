@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Evently.Common.Application.EventBus;
 
-namespace Evently.Common.Application.EventBus;
 /// <summary>
 /// Интерфейс описывающий контракт передачи сообщений между модулями
 /// Событие интеграции

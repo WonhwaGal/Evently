@@ -60,8 +60,6 @@ public static class InfrastructureConfiguration
                 configureConsumer(configure, instanceId);
             }
 
-            // Форматирование названий конечных точек в стиле kebab-case
-            // (это сделает конечные точки более удобочитаемыми)
             configure.SetKebabCaseEndpointNameFormatter();
 
             // Конфигурация шины сообщений, делегат для настройки транспорта

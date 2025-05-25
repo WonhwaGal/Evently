@@ -6,13 +6,13 @@ using Evently.Modules.Users.PublicApi;
 namespace Evently.Modules.Ticketing.Application.Carts.GetCart;
 internal sealed class GetCartQueryHandler(
     CartService cartService,
-    IUsersApi userApi) : IQueryHandler<GetCartQuery, CartResponse>
+    ICustomerRepository customerRepository) : IQueryHandler<GetCartQuery, CartResponse>
 {
     public async Task<Result<CartResponse>> Handle(GetCartQuery request, CancellationToken cancellationToken)
     {
-        Result<UserResponse> result = 
-            await userApi.GetAsync(request.CustomerId, cancellationToken);
-        if(result is null)
+        Customer? customer = 
+            await customerRepository.GetAsync(request.CustomerId, cancellationToken);
+        if(customer is null)
         {
             return Result.Failure<CartResponse>(CustomerErrors.NotFound(request.CustomerId));
         }
