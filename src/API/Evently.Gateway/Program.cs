@@ -33,10 +33,21 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication().AddJwtBearer();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 builder.Services.ConfigureOptions<JwtBearerConfigureOptions>();
 
 WebApplication app = builder.Build();
 
+app.UseCors("AllowFrontend");
 
 app.UseLogContextTraceLogging();
 

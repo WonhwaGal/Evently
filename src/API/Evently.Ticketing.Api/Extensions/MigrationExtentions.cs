@@ -1,16 +1,14 @@
-﻿using Evently.Modules.Events.Infrastructure.Database;
-using Evently.Modules.Users.Infrastructure.Database;
+﻿using Evently.Modules.Ticketing.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Evently.Api.Extensions;
+namespace Evently.Ticketing.Api.Extensions;
 
 public static class MigrationExtentions
 {
     internal static void ApplyMigrations(this IApplicationBuilder app)
     {
         using IServiceScope scope = app.ApplicationServices.CreateScope();
-        ApplyMigrations<EventsDbContext>(scope);
-        ApplyMigrations<UserDbContext>(scope);
+        ApplyMigrations<TicketingDbContext>(scope);
     }
 
     private static void ApplyMigrations<TDbContext>(IServiceScope scope)

@@ -16,15 +16,15 @@ public static class GetCategory
 {
     public static void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("categories/{id}", async (Guid id, ISender sender) =>
+        app.MapGet("categories/{catId}", async (Guid catId, ISender sender) =>
         {
-            var query = new GetCategoryQuery(id);
+            var query = new GetCategoryQuery(catId);
             Result<CategoryResponse?> result = await sender.Send(query);
 
             return result.Match(Results.Ok, ApiResults.Problem);
 
         })
-        .RequireAuthorization()
+        .AllowAnonymous()//.RequireAuthorization()
         .WithTags(Tags.Categories);
     }
 }

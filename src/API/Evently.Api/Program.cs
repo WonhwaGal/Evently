@@ -1,12 +1,10 @@
+using Serilog;
+using Evently.Api.Middleware;
 using Evently.Api.Extensions;
 using Evently.Modules.Events.Infrastructure;
 using Evently.Common.Application;
 using Evently.Common.Infrastructure;
-using System.Reflection.Metadata;
 using Evently.Modules.Users.Infrastructure;
-using Serilog;
-using Evently.Api.Middleware;
-using Evently.Modules.Ticketing.Infrastructure;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Evently.Api.OpenTelemetry;
@@ -34,17 +32,17 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddApplication(
     [Evently.Modules.Events.Application.AssemblyReference.Assembly,
-     Evently.Modules.Users.Application.AssemblyReference.Assembly,
-     Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]);
+     Evently.Modules.Users.Application.AssemblyReference.Assembly]
+     /*Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]*/);
 
 var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionStringOrThrow("Queue"));
 builder.Services.AddInfrastructure(
     builder.Logging,
     DiagnosticsConfig.ServiceName,
     [
-    TicketingModule.ConfigureConsumers, 
-    EventsModule.ConfigureConsumers,
-    UsersModule.ConfigureConsumers
+        //TicketingModule.ConfigureConsumers, 
+        EventsModule.ConfigureConsumers,
+        UsersModule.ConfigureConsumers
     ],
     rabbitMqSettings,
     builder.Configuration);
@@ -53,14 +51,14 @@ builder.Services.AddInfrastructure(
 
 #region [!] Решение сквозной проблемы: конфигурирование
 
-builder.Configuration.AddModuleConfiguration(["events", "users", "ticketing"]);
+builder.Configuration.AddModuleConfiguration(["events", "users"]); //"ticketing"
 
 #endregion
 
 // Modules
 builder.Services.AddEventsModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
-builder.Services.AddTicketingModule(builder.Configuration);
+//builder.Services.AddTicketingModule(builder.Configuration);
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -91,7 +89,7 @@ if (app.Environment.IsDevelopment())
 //Register module endpoints 
 EventsModule.MapEndpoints(app);
 UsersModule.MapEndpoints(app);
-TicketingModule.MapEndpoints(app);
+//TicketingModule.MapEndpoints(app);
 
 #region [!] Решение сквозной проблемы: обработка исключений
 

@@ -11,8 +11,8 @@ internal sealed class CreateCategoryCommandHandler(
     public async Task<Result<Guid>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
     {
         Category? existingCategory = await categoryRepository.GetByNameAsync(request.CategoryName, cancellationToken);
-        
-        if(existingCategory is not null)
+
+        if (existingCategory is not null)
         {
             return Result.Failure<Guid>(CategoryErrors.AlreadyExists(request.CategoryName));
         }

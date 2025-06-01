@@ -12,6 +12,15 @@ services:
     ports:
       - "5100:8080"
       - "5101:8081"
+  evently.ticketing.api:
+    image: eventlyticketing.api
+    container_name: Evently.Ticketing.Api
+    build:
+      context: .
+      dockerfile: src/API/Evently.Ticketing.Api/Dockerfile
+    ports:
+      - "5200:8080"
+      - "5201:8081"
   evently.gateway:
     image: evently.gateway
     container_name: Evently.Gateway

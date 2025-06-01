@@ -19,6 +19,8 @@ public static class CreateCategory
 
             return result.Match(Results.Ok, ApiResults.Problem);
 
-        }).WithTags(Tags.Categories);
+        })
+        .AllowAnonymous()
+        .WithTags(Tags.Categories);
     }
 }
