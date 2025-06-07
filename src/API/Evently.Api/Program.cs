@@ -32,15 +32,13 @@ builder.Services.AddProblemDetails();
 
 builder.Services.AddApplication(
     [Evently.Modules.Events.Application.AssemblyReference.Assembly,
-     Evently.Modules.Users.Application.AssemblyReference.Assembly]
-     /*Evently.Modules.Ticketing.Application.AssemblyReference.Assembly]*/);
+     Evently.Modules.Users.Application.AssemblyReference.Assembly]);
 
 var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionStringOrThrow("Queue"));
 builder.Services.AddInfrastructure(
     builder.Logging,
     DiagnosticsConfig.ServiceName,
     [
-        //TicketingModule.ConfigureConsumers, 
         EventsModule.ConfigureConsumers,
         UsersModule.ConfigureConsumers
     ],
@@ -51,14 +49,13 @@ builder.Services.AddInfrastructure(
 
 #region [!] Решение сквозной проблемы: конфигурирование
 
-builder.Configuration.AddModuleConfiguration(["events", "users"]); //"ticketing"
+builder.Configuration.AddModuleConfiguration(["events", "users"]);
 
 #endregion
 
 // Modules
 builder.Services.AddEventsModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
-//builder.Services.AddTicketingModule(builder.Configuration);
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -89,7 +86,6 @@ if (app.Environment.IsDevelopment())
 //Register module endpoints 
 EventsModule.MapEndpoints(app);
 UsersModule.MapEndpoints(app);
-//TicketingModule.MapEndpoints(app);
 
 #region [!] Решение сквозной проблемы: обработка исключений
 
