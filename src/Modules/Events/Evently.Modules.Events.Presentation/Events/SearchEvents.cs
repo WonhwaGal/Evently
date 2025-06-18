@@ -14,11 +14,12 @@ using Evently.Modules.Events.Application.Events.SearchEvents;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 
 namespace Evently.Modules.Events.Presentation.Events;
-public static class SearchEvents
+public sealed class SearchEvents: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("events/search", async (
             DateTime? startDate,

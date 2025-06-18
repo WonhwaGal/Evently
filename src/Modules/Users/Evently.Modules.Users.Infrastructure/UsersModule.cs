@@ -1,6 +1,7 @@
 ﻿using Evently.Common.Application.EventBus;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Infrastructure.Outbox;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Users.Application.Abstractions.Data;
 using Evently.Modules.Users.Application.Abstractions.Identity;
 using Evently.Modules.Users.Domain.Users;
@@ -24,11 +25,6 @@ using Microsoft.Extensions.Options;
 namespace Evently.Modules.Users.Infrastructure;
 public static class UsersModule
 {
-    public static void MapEndpoints(IEndpointRouteBuilder app)
-    {
-        UserEndpoints.MapEndpoints(app);
-    }
-
     public static void ConfigureConsumers(IRegistrationConfigurator configure, string instanceId)
     {
         //configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
@@ -43,6 +39,7 @@ public static class UsersModule
 
         AddInfrastructure(services, configuration);
 
+        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
         return services;
     }
 

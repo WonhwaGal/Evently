@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Users.Application.Users.RegisterUser;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -12,9 +13,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Users.Presentation.Users;
-public static class RegisterUser
+public sealed class RegisterUser: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("users/register", async (RegisterUserRequest request, ISender sender) =>
         {

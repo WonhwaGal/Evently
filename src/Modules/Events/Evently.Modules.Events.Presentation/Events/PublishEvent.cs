@@ -10,12 +10,13 @@ using Microsoft.AspNetCore.Routing;
 using Evently.Modules.Events.Application.Events.PublishEvent;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
-public static class PublishEvent
+public sealed class PublishEvent: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPatch("events/publish/{id}", async (Guid id, ISender sender) =>
         {

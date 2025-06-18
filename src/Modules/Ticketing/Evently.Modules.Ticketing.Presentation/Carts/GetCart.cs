@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Ticketing.Application.Carts.GetCart;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -13,9 +14,9 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Ticketing.Presentation.Carts;
 
-public static class GetCart
+public sealed class GetCart: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("carts/{customerId}", async (Guid customerId, ISender sender) =>
         {

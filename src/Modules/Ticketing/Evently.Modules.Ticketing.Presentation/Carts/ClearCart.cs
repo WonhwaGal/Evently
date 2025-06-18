@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Ticketing.Application.Carts.ClearCart;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -12,9 +13,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Ticketing.Presentation.Carts;
-internal static class ClearCart
+internal sealed class ClearCart: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPut("carts/clear", async (Guid customerId, ISender sender) =>
         {

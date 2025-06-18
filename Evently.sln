@@ -89,6 +89,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Gateway", "src\API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Ticketing.Api", "src\API\Evently.Ticketing.Api\Evently.Ticketing.Api.csproj", "{5CC7B989-864A-4192-8769-F7C997370914}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Attendance", "Attendance", "{C5967B18-DE5E-4CE0-874D-52A0B825BEC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Modules.Attendance.Domain", "src\Modules\Attendance\Evently.Modules.Attendance.Domain\Evently.Modules.Attendance.Domain.csproj", "{7EC67BBA-454D-4520-9ECB-A66174B39B58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Modules.Attendance.Application", "src\Modules\Attendance\Evently.Modules.Attendance.Application\Evently.Modules.Attendance.Application.csproj", "{707281CA-16ED-47F7-AB0C-CFCA7001A877}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Modules.Attendance.Infrastructure", "src\Modules\Attendance\Evently.Modules.Attendance.Infrastructure\Evently.Modules.Attendance.Infrastructure.csproj", "{687FAA52-2134-48E5-9BED-12065753FEF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Evently.Modules.Attendance.Presentation", "src\Modules\Attendance\Evently.Modules.Attendance.Presentation\Evently.Modules.Attendance.Presentation.csproj", "{8BE53A28-E736-469B-A84F-00CFDF72B67B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -219,6 +229,22 @@ Global
 		{5CC7B989-864A-4192-8769-F7C997370914}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CC7B989-864A-4192-8769-F7C997370914}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CC7B989-864A-4192-8769-F7C997370914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EC67BBA-454D-4520-9ECB-A66174B39B58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EC67BBA-454D-4520-9ECB-A66174B39B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EC67BBA-454D-4520-9ECB-A66174B39B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EC67BBA-454D-4520-9ECB-A66174B39B58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707281CA-16ED-47F7-AB0C-CFCA7001A877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707281CA-16ED-47F7-AB0C-CFCA7001A877}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707281CA-16ED-47F7-AB0C-CFCA7001A877}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707281CA-16ED-47F7-AB0C-CFCA7001A877}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687FAA52-2134-48E5-9BED-12065753FEF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687FAA52-2134-48E5-9BED-12065753FEF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{687FAA52-2134-48E5-9BED-12065753FEF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{687FAA52-2134-48E5-9BED-12065753FEF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BE53A28-E736-469B-A84F-00CFDF72B67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BE53A28-E736-469B-A84F-00CFDF72B67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BE53A28-E736-469B-A84F-00CFDF72B67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BE53A28-E736-469B-A84F-00CFDF72B67B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -261,6 +287,11 @@ Global
 		{FFA37068-E7C0-4403-BF00-95B87358F2E9} = {3851571E-70CA-4879-A3B6-EB668A7B9E8F}
 		{66281B65-E01D-47C0-B4ED-1C49D22D4D92} = {CA7143A3-15CE-4D9A-98ED-57C937C29F70}
 		{5CC7B989-864A-4192-8769-F7C997370914} = {CA7143A3-15CE-4D9A-98ED-57C937C29F70}
+		{C5967B18-DE5E-4CE0-874D-52A0B825BEC5} = {D4D3F4DD-54C8-48DE-8917-3197FD8081A4}
+		{7EC67BBA-454D-4520-9ECB-A66174B39B58} = {C5967B18-DE5E-4CE0-874D-52A0B825BEC5}
+		{707281CA-16ED-47F7-AB0C-CFCA7001A877} = {C5967B18-DE5E-4CE0-874D-52A0B825BEC5}
+		{687FAA52-2134-48E5-9BED-12065753FEF3} = {C5967B18-DE5E-4CE0-874D-52A0B825BEC5}
+		{8BE53A28-E736-469B-A84F-00CFDF72B67B} = {C5967B18-DE5E-4CE0-874D-52A0B825BEC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71E0CF07-0638-4AC7-9568-843CBB9709AF}

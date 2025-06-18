@@ -1,3 +1,4 @@
+name: evently
 services:
   evently.api:
     image: evently.api

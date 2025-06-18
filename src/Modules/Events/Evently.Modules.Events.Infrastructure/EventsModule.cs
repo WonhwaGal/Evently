@@ -1,6 +1,7 @@
 ﻿using Evently.Common.Application.EventBus;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Infrastructure.Outbox;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events;
@@ -27,13 +28,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Evently.Modules.Events.Infrastructure;
 public static class EventsModule
 {
-    public static void MapEndpoints(IEndpointRouteBuilder app)
-    {
-        EventEndpoints.MapEndpoints(app);
-        CategoriesEndpoints.MapEndpoints(app);
-        TicketTypesEndpoints.MapEndpoints(app);
-    }
-
     public static void ConfigureConsumers(IRegistrationConfigurator configure, string instanceId)
     {
         //configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
@@ -45,9 +39,10 @@ public static class EventsModule
         services.AddIntegrationEventHandlers();
         services.AddDomainEventHandlers();
 
-        // add module-specific settins
+        // add module-specific settings
         services.AddInfrastructure(configuration);
 
+        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
         return services;
     }
 

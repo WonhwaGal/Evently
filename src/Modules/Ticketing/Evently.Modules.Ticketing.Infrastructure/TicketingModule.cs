@@ -32,11 +32,6 @@ namespace Evently.Modules.Ticketing.Infrastructure;
 
 public static class TicketingModule
 {
-    public static void MapEndpoints(IEndpointRouteBuilder app)
-    {
-        CartEndpoints.MapEndpoints(app);
-    }
-
     public static void ConfigureConsumers(IRegistrationConfigurator configure, string instanceId)
     {
         configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>()
@@ -59,6 +54,7 @@ public static class TicketingModule
         // add module-specific settins
         services.AddInfrastructure(configuration);
 
+        services.AddEndpoints(Presentation.AssemblyReference.Assembly);
         return services;
     }
 
