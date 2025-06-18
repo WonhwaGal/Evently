@@ -11,12 +11,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 
 namespace Evently.Modules.Events.Presentation.Events;
 
-public static class CancelEvent
+public sealed class CancelEvent: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPatch("events/cancel/{id}", async (Guid id, ISender sender) =>
         {

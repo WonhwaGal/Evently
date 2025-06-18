@@ -7,6 +7,7 @@ using Evently.Common.Application;
 using Evently.Common.Infrastructure.Configuration;
 using Evently.Common.Infrastructure.EventBus;
 using Evently.Common.Infrastructure;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Ticketing.Api.OpenTelemetry;
 using Evently.Modules.Ticketing.Infrastructure;
 using Evently.Ticketing.Api.Extensions;
@@ -14,12 +15,12 @@ using Evently.Ticketing.Api.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-#region [!] Решение сквозной проблемы: логирование (Serilog + Seq)
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (Serilog + Seq)
 builder.Host.UseSerilog((context, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 #endregion
 
-#region [!] Решение сквозной проблемы: обработка исключений
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 #endregion
@@ -39,7 +40,7 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-#region [!] Решение сквозной проблемы: внедрение зависимостей
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 Assembly[] moduleApplicationAssemblies = [Evently.Modules.Ticketing.Application.AssemblyReference.Assembly];
 builder.Services.AddApplication(moduleApplicationAssemblies);
 
@@ -56,7 +57,7 @@ builder.Services.AddInfrastructure(
     builder.Configuration);
 #endregion
 
-#region [!] Решение сквозной проблемы: конфигурирование
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 builder.Configuration.AddModuleConfiguration(["ticketing"]);
 #endregion
 
@@ -73,17 +74,17 @@ if (app.Environment.IsDevelopment())
     app.ApplyMigrations();
 }
 
-TicketingModule.MapEndpoints(app);
+app.MapEndpoints();
 
-#region [!] Решение сквозной проблемы: обработка исключений
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 app.UseExceptionHandler();
 #endregion
 
-#region [!] Решение сквозной проблемы: логирование (Serilog + Seq)
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (Serilog + Seq)
 app.UseSerilogRequestLogging();
 #endregion
 
-#region [!] Решение сквозной проблемы: аутентификация и авторизация
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 app.UseAuthentication();
 app.UseAuthorization();
 #endregion

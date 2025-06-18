@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Users.Application.Users.GetUser;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -12,9 +13,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Users.Presentation.Users;
-public static class GetUserById
+public sealed class GetUserById: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("users/getById/{id}", async (Guid id, ISender sender) =>
         {

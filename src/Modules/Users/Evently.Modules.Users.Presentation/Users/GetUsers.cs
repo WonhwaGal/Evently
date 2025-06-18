@@ -1,5 +1,6 @@
 ﻿using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Users.Application.Users.GetUser;
 using Evently.Modules.Users.Application.Users.GetUsers;
 using MediatR;
@@ -9,9 +10,9 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Users.Presentation.Users;
 
-internal static class GetUsers
+internal sealed class GetUsers: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("users", async (ISender sender) =>
         {

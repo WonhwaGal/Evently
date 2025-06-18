@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 
 namespace Evently.Modules.Events.Presentation.Events;
-public static class RescheduleEvent
+public sealed class RescheduleEvent: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPatch("events/reschedule", async (RescheduleEventRequest request, ISender sender) =>
         {

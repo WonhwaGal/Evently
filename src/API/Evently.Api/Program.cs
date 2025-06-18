@@ -10,17 +10,19 @@ using Swashbuckle.AspNetCore.Filters;
 using Evently.Api.OpenTelemetry;
 using Evently.Common.Infrastructure.Configuration;
 using Evently.Common.Infrastructure.EventBus;
+using Evently.Common.Presentation.Endpoints;
+using Evently.Modules.Attendance.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-#region [!] Решение сквозной проблемы: логирование (Serilog + Seq)
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (Serilog + Seq)
 
 builder.Host.UseSerilog((context, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(context.Configuration));
 
 #endregion
 
-#region [!] Решение сквозной проблемы: обработка исключений
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
@@ -28,11 +30,12 @@ builder.Services.AddProblemDetails();
 
 #endregion
 
-#region [!] Решение сквозной проблемы: внедрение зависимостей
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 builder.Services.AddApplication(
     [Evently.Modules.Events.Application.AssemblyReference.Assembly,
-     Evently.Modules.Users.Application.AssemblyReference.Assembly]);
+     Evently.Modules.Users.Application.AssemblyReference.Assembly,
+     Evently.Modules.Attendance.Application.AssemblyReference.Assembly]);
 
 var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionStringOrThrow("Queue"));
 builder.Services.AddInfrastructure(
@@ -40,23 +43,24 @@ builder.Services.AddInfrastructure(
     DiagnosticsConfig.ServiceName,
     [
         EventsModule.ConfigureConsumers,
-        UsersModule.ConfigureConsumers
+        UsersModule.ConfigureConsumers,
+        AttendanceModule.ConfigureConsumers
     ],
     rabbitMqSettings,
     builder.Configuration);
 
 #endregion
 
-#region [!] Решение сквозной проблемы: конфигурирование
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-builder.Configuration.AddModuleConfiguration(["events", "users"]);
+builder.Configuration.AddModuleConfiguration(["events", "users", "attendance"]);
 
 #endregion
 
 // Modules
 builder.Services.AddEventsModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
-
+builder.Services.AddAttendanceModule(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -71,6 +75,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
+    
+    //РќР°СЃС‚СЂРѕР№РєР° РіРµРЅРµСЂР°С†РёРё РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂРѕРІ СЃС…РµРј
+    options.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
 });
 
 WebApplication app = builder.Build();
@@ -83,23 +90,21 @@ if (app.Environment.IsDevelopment())
     app.ApplyMigrations();
 }
 
-//Register module endpoints 
-EventsModule.MapEndpoints(app);
-UsersModule.MapEndpoints(app);
+app.MapEndpoints();
 
-#region [!] Решение сквозной проблемы: обработка исключений
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 app.UseExceptionHandler();
 
 #endregion
 
-#region [!] Решение сквозной проблемы: логирование (Serilog + Seq)
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (Serilog + Seq)
 
 app.UseSerilogRequestLogging();
 
 #endregion
 
-#region [!] Решение сквозной проблемы: аутентификация и авторизация
+#region [!] пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 app.UseAuthentication();
 app.UseAuthorization();

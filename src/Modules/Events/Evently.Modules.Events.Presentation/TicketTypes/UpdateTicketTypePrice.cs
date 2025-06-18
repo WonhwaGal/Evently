@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Evently.Common.Presentation.ApiResults;
+using Evently.Common.Presentation.Endpoints;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
-public static class UpdateTicketTypePrice
+public sealed class UpdateTicketTypePrice: IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPatch("ticketTypes/updatePrice", async (Guid id, decimal price, ISender sender) =>
         {
