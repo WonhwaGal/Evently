@@ -1,4 +1,3 @@
-
 using Evently.Gateway.Authentication;
 using Evently.Gateway.Middleware;
 using Evently.Gateway.OpenTelemetry;
@@ -30,6 +29,21 @@ builder.Services
         tracing.AddOtlpExporter();
     });
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+string[] allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string>().Split(',');
+#pragma warning restore CS8602
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder
+        .WithOrigins(allowedOrigins)
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
+    });
+});
+
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication().AddJwtBearer();
 
@@ -46,5 +60,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapReverseProxy();
+
+app.UseCors();
 
 await app.RunAsync();
