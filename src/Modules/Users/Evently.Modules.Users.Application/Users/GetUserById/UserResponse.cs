@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Evently.Modules.Users.Application.Users.GetUser;
+﻿
+namespace Evently.Modules.Users.Application.Users.GetUserById;
 public sealed class UserResponse
 {
     /// <summary>

@@ -1,5 +1,5 @@
 ﻿using Evently.Common.Application.Caching;
-using Evently.Modules.Users.Application.Users.GetUser;
+using Evently.Modules.Users.Application.Users.GetUserById;
 
 namespace Evently.Modules.Users.Application.Users.GetUsers;
 public sealed record GetUsersQuery : ICachedQuery<IReadOnlyList<UserResponse>>

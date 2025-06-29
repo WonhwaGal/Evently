@@ -3,13 +3,12 @@ using Dapper;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
-using Evently.Modules.Users.Domain.Users;
 
-namespace Evently.Modules.Users.Application.Users.GetUser;
-internal sealed class GetUserQueryHandler(
-    IDbConnectionFactory connectionFactory) : IQueryHandler<GetUserQuery, UserResponse?>
+namespace Evently.Modules.Users.Application.Users.GetUserById;
+internal sealed class GetUserByIdQueryHandler(
+    IDbConnectionFactory connectionFactory) : IQueryHandler<GetUserByIdQuery, UserResponse?>
 {
-    public async Task<Result<UserResponse?>> Handle(GetUserQuery request, CancellationToken cancellationToken)
+    public async Task<Result<UserResponse?>> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
     {
         await using DbConnection dbConnection = await connectionFactory.OpenConnectionAsync(cancellationToken);
 

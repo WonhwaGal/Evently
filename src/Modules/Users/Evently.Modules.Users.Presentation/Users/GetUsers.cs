@@ -1,7 +1,7 @@
 ﻿using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
 using Evently.Common.Presentation.Endpoints;
-using Evently.Modules.Users.Application.Users.GetUser;
+using Evently.Modules.Users.Application.Users.GetUserById;
 using Evently.Modules.Users.Application.Users.GetUsers;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

@@ -5,8 +5,7 @@ using Evently.Modules.Users.Domain.Users;
 
 namespace Evently.Modules.Users.Application.Users.LoginUser;
 internal sealed class LogInUserCommandHandler(
-    IJwtService jwtService)
-    : ICommandHandler<LogInUserCommand, AccessTokenResponse>
+    IJwtService jwtService) : ICommandHandler<LogInUserCommand, AccessTokenResponse>
 {
     public async Task<Result<AccessTokenResponse>> Handle(
         LogInUserCommand request,

@@ -1,7 +1,7 @@
 ﻿using Evently.Common.Application.Caching;
 
-namespace Evently.Modules.Users.Application.Users.GetUser;
-public sealed record GetUserQuery(Guid UserId) : ICachedQuery<UserResponse?>
+namespace Evently.Modules.Users.Application.Users.GetUserById;
+public sealed record GetUserByIdQuery(Guid UserId) : ICachedQuery<UserResponse?>
 {
     public string CacheKey => $"user-{UserId}";
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Evently.Common.Domain;
+﻿using Evently.Common.Domain;
 using Evently.Common.Presentation.ApiResults;
 using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Users.Application.Users.RegisterUser;

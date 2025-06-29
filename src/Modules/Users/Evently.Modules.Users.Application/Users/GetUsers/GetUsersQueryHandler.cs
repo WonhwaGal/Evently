@@ -3,7 +3,7 @@ using Dapper;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
-using Evently.Modules.Users.Application.Users.GetUser;
+using Evently.Modules.Users.Application.Users.GetUserById;
 
 namespace Evently.Modules.Users.Application.Users.GetUsers;
 internal sealed class GetUsersQueryHandler(

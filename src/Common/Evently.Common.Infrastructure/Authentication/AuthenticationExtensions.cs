@@ -10,11 +10,7 @@ internal static class AuthenticationExtensions
     {
         services.AddAuthorization();
         services.AddAuthentication()
-            // Добавить JWT-аутентификацию
-            .AddJwtBearer(options =>
-            {
-                // Настройка параметров аутентификации ...
-            });
+            .AddJwtBearer();
 
 
         services.ConfigureOptions<JwtBearerConfigureOptions>();

@@ -4,7 +4,7 @@ using Evently.Common.Application.Exceptions;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Modules.Ticketing.PublicApi;
-using Evently.Modules.Users.Application.Users.GetUser;
+using Evently.Modules.Users.Application.Users.GetUserById;
 using Evently.Modules.Users.Domain.Users.Users;
 using Evently.Modules.Users.IntegrationEvents;
 using MediatR;
@@ -18,10 +18,10 @@ internal sealed class UserCreatedDomainEventHandler(
 {
     public override async Task Handle(UserRegisteredDomainEvent domainEvent, CancellationToken cancellationToken = default)
     {
-        Result<UserResponse?> result = await sender.Send(new GetUserQuery(domainEvent.UserId), cancellationToken);
+        Result<UserResponse?> result = await sender.Send(new GetUserByIdQuery(domainEvent.UserId), cancellationToken);
         if (result.IsFailure)
         {
-            throw new EventlyException(nameof(GetUserQuery), result.Error);
+            throw new EventlyException(nameof(GetUserByIdQuery), result.Error);
         }
 
         UserRegisteredIntegrationEvent integrationEvent = mapper

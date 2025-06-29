@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Evently.Modules.Users.Application.Users.GetUser;
+using Evently.Modules.Users.Application.Users.GetUserById;
 using Evently.Modules.Users.Domain.Users.Users;
 using Evently.Modules.Users.IntegrationEvents;
 
