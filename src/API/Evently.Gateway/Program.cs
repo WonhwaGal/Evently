@@ -55,12 +55,10 @@ app.UseLogContextTraceLogging();
 
 app.UseSerilogRequestLogging();
 
+app.UseCors();
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapReverseProxy();
-
-app.UseCors();
 
 await app.RunAsync();
