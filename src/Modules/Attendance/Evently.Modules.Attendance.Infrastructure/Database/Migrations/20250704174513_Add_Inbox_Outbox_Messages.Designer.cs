@@ -4,6 +4,7 @@ using Evently.Modules.Attendance.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Evently.Modules.Attendance.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(AttendanceDbContext))]
-    partial class AttendanceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250704174513_Add_Inbox_Outbox_Messages")]
+    partial class Add_Inbox_Outbox_Messages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,59 +197,6 @@ namespace Evently.Modules.Attendance.Infrastructure.Database.Migrations
                         .HasName("pk_events");
 
                     b.ToTable("events", "attendance");
-                });
-
-            modelBuilder.Entity("Evently.Modules.Attendance.Domain.Events.EventStatistics", b =>
-                {
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("event_id");
-
-                    b.Property<int>("AttendeesCheckedIn")
-                        .HasColumnType("int")
-                        .HasColumnName("attendees_checked_in");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("description");
-
-                    b.Property<string>("DuplicateCheckInTickets")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("duplicate_check_in_tickets");
-
-                    b.Property<DateTime?>("EndsAtUtc")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("ends_at_utc");
-
-                    b.Property<string>("InvalidCheckInTickets")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("invalid_check_in_tickets");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("location");
-
-                    b.Property<DateTime>("StartsAtUtc")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("starts_at_utc");
-
-                    b.Property<int>("TicketsSold")
-                        .HasColumnType("int")
-                        .HasColumnName("tickets_sold");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("title");
-
-                    b.HasKey("EventId")
-                        .HasName("pk_event_statistics");
-
-                    b.ToTable("event_statistics", "attendance");
                 });
 
             modelBuilder.Entity("Evently.Modules.Attendance.Domain.Tickets.Ticket", b =>
