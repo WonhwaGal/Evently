@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Evently.Common.Domain;
 using Evently.Modules.Users.Application.Abstractions.Identity;
+using Evently.Modules.Users.Infrastructure.Identity.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Evently.Modules.Users.Infrastructure.Identity;
@@ -23,8 +24,14 @@ internal sealed class IdentityProviderService(
 
         try
         {
+            string clientId = await keyCloakClient.GetClientId(cancellationToken);
+
+            RoleRepresentation role = await keyCloakClient.GetRoleId("manager", clientId, cancellationToken);
+
             string identityId = await keyCloakClient.RegisterUserAsync(userRepresentation, cancellationToken);
 
+            bool result = await keyCloakClient.AssignRoleToUser(role, identityId, clientId, cancellationToken);
+            
             return identityId;
         }
         catch (HttpRequestException exception) when (exception.StatusCode == HttpStatusCode.Conflict)
