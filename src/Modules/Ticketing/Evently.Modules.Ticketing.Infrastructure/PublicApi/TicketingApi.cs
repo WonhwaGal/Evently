@@ -28,7 +28,7 @@ internal sealed class TicketingApi(ISender sender) : ITicketingApi
         CancellationToken cancellationToken = default)
     {
         await sender.Send(new CreateEventCommand(
-            id, categotyId, title, description, location, startAtUtc, endAtUtc), cancellationToken);
+            id, title, description, location, startAtUtc, endAtUtc, new List<CreateEventCommand.TicketTypeRequest>()), cancellationToken);
     }
 
     public async Task CreateTicketTypeAsync(Guid ticketTypeId,

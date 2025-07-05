@@ -44,4 +44,9 @@ public sealed class EventResponse
     /// Статус мероприятия
     /// </summary>
     public EventStatus Status { get; set; }
+    
+    /// <summary>
+    /// Типы билетов по данному мероприятию
+    /// </summary>
+    public List<TicketTypeResponse> TicketTypes { get; } = [];
 }

@@ -3,6 +3,14 @@
 namespace Evently.Modules.Ticketing.Application.Events.CreateEvent;
 public sealed record CreateEventCommand : ICommand
 {
+    public sealed record TicketTypeRequest(
+        Guid TicketTypeId,
+        Guid EventId,
+        string Name,
+        decimal Price,
+        string Currency,
+        decimal Quantity);
+
     public Guid EventId { get; init; }
 
     public Guid CategoryId { get; init; }
@@ -17,22 +25,27 @@ public sealed record CreateEventCommand : ICommand
 
     public DateTime? EndsAtUtc { get; init; }
 
+    public List<CreateEventCommand.TicketTypeRequest> TicketTypes  { get; init; }
+
     private CreateEventCommand() { }
 
-    public CreateEventCommand(Guid eventId,
-        Guid categotyId,
+    public CreateEventCommand(
+        Guid eventId,
+        //Guid categotyId,
         string title,
         string description,
         string location,
         DateTime startAtUtc,
-        DateTime? endAtUtc)
+        DateTime? endAtUtc,
+        List<CreateEventCommand.TicketTypeRequest> ticketTypes)
     {
         EventId = eventId;
-        CategoryId = categotyId;
+        // CategoryId = categotyId;
         Title = title;
         Description = description;
         Location = location;
         StartsAtUtc = startAtUtc;
         EndsAtUtc = endAtUtc;
+        TicketTypes = ticketTypes;
     }
 }

@@ -8,7 +8,8 @@ using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Events.Application.Events.GetEvent;
 
-internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetEventQuery, EventResponse?>
+internal sealed class GetEventQueryHandler(
+    IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetEventQuery, EventResponse?>
 {
     public async Task<Result<EventResponse?>> Handle(GetEventQuery request, CancellationToken cancellationToken)
     {
@@ -16,26 +17,76 @@ internal sealed class GetEventQueryHandler(IDbConnectionFactory dbConnectionFact
 
         const string sql =
             $"""
-            SELECT
-                id AS {nameof(EventResponse.Id)},
-                category_id AS {nameof(EventResponse.CategoryId)},
-                title AS {nameof(EventResponse.Title)},
-                description AS {nameof(EventResponse.Description)},
-                location AS {nameof(EventResponse.Location)},
-                starts_at_utc AS {nameof(EventResponse.StartsAtUtc)},
-                ends_at_utc AS {nameof(EventResponse.EndsAtUtc)},
-                status AS {nameof(EventResponse.Status)}
-            FROM
-                events.events
-            WHERE
-                id = @EventId
-            """;
+             SELECT
+                 e.id AS {nameof(EventResponse.Id)},
+                 e.category_id AS {nameof(EventResponse.CategoryId)},
+                 e.title AS {nameof(EventResponse.Title)},
+                 e.description AS {nameof(EventResponse.Description)},
+                 e.location AS {nameof(EventResponse.Location)},
+                 e.starts_at_utc AS {nameof(EventResponse.StartsAtUtc)},
+                 e.ends_at_utc AS {nameof(EventResponse.EndsAtUtc)},
+                 tt.id AS {nameof(TicketTypeResponse.TicketTypeId)},
+                 tt.name AS {nameof(TicketTypeResponse.Name)},
+                 tt.price AS {nameof(TicketTypeResponse.Price)},
+                 tt.currency AS {nameof(TicketTypeResponse.Currency)},
+                 tt.quantity AS {nameof(TicketTypeResponse.Quantity)}
+             FROM events.events e
+             LEFT JOIN events.ticket_types tt ON tt.event_id = e.id
+             WHERE e.id = @EventId
+             """;
 
-        EventResponse? @event = await dbConnection.QuerySingleOrDefaultAsync<EventResponse>(sql, new
+        Dictionary<Guid, EventResponse> eventsDictionary = [];
+        await dbConnection.QueryAsync<EventResponse, TicketTypeResponse?, EventResponse>(
+            sql,
+            (@event, ticketType) =>
+            {
+                if (eventsDictionary.TryGetValue(@event.Id, out EventResponse? existingEvent))
+                {
+                    @event = existingEvent;
+                }
+                else
+                {
+                    eventsDictionary.Add(@event.Id, @event);
+                }
+
+                if (ticketType is not null)
+                {
+                    @event.TicketTypes.Add(ticketType);
+                }
+
+                return @event;
+            },
+            request,
+            splitOn: nameof(TicketTypeResponse.TicketTypeId));
+
+        if (!eventsDictionary.TryGetValue(request.EventId, out EventResponse eventResponse))
         {
-            request.EventId
-        });
+            return Result.Failure<EventResponse?>(EventErrors.NotFound(request.EventId));
+        }
 
-        return @event;
+
+        //         const string sql =
+        //             $"""
+        //             SELECT
+        //                 id AS {nameof(EventResponse.Id)},
+        //                 category_id AS {nameof(EventResponse.CategoryId)},
+        //                 title AS {nameof(EventResponse.Title)},
+        //                 description AS {nameof(EventResponse.Description)},
+        //                 location AS {nameof(EventResponse.Location)},
+        //                 starts_at_utc AS {nameof(EventResponse.StartsAtUtc)},
+        //                 ends_at_utc AS {nameof(EventResponse.EndsAtUtc)},
+        //                 status AS {nameof(EventResponse.Status)}
+        //             FROM
+        //                 events.events
+        //             WHERE
+        //                 id = @EventId
+        //             """;
+        //
+        //         EventResponse? @event = await dbConnection.QuerySingleOrDefaultAsync<EventResponse>(sql, new
+        //         {
+        //             request.EventId
+        //         });
+
+        return eventResponse;
     }
 }

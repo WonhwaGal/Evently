@@ -80,7 +80,7 @@ public static class AttendanceModule
 
         services.AddScoped<IAttendeeRepository, AttendeeRepository>();
         services.AddScoped<IEventRepository, EventRepository>();
-       // services.AddScoped<IEventStatisticRepository, EventStatisticRepository>();
+        services.AddScoped<IEventStatisticRepository, EventStatisticRepository>();
         services.AddScoped<ITicketRepository, TicketRepository>();
 
        // services.AddScoped<IAttendanceContext, AttendanceContext>();
