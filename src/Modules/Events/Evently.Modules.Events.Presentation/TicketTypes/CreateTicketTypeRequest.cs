@@ -15,12 +15,12 @@ public sealed class CreateTicketTypeRequest
     /// <summary>
     /// Наименование билета
     /// </summary>
-    public string TicketTypeName { get; set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// Стоимость билета
     /// </summary>
-    public decimal TicketPrice { get; set; }
+    public decimal Price { get; set; }
 
     /// <summary>
     /// Валюта билета

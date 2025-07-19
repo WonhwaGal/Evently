@@ -27,7 +27,8 @@ public sealed class PublishEventCommandHandler(
             return Result.Failure(EventErrors.StartDateInPast);
         }
 
-        @event.UpdateStatus(EventStatus.Published);
+        @event.Publish();
+        //@event.UpdateStatus(EventStatus.Published);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

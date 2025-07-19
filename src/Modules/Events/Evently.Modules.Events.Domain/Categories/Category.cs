@@ -26,14 +26,15 @@ public sealed class Category : Entity
             IsArchived = false
         };
 
-        if (category.CheckName(category.Name).IsSuccess)
+        Result checkResult = category.CheckName(name);
+        if (checkResult.IsSuccess)
         {
             category.Raise(new CategoryCreatedDomainEvent(category.Id));
             return category;
         }
         else
         {
-            return Result.Failure<Category>(CategoryErrors.IncorrectName);
+            return Result.Failure<Category>(checkResult.Error);
         }
     }
 
@@ -59,9 +60,10 @@ public sealed class Category : Entity
             return Result.Success();
         }
 
-        if (CheckName(name).IsFailure)
+        Result checkResult = CheckName(name);
+        if (checkResult.IsFailure)
         {
-            return Result.Failure(CategoryErrors.IncorrectName);
+            return Result.Failure(checkResult.Error);
         }
 
         Name = name;
@@ -71,7 +73,7 @@ public sealed class Category : Entity
 
     private Result CheckName(string name)
     {
-        if (name.Length == 0 || string.IsNullOrWhiteSpace(name) || Regex.IsMatch(name, @"^[^a-zA-Z]+$"))
+        if (name.Length == 0 || string.IsNullOrWhiteSpace(name) || Regex.IsMatch(name, @"^[^a-zA-Zа-яА-ЯёЁ]+$"))
         {
             return Result.Failure(CategoryErrors.IncorrectName);
         }

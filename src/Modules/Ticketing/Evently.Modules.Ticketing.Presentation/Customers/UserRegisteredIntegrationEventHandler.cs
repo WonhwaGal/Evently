@@ -8,7 +8,7 @@ using MassTransit;
 using MediatR;
 
 namespace Evently.Modules.Ticketing.Presentation.Customers;
-public sealed class UserRegisteredIntegrationEventConsumer(
+public sealed class UserRegisteredIntegrationEventHandler(
     ISender sender,
     IMapper mapper) : IntegrationEventHandler<UserRegisteredIntegrationEvent>
 {

@@ -21,8 +21,8 @@ public sealed class CreateTicketType: IEndpoint
         {
             var command = new CreateTicketTypeCommand(
                 request.EventId,
-                request.TicketTypeName,
-                request.TicketPrice,
+                request.Name,
+                request.Price,
                 request.Currency,
                 request.Quantity);
 

@@ -1,5 +1,4 @@
-﻿using Evently.Modules.Ticketing.Domain.Events;
-using Evently.Modules.Ticketing.Domain.TicketTypes;
+﻿using Evently.Modules.Ticketing.Domain.TicketTypes;
 using Evently.Modules.Ticketing.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +10,21 @@ internal sealed class TicketTypeRepository(TicketingDbContext context) : ITicket
         return await context.TicketTypes.SingleOrDefaultAsync(t => t.Id == id, cancellationToken);
     }
 
-    public void Insert(TicketType ticketType)
+    public async Task<TicketType?> GetWithLockAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        context.TicketTypes.Add(ticketType);
+        return await context
+            .TicketTypes
+            .FromSql(
+                $"""
+                 SELECT id, event_id, name, price, currency, quantity, available_quantity
+                 FROM ticketing.ticket_types WITH (ROWLOCK, UPDLOCK)
+                 WHERE id = {id}
+                 """)
+            .SingleOrDefaultAsync(cancellationToken);
+    }
+
+    public void InsertRange(IEnumerable<TicketType> ticketTypes)
+    {
+        context.TicketTypes.AddRange(ticketTypes);
     }
 }

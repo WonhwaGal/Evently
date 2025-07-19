@@ -12,8 +12,8 @@ public sealed class Event : Entity
         string title,
         string description,
         string location,
-        DateTime startAtUtc,
-        DateTime? endAtUtc
+        DateTime startsAtUtc,
+        DateTime? endsAtUtc
         )
     {
         var @event = new Event
@@ -23,12 +23,12 @@ public sealed class Event : Entity
             Title = title,
             Description = description,
             Location = location,
-            StartsAtUtc = startAtUtc,
-            EndsAtUtc = endAtUtc,
+            StartsAtUtc = startsAtUtc,
+            EndsAtUtc = endsAtUtc,
             Status = EventStatus.Draft
         };
 
-        if (endAtUtc.HasValue && endAtUtc < startAtUtc)
+        if (endsAtUtc.HasValue && endsAtUtc < startsAtUtc)
         {
             return Result.Failure<Event>(EventErrors.EndDatePrecedesStartDate);
         }

@@ -57,7 +57,6 @@ internal sealed class RequestLoggingPipelineBehavior<TRequest, TResponse>(
 
             return result;
         }
-
     }
 
     private static string GetModuleName(string requestName) => requestName.Split('.')[2];

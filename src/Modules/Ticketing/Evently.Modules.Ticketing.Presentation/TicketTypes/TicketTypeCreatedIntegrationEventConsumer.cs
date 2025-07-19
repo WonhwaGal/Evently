@@ -13,7 +13,8 @@ public sealed class TicketTypeCreatedIntegrationEventConsumer(
 {
     public async Task Consume(ConsumeContext<TicketTypeCreatedIntegrationEvent> context)
     {
-        Result result = await sender.Send(mapper.Map<CreateTicketTypeCommand>(context.Message));
+        CreateTicketTypeCommand command = mapper.Map<CreateTicketTypeCommand>(context.Message);
+        Result result = await sender.Send(command);
 
         if (result.IsFailure)
         {

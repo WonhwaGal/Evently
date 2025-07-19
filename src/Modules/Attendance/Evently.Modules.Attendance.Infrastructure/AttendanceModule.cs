@@ -12,6 +12,7 @@ using Evently.Modules.Attendance.Infrastructure.Events;
 using Evently.Modules.Attendance.Infrastructure.Inbox;
 using Evently.Modules.Attendance.Infrastructure.Outbox;
 using Evently.Modules.Attendance.Infrastructure.Tickets;
+using Evently.Modules.Events.IntegrationEvents;
 using Evently.Modules.Users.IntegrationEvents;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
@@ -45,10 +46,10 @@ public static class AttendanceModule
             .Endpoint(c => c.InstanceId = instanceId);
         // registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserProfileUpdatedIntegrationEvent>>()
         //     .Endpoint(c => c.InstanceId = instanceId);
-        // registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventPublishedIntegrationEvent>>()
-        //     .Endpoint(c => c.InstanceId = instanceId);
-        // registrationConfigurator.AddConsumer<IntegrationEventConsumer<TicketIssuedIntegrationEvent>>()
-        //     .Endpoint(c => c.InstanceId = instanceId);
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventPublishedIntegrationEvent>>()
+            .Endpoint(c => c.InstanceId = instanceId);
+        //registrationConfigurator.AddConsumer<IntegrationEventConsumer<TicketIssuedIntegrationEvent>>()
+        //    .Endpoint(c => c.InstanceId = instanceId);
         // registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventCancellationStartedIntegrationEvent>>()
         //     .Endpoint(c => c.InstanceId = instanceId);
     }
