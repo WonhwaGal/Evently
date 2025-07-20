@@ -122,3 +122,24 @@ services:
     ports:
       - "5672:5672" # for messages
       - "15672:15672" # for monitoring
+  evently.mongo:
+    image: mongo:latest
+    container_name: Evently.Mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - ./.containers/mongo:/data/db
+    ports:
+      - "27017:27017"
+  evently.mongo.express:
+    image: mongo-express
+    container_name: Evently.MongoExpress
+    #restart: always
+    ports:
+      - "9781:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin@evently.mongo:27017/
+      ME_CONFIG_BASICAUTH: false
