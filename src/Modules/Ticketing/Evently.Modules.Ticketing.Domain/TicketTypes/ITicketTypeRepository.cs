@@ -5,7 +5,6 @@ namespace Evently.Modules.Ticketing.Domain.TicketTypes;
 /// </summary>
 public interface ITicketTypeRepository
 {
-
     /// <summary>
     /// Получить тип билета по идентификатору
     /// </summary>

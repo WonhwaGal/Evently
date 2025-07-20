@@ -15,7 +15,6 @@ using Evently.Modules.Ticketing.Domain.Events;
 using Evently.Modules.Ticketing.Infrastructure.Events;
 using Evently.Common.Presentation.Endpoints;
 using MassTransit;
-using Evently.Modules.Ticketing.Presentation.TicketTypes;
 using Evently.Common.Infrastructure.Outbox;
 using Evently.Modules.Ticketing.Infrastructure.Outbox;
 using Evently.Common.Application.Messaging;
@@ -42,8 +41,8 @@ public static class TicketingModule
             .Endpoint(c => c.InstanceId = instanceId);
         configure.AddConsumer<IntegrationEventConsumer<EventPublishedIntegrationEvent>>()
             .Endpoint(c => c.InstanceId = instanceId);
-        configure.AddConsumer<TicketTypeCreatedIntegrationEventConsumer>()
-            .Endpoint(c => c.InstanceId = instanceId);
+        /*configure.AddConsumer<TicketTypeCreatedIntegrationEventConsumer>()
+            .Endpoint(c => c.InstanceId = instanceId);*/
     }
 
     public static IServiceCollection AddTicketingModule(this IServiceCollection services,

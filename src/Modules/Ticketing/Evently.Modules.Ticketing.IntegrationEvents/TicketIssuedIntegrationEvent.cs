@@ -4,7 +4,6 @@ namespace Evently.Modules.Ticketing.IntegrationEvents;
 
 public sealed class TicketIssuedIntegrationEvent : IntegrationEvent
 {
-
     public TicketIssuedIntegrationEvent() { }
     public TicketIssuedIntegrationEvent(
         Guid id,

@@ -45,7 +45,7 @@ public sealed class Ticket : Entity
         // что билет был использован
         Raise(new TicketUsedDomainEvent(Id));
     }
-    
+
     /// <summary>
     /// Конструктор по умолчанию (для EF Core)
     /// </summary>
@@ -78,4 +78,3 @@ public sealed class Ticket : Entity
     /// </summary>
     public DateTime? UsedAtUtc { get; private set; }
 }
-

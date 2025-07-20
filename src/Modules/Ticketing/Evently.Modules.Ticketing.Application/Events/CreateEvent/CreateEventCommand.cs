@@ -3,7 +3,6 @@
 namespace Evently.Modules.Ticketing.Application.Events.CreateEvent;
 public sealed record CreateEventCommand : ICommand
 {
-
     public sealed record TicketTypeRequest(
         Guid TicketTypeId,
         Guid EventId,
