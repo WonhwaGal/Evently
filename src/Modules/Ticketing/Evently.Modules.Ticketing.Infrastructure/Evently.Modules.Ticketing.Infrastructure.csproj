@@ -11,7 +11,6 @@
     <ProjectReference Include="..\..\Attendance\Evently.Modules.Attendance.Domain\Evently.Modules.Attendance.Domain.csproj" />
     <ProjectReference Include="..\Evently.Modules.Ticketing.Application\Evently.Modules.Ticketing.Application.csproj" />
     <ProjectReference Include="..\Evently.Modules.Ticketing.Presentation\Evently.Modules.Ticketing.Presentation.csproj" />
-    <ProjectReference Include="..\Evently.Modules.Ticketing.PublicApi\Evently.Modules.Ticketing.PublicApi.csproj" />
   </ItemGroup>
 
 </Project>

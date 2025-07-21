@@ -9,12 +9,8 @@ using Evently.Modules.Users.Infrastructure.Database;
 using Evently.Modules.Users.Infrastructure.Identity;
 using Evently.Modules.Users.Infrastructure.Inbox;
 using Evently.Modules.Users.Infrastructure.Outbox;
-using Evently.Modules.Users.Infrastructure.PublicApi;
 using Evently.Modules.Users.Infrastructure.Users;
-using Evently.Modules.Users.Presentation.Users;
-using Evently.Modules.Users.PublicApi;
 using MassTransit;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -79,8 +75,6 @@ public static class UsersModule
 
         // repositories
         services.AddScoped<IUserRepository, UserRepository>();
-
-        services.AddScoped<IUsersApi, UsersApi>();
 
         services.Configure<OutboxOptions>(configuration.GetSection("Users:Outbox"));
         services.ConfigureOptions<ConfigureProcessOutboxJob>();

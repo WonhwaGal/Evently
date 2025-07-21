@@ -11,14 +11,8 @@ using Evently.Modules.Events.Infrastructure.Database;
 using Evently.Modules.Events.Infrastructure.Events;
 using Evently.Modules.Events.Infrastructure.Inbox;
 using Evently.Modules.Events.Infrastructure.Outbox;
-using Evently.Modules.Events.Infrastructure.PublicApi;
 using Evently.Modules.Events.Infrastructure.TicketTypes;
-using Evently.Modules.Events.Presentation.Categories;
-using Evently.Modules.Events.Presentation.Events;
-using Evently.Modules.Events.Presentation.TicketTypes;
-using Evently.Modules.Events.PublicApi;
 using MassTransit;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -69,8 +63,6 @@ public static class EventsModule
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
-
-        services.AddScoped<IEventsApi, EventsApi>();
 
         services.Configure<OutboxOptions>(configuration.GetSection("Events:Outbox"));
         services.ConfigureOptions<ConfigureProcessOutboxJob>();

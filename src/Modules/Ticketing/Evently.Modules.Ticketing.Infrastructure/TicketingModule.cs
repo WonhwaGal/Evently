@@ -7,8 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Evently.Modules.Ticketing.Infrastructure.Database;
-using Evently.Modules.Ticketing.Infrastructure.PublicApi;
-using Evently.Modules.Ticketing.PublicApi;
 using Evently.Modules.Ticketing.Domain.TicketTypes;
 using Evently.Modules.Ticketing.Infrastructure.TicketTypes;
 using Evently.Modules.Ticketing.Domain.Events;
@@ -92,8 +90,6 @@ public static class TicketingModule
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<TicketingDbContext>());
 
-        // Регистрация сервиса предоставляющего публичное API
-        services.AddScoped<ITicketingApi, TicketingApi>();
         // Регистрация сервиса обработки платежей
         services.AddSingleton<IPaymentService, PaymentService>();
 
