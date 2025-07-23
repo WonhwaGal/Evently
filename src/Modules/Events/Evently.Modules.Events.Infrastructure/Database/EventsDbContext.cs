@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Evently.Common.Infrastructure;
-using Evently.Common.Infrastructure.Outbox;
+﻿using Evently.Common.Infrastructure.Outbox;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
 using Evently.Modules.Events.Domain.Events;
@@ -31,26 +25,4 @@ public sealed class EventsDbContext(
         modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
         modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
     }
-
-    //public async override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    //{
-    //    PublishDomainEventsAsync();
-    //    return await base.SaveChangesAsync(cancellationToken);
-    //}
-
-    //private void PublishDomainEventsAsync()
-    //{
-    //    var domainEvents = ChangeTracker
-    //        .Entries<Entity>()
-    //        .Select(entry => entry.Entity)
-    //        .SelectMany(entity =>
-    //        {
-    //            IReadOnlyCollection<IDomainEvent> domainEvents = entity.DomainEvents;
-    //            entity.ClearDomainEvents();
-    //            return domainEvents;
-    //        })
-    //        .ToList();
-
-    //    domainEvents.ForEach(async domainEvent => await publisher.Publish(domainEvent));
-    //}
 }
