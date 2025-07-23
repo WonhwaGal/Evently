@@ -4,7 +4,6 @@ namespace Evently.Modules.Events.IntegrationEvents;
 
 public sealed class EventPublishedIntegrationEvent : IntegrationEvent
 {
-
     public EventPublishedIntegrationEvent() { }
 
     public EventPublishedIntegrationEvent(

@@ -8,7 +8,7 @@ public sealed class EventCreatedIntegrationEvent : IntegrationEvent
          Guid id,
          DateTime occurredOnUtc,
          Guid eventId,
-         Guid categotyId,
+         Guid categoryId,
          string title,
          string description,
          string location,
@@ -18,7 +18,7 @@ public sealed class EventCreatedIntegrationEvent : IntegrationEvent
         IntegrationEventId = id;
         OccurredOnUtc = occurredOnUtc;
         EventId = eventId;
-        CategoryId = categotyId;
+        CategoryId = categoryId;
         Title = title;
         Description = description;
         Location = location;

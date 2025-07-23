@@ -39,8 +39,6 @@ public static class TicketingModule
             .Endpoint(c => c.InstanceId = instanceId);
         configure.AddConsumer<IntegrationEventConsumer<EventPublishedIntegrationEvent>>()
             .Endpoint(c => c.InstanceId = instanceId);
-        /*configure.AddConsumer<TicketTypeCreatedIntegrationEventConsumer>()
-            .Endpoint(c => c.InstanceId = instanceId);*/
     }
 
     public static IServiceCollection AddTicketingModule(this IServiceCollection services,

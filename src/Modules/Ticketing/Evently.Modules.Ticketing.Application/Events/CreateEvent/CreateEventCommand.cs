@@ -31,7 +31,7 @@ public sealed record CreateEventCommand : ICommand
 
     public CreateEventCommand(
         Guid eventId,
-        //Guid categotyId,
+        //Guid categoryId,
         string title,
         string description,
         string location,
@@ -40,7 +40,7 @@ public sealed record CreateEventCommand : ICommand
         List<CreateEventCommand.TicketTypeRequest> ticketTypes)
     {
         EventId = eventId;
-        // CategoryId = categotyId;
+        // CategoryId = categoryId;
         Title = title;
         Description = description;
         Location = location;
