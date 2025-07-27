@@ -63,30 +63,6 @@ internal sealed class GetEventQueryHandler(
         {
             return Result.Failure<EventResponse?>(EventErrors.NotFound(request.EventId));
         }
-
-
-        //         const string sql =
-        //             $"""
-        //             SELECT
-        //                 id AS {nameof(EventResponse.Id)},
-        //                 category_id AS {nameof(EventResponse.CategoryId)},
-        //                 title AS {nameof(EventResponse.Title)},
-        //                 description AS {nameof(EventResponse.Description)},
-        //                 location AS {nameof(EventResponse.Location)},
-        //                 starts_at_utc AS {nameof(EventResponse.StartsAtUtc)},
-        //                 ends_at_utc AS {nameof(EventResponse.EndsAtUtc)},
-        //                 status AS {nameof(EventResponse.Status)}
-        //             FROM
-        //                 events.events
-        //             WHERE
-        //                 id = @EventId
-        //             """;
-        //
-        //         EventResponse? @event = await dbConnection.QuerySingleOrDefaultAsync<EventResponse>(sql, new
-        //         {
-        //             request.EventId
-        //         });
-
         return eventResponse;
     }
 }
