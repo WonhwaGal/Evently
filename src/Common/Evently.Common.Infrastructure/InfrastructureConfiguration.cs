@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Extensions.DiagnosticSources;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Quartz;
@@ -40,6 +42,24 @@ public static class InfrastructureConfiguration
 
         services.AddSingleton<IDbConnectionFactory>(_ => 
             new SqlConnectionFactory(databaseConnectionString));
+        
+        if (serviceName != "Evently.Ticketing.Api")
+        {
+            string mongoConnectionString = configuration.GetConnectionString("Mongo") ??
+                                           throw new ArgumentNullException(nameof(configuration));
+
+            var mongoClientSettings = MongoClientSettings.FromConnectionString(mongoConnectionString);
+            mongoClientSettings.ClusterConfigurator = c => c.Subscribe(
+                new DiagnosticsActivityEventSubscriber(
+                    new InstrumentationOptions
+                    {
+                        CaptureCommandText = true
+                    }));
+#pragma warning disable CA2000
+            services.AddSingleton<IMongoClient>(new MongoClient(mongoClientSettings));
+#pragma warning restore CA2000
+        }
+
 
         //services.TryAddSingleton<PublishDomainEventsInterceptor>();
         services.TryAddSingleton<InsertOutboxMessagesInterceptor>();
