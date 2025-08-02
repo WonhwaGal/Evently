@@ -14,6 +14,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Extensions.DiagnosticSources;
 using OpenTelemetry.Resources;
@@ -49,6 +52,7 @@ public static class InfrastructureConfiguration
                                            throw new ArgumentNullException(nameof(configuration));
 
             var mongoClientSettings = MongoClientSettings.FromConnectionString(mongoConnectionString);
+            BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.Standard));
             mongoClientSettings.ClusterConfigurator = c => c.Subscribe(
                 new DiagnosticsActivityEventSubscriber(
                     new InstrumentationOptions

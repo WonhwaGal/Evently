@@ -42,8 +42,7 @@ public sealed class EventStatisticsV2
     /// <summary>
     /// Идентификатор мероприятия
     /// </summary>
-    [BsonId] // Используется как уникальный идентификатор для мероприятия
-             // и для сериализации в MongoDB
+    [BsonId] // Используется как уникальный идентификатор для мероприятия и для сериализации в MongoDB
     public Guid EventId { get; set; }
 
     /// <summary>
