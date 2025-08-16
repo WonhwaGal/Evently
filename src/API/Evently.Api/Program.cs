@@ -37,12 +37,13 @@ builder.Services.AddApplication(
      Evently.Modules.Users.Application.AssemblyReference.Assembly,
      Evently.Modules.Attendance.Application.AssemblyReference.Assembly]);
 
+string redisConnectionString = builder.Configuration.GetConnectionStringOrThrow("Cache");
 var rabbitMqSettings = new RabbitMqSettings(builder.Configuration.GetConnectionStringOrThrow("Queue"));
 builder.Services.AddInfrastructure(
     builder.Logging,
     DiagnosticsConfig.ServiceName,
     [
-        EventsModule.ConfigureConsumers,
+        EventsModule.ConfigureConsumers(redisConnectionString),
         UsersModule.ConfigureConsumers,
         AttendanceModule.ConfigureConsumers
     ],

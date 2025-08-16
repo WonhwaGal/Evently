@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using Evently.Common.Domain;
-using Evently.Modules.Users.Domain.Users.Users;
+using Evently.Modules.Users.Domain.Users.Events;
 
 namespace Evently.Modules.Users.Domain.Users;
 

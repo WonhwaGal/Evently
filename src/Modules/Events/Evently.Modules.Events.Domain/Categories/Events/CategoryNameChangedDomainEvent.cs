@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
 
-namespace Evently.Modules.Events.Domain.Categories.Categories;
+namespace Evently.Modules.Events.Domain.Categories.Events;
 public sealed class CategoryNameChangedDomainEvent(Guid id, string newName) : DomainEvent
 {
     public Guid CategoryId { get; } = id;

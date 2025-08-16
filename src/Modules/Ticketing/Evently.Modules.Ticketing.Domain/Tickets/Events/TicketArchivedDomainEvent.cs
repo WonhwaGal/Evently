@@ -1,6 +1,6 @@
 using Evently.Common.Domain;
 
-namespace Evently.Modules.Ticketing.Domain.Tickets;
+namespace Evently.Modules.Ticketing.Domain.Tickets.Events;
 
 /// <summary>
 /// Событие архивации тикета

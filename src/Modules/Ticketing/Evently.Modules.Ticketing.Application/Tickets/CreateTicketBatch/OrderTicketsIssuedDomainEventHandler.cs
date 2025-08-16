@@ -3,7 +3,7 @@ using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Modules.Ticketing.Application.Tickets.GetTicket;
 using Evently.Modules.Ticketing.Application.Tickets.GetTicketForOrder;
-using Evently.Modules.Ticketing.Domain.Orders;
+using Evently.Modules.Ticketing.Domain.Orders.Events;
 using MediatR;
 
 namespace Evently.Modules.Ticketing.Application.Tickets.CreateTicketBatch;

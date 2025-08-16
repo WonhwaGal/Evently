@@ -2,7 +2,7 @@
 using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.Events;
 using Evently.Modules.Events.Domain.TicketTypes;
-using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
+using Evently.Modules.Events.Domain.TicketTypes.Events;
 using Evently.Modules.Events.Domain.UnitTests.Abstractions;
 using FluentAssertions;
 

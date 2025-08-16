@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
 
-namespace Evently.Modules.Users.Domain.Users.Users;
+namespace Evently.Modules.Users.Domain.Users.Events;
 public sealed class UserFullNameUpdatedDomainEvent(Guid id, string firstName, string lastName) : DomainEvent
 {
     public Guid UserId { get; set; } = id; 

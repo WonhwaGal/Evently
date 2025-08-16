@@ -2,7 +2,7 @@ using Evently.Common.Application.Exceptions;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Modules.Ticketing.Application.Tickets.CreateTicketBatch;
-using Evently.Modules.Ticketing.Domain.Orders.Orders;
+using Evently.Modules.Ticketing.Domain.Orders.Events;
 using MediatR;
 
 namespace Evently.Modules.Ticketing.Application.Orders.CreateOrder;

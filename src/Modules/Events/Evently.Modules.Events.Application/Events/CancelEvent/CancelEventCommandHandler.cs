@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Evently.Common.Application.Clock;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
@@ -12,7 +13,8 @@ namespace Evently.Modules.Events.Application.Events.CancelEvent;
 
 public sealed class CancelEventCommandHandler(
     IEventRepository eventRepository,
-    IUnitOfWork unitOfWork) : ICommandHandler<CancelEventCommand>
+    IUnitOfWork unitOfWork,
+    IDateTimeProvider dateTimeProvider) : ICommandHandler<CancelEventCommand>
 {
     public async Task<Result> Handle(CancelEventCommand request, CancellationToken cancellationToken)
     {
@@ -28,7 +30,12 @@ public sealed class CancelEventCommandHandler(
             return Result.Failure(EventErrors.StartDateInPast);
         }
 
-        @event.UpdateStatus(EventStatus.Cancelled);
+        Result result = @event.Cancel(dateTimeProvider.UtcNow);
+
+        if (result.IsFailure)
+        {
+            return Result.Failure(result.Error);
+        }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

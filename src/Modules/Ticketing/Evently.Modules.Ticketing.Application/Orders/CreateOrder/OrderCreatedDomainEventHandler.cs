@@ -3,8 +3,7 @@ using Evently.Common.Application.Exceptions;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Modules.Ticketing.Application.Orders.GetOrder;
-using Evently.Modules.Ticketing.Domain.Orders;
-using Evently.Modules.Ticketing.Domain.Orders.Orders;
+using Evently.Modules.Ticketing.Domain.Orders.Events;
 using Evently.Modules.Ticketing.IntegrationEvents;
 using MediatR;
 

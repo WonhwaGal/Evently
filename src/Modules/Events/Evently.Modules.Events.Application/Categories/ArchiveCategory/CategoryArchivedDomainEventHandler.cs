@@ -1,5 +1,5 @@
 ﻿using Evently.Common.Application.Messaging;
-using Evently.Modules.Events.Domain.Categories.Categories;
+using Evently.Modules.Events.Domain.Categories.Events;
 
 namespace Evently.Modules.Events.Application.Categories.ArchiveCategory;
 public class CategoryArchivedDomainEventHandler : DomainEventHandler<CategoryArchivedDomainEvent>

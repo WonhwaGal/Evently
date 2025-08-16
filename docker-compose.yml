@@ -123,7 +123,7 @@ services:
       - "5672:5672" # for messages
       - "15672:15672" # for monitoring
   evently.mongo:
-    image: mongo:latest
+    image: mongo:8.0.12
     container_name: Evently.Mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin

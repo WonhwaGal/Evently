@@ -4,7 +4,7 @@ using Evently.Common.Application.Exceptions;
 using Evently.Common.Application.Messaging;
 using Evently.Common.Domain;
 using Evently.Modules.Events.Application.TicketTypes.GetTicketTypeById;
-using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
+using Evently.Modules.Events.Domain.TicketTypes.Events;
 using Evently.Modules.Events.IntegrationEvents;
 using MediatR;
 

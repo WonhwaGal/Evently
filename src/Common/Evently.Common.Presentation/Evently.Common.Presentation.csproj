@@ -3,6 +3,7 @@
   <ItemGroup>
 	<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	<PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MassTransit" Version="8.3.4" />
 	<PackageReference Include="MassTransit.Abstractions" Version="8.3.4" />
     <ProjectReference Include="..\Evently.Common.Domain\Evently.Common.Domain.csproj" />
   </ItemGroup>

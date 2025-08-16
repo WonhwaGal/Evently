@@ -1,5 +1,5 @@
 ﻿using Evently.Common.Application.Messaging;
-using Evently.Modules.Events.Domain.Categories.Categories;
+using Evently.Modules.Events.Domain.Categories.Events;
 
 namespace Evently.Modules.Events.Application.Categories.CreateCategory;
 public class CategoryCreatedDomainEventHandler : DomainEventHandler<CategoryCreatedDomainEvent>

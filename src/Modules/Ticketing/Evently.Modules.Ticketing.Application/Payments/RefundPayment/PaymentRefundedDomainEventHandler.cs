@@ -1,7 +1,6 @@
 using Evently.Common.Application.Messaging;
 using Evently.Modules.Ticketing.Application.Abstractions.Payments;
-using Evently.Modules.Ticketing.Domain.Payments;
-using Evently.Modules.Ticketing.Domain.Payments.Payments;
+using Evently.Modules.Ticketing.Domain.Payments.Events;
 
 namespace Evently.Modules.Ticketing.Application.Payments.RefundPayment;
 

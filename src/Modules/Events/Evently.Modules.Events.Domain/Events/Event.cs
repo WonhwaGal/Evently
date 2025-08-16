@@ -65,6 +65,30 @@ public sealed class Event : Entity
 
         Raise(new EventStatusChangedDomainEvent(Id, Status));
     }
+    
+    /// <summary>
+    /// Отменить мероприятие
+    /// </summary>
+    /// <param name="utcNow"></param>
+    /// <returns></returns>
+    public Result Cancel(DateTime utcNow)
+    {
+        if (Status == EventStatus.Cancelled)
+        {
+            return Result.Failure(EventErrors.AlreadyCanceled);
+        }
+
+        if (StartsAtUtc < utcNow)
+        {
+            return Result.Failure(EventErrors.AlreadyStarted);
+        }
+
+        Status = EventStatus.Cancelled;
+
+        Raise(new EventCanceledDomainEvent(Id));
+
+        return Result.Success();
+    }
 
     /// <summary>
     /// Мероприятие (концерт, фестиваль, выставка и т.д.)

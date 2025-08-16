@@ -1,6 +1,6 @@
 using Evently.Common.Domain;
 
-namespace Evently.Modules.Ticketing.Domain.Orders;
+namespace Evently.Modules.Ticketing.Domain.Orders.Events;
 
 /// <summary>
 /// Событие: заказ выдан

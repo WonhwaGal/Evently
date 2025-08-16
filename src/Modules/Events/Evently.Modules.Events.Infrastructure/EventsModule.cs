@@ -12,6 +12,7 @@ using Evently.Modules.Events.Infrastructure.Events;
 using Evently.Modules.Events.Infrastructure.Inbox;
 using Evently.Modules.Events.Infrastructure.Outbox;
 using Evently.Modules.Events.Infrastructure.TicketTypes;
+using Evently.Modules.Events.Presentation.Events.CancelEventSaga;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -22,9 +23,15 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 namespace Evently.Modules.Events.Infrastructure;
 public static class EventsModule
 {
-    public static void ConfigureConsumers(IRegistrationConfigurator configure, string instanceId)
+    public static Action<IRegistrationConfigurator, string> ConfigureConsumers(string redisConnectionString)
     {
-        //configure.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
+        return (registration, instanceId) => registration
+            .AddSagaStateMachine<CancelEventSaga, CancelEventState>()
+            .Endpoint(c => c.InstanceId = instanceId)
+            .RedisRepository(redisConnectionString);
+        
+        //configure.AddSagaStateMachine<CancelEventSaga, CancelEventState>()
+        //    .InMemoryRepository();
     }
 
     public static IServiceCollection AddEventsModule(this IServiceCollection services,

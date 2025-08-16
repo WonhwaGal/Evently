@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.Categories;
-using Evently.Modules.Events.Domain.Categories.Categories;
+using Evently.Modules.Events.Domain.Categories.Events;
 using Evently.Modules.Events.Domain.UnitTests.Abstractions;
 using FluentAssertions;
 

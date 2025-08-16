@@ -1,6 +1,6 @@
 ﻿using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.Events;
-using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
+using Evently.Modules.Events.Domain.TicketTypes.Events;
 
 namespace Evently.Modules.Events.Domain.TicketTypes;
 public sealed class TicketType : Entity

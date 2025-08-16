@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Evently.Modules.Events.Application.TicketTypes.GetTicketTypeById;
-using Evently.Modules.Events.Domain.TicketTypes.TicketTypes;
+using Evently.Modules.Events.Domain.TicketTypes.Events;
 using Evently.Modules.Events.IntegrationEvents;
 
 namespace Evently.Modules.Events.Application.TicketTypes.CreateTicketType;
