@@ -9,8 +9,7 @@ using Newtonsoft.Json;
 
 namespace Evently.Modules.Events.Infrastructure.Inbox;
 internal sealed class IntegrationEventConsumer<TIntegrationEvent>(
-    IDbConnectionFactory dbConnectionFactory)
-    : IConsumer<TIntegrationEvent>
+    IDbConnectionFactory dbConnectionFactory) : IConsumer<TIntegrationEvent>
     where TIntegrationEvent : IntegrationEvent
 {
     public async Task Consume(ConsumeContext<TIntegrationEvent> context)
@@ -29,7 +28,7 @@ internal sealed class IntegrationEventConsumer<TIntegrationEvent>(
 
         const string sql =
             """
-            INSERT INTO users.inbox_messages(id, type, content, occurred_on_utc)
+            INSERT INTO events.inbox_messages(id, type, content, occurred_on_utc)
             VALUES (@Id, @Type, @Content, @OccurredOnUtc)
             """;
 

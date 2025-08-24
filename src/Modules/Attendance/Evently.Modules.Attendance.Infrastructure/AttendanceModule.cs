@@ -51,8 +51,8 @@ public static class AttendanceModule
             .Endpoint(c => c.InstanceId = instanceId);
         registrationConfigurator.AddConsumer<IntegrationEventConsumer<TicketIssuedIntegrationEvent>>()
             .Endpoint(c => c.InstanceId = instanceId);
-        // registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventCancellationStartedIntegrationEvent>>()
-        //     .Endpoint(c => c.InstanceId = instanceId);
+        //registrationConfigurator.AddConsumer<IntegrationEventConsumer<EventCancellationStartedIntegrationEvent>>()
+        //    .Endpoint(c => c.InstanceId = instanceId);
     }
 
     private static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)

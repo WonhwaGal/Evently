@@ -4,6 +4,8 @@ namespace Evently.Modules.Events.IntegrationEvents;
 
 public sealed class EventCanceledIntegrationEvent : IntegrationEvent
 {
+    public EventCanceledIntegrationEvent() { }
+
     public EventCanceledIntegrationEvent(Guid id, DateTime occurredOnUtc, Guid eventId)
         : base(id, occurredOnUtc)
     {

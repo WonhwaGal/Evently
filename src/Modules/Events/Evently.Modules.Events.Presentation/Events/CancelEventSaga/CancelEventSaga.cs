@@ -66,8 +66,8 @@ public sealed class CancelEventSaga : MassTransitStateMachine<CancelEventState>
         During(CancellationStarted,  // Промежуточное состояние "Отмена начата"
             When(EventPaymentsRefunded) // Если в текущем состоянии пришло событие возврата платежей
                 .TransitionTo(PaymentsRefunded), // Перевожу в состояние "Платежи возвращены"
-                When(EventTicketsArchived) // Если в текущем состоянии пришло событие архивации билетов
-                    .TransitionTo(TicketsArchived) // Перевожу в состояние "Билеты архивированы"
+            When(EventTicketsArchived) // Если в текущем состоянии пришло событие архивации билетов
+                .TransitionTo(TicketsArchived) // Перевожу в состояние "Билеты архивированы"
             );
 
         During(PaymentsRefunded, // Промежуточное состояние "Платежи возвращены"

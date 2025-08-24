@@ -73,15 +73,15 @@ public sealed class Event : Entity
     /// <returns></returns>
     public Result Cancel(DateTime utcNow)
     {
-        if (Status == EventStatus.Cancelled)
-        {
-            return Result.Failure(EventErrors.AlreadyCanceled);
-        }
+        //if (Status == EventStatus.Cancelled)
+        //{
+        //    return Result.Failure(EventErrors.AlreadyCanceled);
+        //}
 
-        if (StartsAtUtc < utcNow)
-        {
-            return Result.Failure(EventErrors.AlreadyStarted);
-        }
+        //if (StartsAtUtc < utcNow)
+        //{
+        //    return Result.Failure(EventErrors.AlreadyStarted);
+        //}
 
         Status = EventStatus.Cancelled;
 
