@@ -24,7 +24,7 @@ internal sealed class EventPublishedDomainEventHandler(ISender sender, IEventBus
         }
 
         var e = new EventPublishedIntegrationEvent(
-            domainEvent.EventId,
+            domainEvent.DomainEventId,
             domainEvent.OccurredOnUtc,
             result.Value.Id,
             result.Value.Title,

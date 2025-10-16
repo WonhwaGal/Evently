@@ -57,7 +57,7 @@ public sealed class CancelEventSaga : MassTransitStateMachine<CancelEventState>
         Initially( // Начальное состояние саги
             When(EventCanceled) // Указать на событие, которое начнет сагу
                 .Publish(context => new EventCancellationStartedIntegrationEvent(
-                    context.Message.EventId,
+                    context.Message.IntegrationEventId,
                     context.Message.OccurredOnUtc,
                     context.Message.EventId
                 ))

@@ -14,7 +14,7 @@ internal sealed class EventCanceledDomainEventHandler(IEventBus eventBus)
     {
         await eventBus.PublishAsync(
             new EventCanceledIntegrationEvent(
-                domainEvent.EventId,
+                domainEvent.DomainEventId,
                 domainEvent.OccurredOnUtc,
                 domainEvent.EventId),
             cancellationToken);
