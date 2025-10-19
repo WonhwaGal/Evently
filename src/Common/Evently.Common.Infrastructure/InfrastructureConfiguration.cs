@@ -1,5 +1,4 @@
-﻿using System.Security.Policy;
-using Evently.Common.Application.Caching;
+﻿using Evently.Common.Application.Caching;
 using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.EventBus;

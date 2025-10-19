@@ -9,5 +9,5 @@ public interface IDateTimeProvider
     /// <summary>
     /// Возвращает текущее время в UTC
     /// </summary>
-    public DateTime UtcNow { get; }
+    DateTime UtcNow { get; }
 }

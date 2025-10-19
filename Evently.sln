@@ -95,6 +95,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Attendance.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Evently.Modules.Ticketing.IntegrationEvents", "src\Modules\Ticketing\Evently.Modules.Ticketing.IntegrationEvents\Evently.Modules.Ticketing.IntegrationEvents.csproj", "{494DD151-6DA0-415F-98AA-54B96C917DAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{32CA0656-4036-4F61-823E-878F077B28BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppHost", "aspire\AppHost\AppHost.csproj", "{23BE6EAC-E85D-46D4-92F8-D8038166476D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -233,6 +237,10 @@ Global
 		{494DD151-6DA0-415F-98AA-54B96C917DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{494DD151-6DA0-415F-98AA-54B96C917DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{494DD151-6DA0-415F-98AA-54B96C917DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23BE6EAC-E85D-46D4-92F8-D8038166476D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23BE6EAC-E85D-46D4-92F8-D8038166476D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23BE6EAC-E85D-46D4-92F8-D8038166476D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23BE6EAC-E85D-46D4-92F8-D8038166476D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -278,6 +286,7 @@ Global
 		{687FAA52-2134-48E5-9BED-12065753FEF3} = {C5967B18-DE5E-4CE0-874D-52A0B825BEC5}
 		{8BE53A28-E736-469B-A84F-00CFDF72B67B} = {C5967B18-DE5E-4CE0-874D-52A0B825BEC5}
 		{494DD151-6DA0-415F-98AA-54B96C917DAC} = {84F46077-3C19-4467-90D8-0162A1A6074D}
+		{23BE6EAC-E85D-46D4-92F8-D8038166476D} = {32CA0656-4036-4F61-823E-878F077B28BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {71E0CF07-0638-4AC7-9568-843CBB9709AF}

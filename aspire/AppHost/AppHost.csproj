@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Sdk Name="Aspire.AppHost.Sdk" Version="9.5.1" />
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <UserSecretsId>549ab0a8-7aab-4e65-a030-bc4f9c5133d2</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+		<PackageReference Include="Aspire.Hosting.Redis" Version="9.5.1" />
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.1" />
+        <PackageReference Include="Aspire.Hosting.SqlServer" Version="9.5.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="appsettings.Development.json">
+        <DependentUpon>appsettings.json</DependentUpon>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\API\Evently.Api\Evently.Api.csproj" />
+      <ProjectReference Include="..\..\src\API\Evently.Ticketing.Api\Evently.Ticketing.Api.csproj" />
+    </ItemGroup>
+
+</Project>
