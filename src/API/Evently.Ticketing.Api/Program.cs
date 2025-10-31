@@ -11,13 +11,24 @@ using Evently.Common.Presentation.Endpoints;
 using Evently.Ticketing.Api.OpenTelemetry;
 using Evently.Modules.Ticketing.Infrastructure;
 using Evently.Ticketing.Api.Extensions;
+using Serilog.Sinks.OpenTelemetry;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 #region [!] ������� �������� ��������: ����������� (Serilog + Seq)
 builder.Host.UseSerilog((context, loggerConfiguration) =>
-    loggerConfiguration.ReadFrom.Configuration(context.Configuration));
+    loggerConfiguration.ReadFrom.Configuration(context.Configuration)
+        .WriteTo.OpenTelemetry(options =>
+        {
+            options.Endpoint ="http://evently.seq:5341/ingest/otlp";
+            options.Protocol = OtlpProtocol.HttpProtobuf;
+            options.ResourceAttributes = new Dictionary<string, object>
+            {
+                ["service.name"] = DiagnosticsConfig.ServiceName
+            };
+        })
+);
 #endregion
 
 #region [!] ������� �������� ��������: ��������� ����������

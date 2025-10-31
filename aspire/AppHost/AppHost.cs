@@ -23,6 +23,7 @@ IResourceBuilder<SqlServerServerResource> eventlySql = builder.AddSqlServer("eve
     .WithImage("mssql/server:2022-CU16-ubuntu-22.04")
     .WithEnvironment("ACCEPT_EULA", "Y")
     .WithEnvironment("MSSQL_PID", "Express")
+    .WithLifetime(ContainerLifetime.Persistent)
     .WithDataVolume("evently-db");
     //.WithBindMount("./.containers/database", "/var/opt/mssql/data")
 
@@ -40,8 +41,25 @@ IResourceBuilder<SqlServerServerResource> eventlySql = builder.AddSqlServer("eve
    IResourceBuilder<RedisResource> eventlyCache =  builder.AddRedis(name:
            "Cache")
        .WithImage("redis:latest")
+       .WithLifetime(ContainerLifetime.Persistent)
        .WithRedisInsight()
        .WithRedisCommander();
+
+/*
+  evently.seq:
+    image: datalust/seq:latest
+    container_name: Evently.Seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - "5341:5341"
+      - "8180:80" # for monitoring
+ */
+   IResourceBuilder<SeqResource> eventlySeq = builder.AddSeq("evently-seq")
+       .WithImage("datalust/seq:2024.3")
+       .WithLifetime(ContainerLifetime.Persistent)
+       .WithEnvironment("ACCEPT_EULA", "Y")
+       .WithExternalHttpEndpoints();
 
 /*
   evently.api:
@@ -62,8 +80,10 @@ IResourceBuilder<SqlServerServerResource> eventlySql = builder.AddSqlServer("eve
            name: "evently-api")
        .WaitFor(eventlyDb)
        .WaitFor(eventlyCache)
+       .WaitFor(eventlySeq)
        .WithReference(eventlyDb)
-       .WithReference(eventlyCache);
+       .WithReference(eventlyCache)
+       .WithReference(eventlySeq);
 
 /*
   evently.ticketing.api:
@@ -80,7 +100,9 @@ IResourceBuilder<SqlServerServerResource> eventlySql = builder.AddSqlServer("eve
             name: "evently-ticketing-api")
         .WaitFor(eventlyDb)
         .WaitFor(eventlyCache)
+        .WaitFor(eventlySeq)
         .WithReference(eventlyDb)
-        .WithReference(eventlyCache);
+        .WithReference(eventlyCache)
+        .WithReference(eventlySeq);
 
 await builder.Build().RunAsync();

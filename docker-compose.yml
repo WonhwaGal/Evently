@@ -8,6 +8,8 @@ services:
     build:
       context: .
       dockerfile: src/API/Evently.Api/Dockerfile
+    #environment:
+    #  - OTEL_EXPORTER_OTLP_ENDPOINT=http://evently.jaeger:4317
     volumes:
       - ./.logs/Evently/Dev.Logs:/logs
     ports:
@@ -19,6 +21,8 @@ services:
     build:
       context: .
       dockerfile: src/API/Evently.Ticketing.Api/Dockerfile
+    #environment:
+      #- OTEL_EXPORTER_OTLP_ENDPOINT=http://evently.jaeger:4317
     ports:
       - "5200:8080"
       - "5201:8081"
@@ -46,7 +50,7 @@ services:
     ports:
       - "1433:1433"
   evently.seq:
-    image: datalust/seq:latest
+    image: datalust/seq:2024.3
     container_name: Evently.Seq
     environment:
       - ACCEPT_EULA=Y

@@ -18,6 +18,8 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Extensions.DiagnosticSources;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Quartz;
@@ -42,9 +44,9 @@ public static class InfrastructureConfiguration
 
         string databaseConnectionString = configuration.GetConnectionString("Database")!;
 
-        services.AddSingleton<IDbConnectionFactory>(_ => 
+        services.AddSingleton<IDbConnectionFactory>(_ =>
             new SqlConnectionFactory(databaseConnectionString));
-        
+
         if (serviceName != "Evently.Ticketing.Api")
         {
             string mongoConnectionString = configuration.GetConnectionString("Mongo") ??
@@ -108,8 +110,10 @@ public static class InfrastructureConfiguration
         });
 
         #region [!] Outbox pattern
+
         services.AddQuartz();
         services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
         #endregion
 
         AddCaching(services, configuration);
@@ -159,6 +163,19 @@ public static class InfrastructureConfiguration
         services.AddOpenTelemetry()
             // Добавить ресурс по наименованию приложения
             .ConfigureResource(resource => resource.AddService(serviceName))
+            // Настроить сбор метрик
+            .WithMetrics(metrics =>
+            {
+                metrics
+                    .AddMeter(serviceName)
+                    // Добавить инструментарии для .NET Runtime, HttpClient и ASP.NET Core
+                    .AddHttpClientInstrumentation()
+                    .AddAspNetCoreInstrumentation()
+                    .AddRuntimeInstrumentation()
+                    .AddProcessInstrumentation();
+                //metrics.AddOtlpExporter();
+            })
+
             // Настроить распределенную трассировку
             .WithTracing(tracing =>
             {
@@ -166,14 +183,19 @@ public static class InfrastructureConfiguration
                     // Добавить инструментарии для HttpClient и ASP.NET Core
                     .AddHttpClientInstrumentation()
                     .AddAspNetCoreInstrumentation()
-                    .AddEntityFrameworkCoreInstrumentation(
-                        options => options.SetDbStatementForStoredProcedure = false)
+                    .AddEntityFrameworkCoreInstrumentation(options => options.SetDbStatementForStoredProcedure = false)
                     .AddRedisInstrumentation()
                     .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName)
-                    .AddSqlClientInstrumentation(
-                        options => options.SetDbStatementForText = true);
-                tracing.AddOtlpExporter();
+                    .AddSqlClientInstrumentation(options => options.SetDbStatementForText = true)
+                //tracing.AddOtlpExporter();
+                    .AddOtlpExporter(o => o.Endpoint = new Uri("http://evently.jaeger:4317"))
+                    .AddOtlpExporter(o =>
+                    {
+                        o.Endpoint = new Uri("http://evently.seq:5341/ingest/otlp/v1/traces");
+                        o.Protocol  = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+                    });
             });
+            //.UseOtlpExporter();
 
         // Настроить ведение журнала OpenTelemetry
         loggingBuilder.AddOpenTelemetry(options =>
