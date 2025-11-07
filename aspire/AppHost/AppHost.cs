@@ -56,7 +56,7 @@ IResourceBuilder<SqlServerServerResource> eventlySql = builder.AddSqlServer("eve
       - "8180:80" # for monitoring
  */
    IResourceBuilder<SeqResource> eventlySeq = builder.AddSeq("evently-seq")
-       .WithImage("datalust/seq:2024.3")
+       .WithImage("datalust/seq:latest")
        .WithLifetime(ContainerLifetime.Persistent)
        .WithEnvironment("ACCEPT_EULA", "Y")
        .WithExternalHttpEndpoints();

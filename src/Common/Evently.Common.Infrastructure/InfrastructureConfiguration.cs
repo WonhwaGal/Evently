@@ -188,12 +188,12 @@ public static class InfrastructureConfiguration
                     .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName)
                     .AddSqlClientInstrumentation(options => options.SetDbStatementForText = true)
                 //tracing.AddOtlpExporter();
-                    .AddOtlpExporter(o => o.Endpoint = new Uri("http://evently.jaeger:4317"))
-                    .AddOtlpExporter(o =>
-                    {
-                        o.Endpoint = new Uri("http://evently.seq:5341/ingest/otlp/v1/traces");
-                        o.Protocol  = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
-                    });
+                .AddOtlpExporter(o => o.Endpoint = new Uri("http://evently.jaeger:4317"))
+                .AddOtlpExporter(o =>
+                {
+                    o.Endpoint = new Uri("http://evently.seq:5341/ingest/otlp/v1/traces");
+                    o.Protocol  = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
+                });
             });
             //.UseOtlpExporter();
 
