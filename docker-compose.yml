@@ -8,6 +8,9 @@ services:
     build:
       context: .
       dockerfile: src/API/Evently.Api/Dockerfile
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://evently.otel.collector:4318
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
     #environment:
     #  - OTEL_EXPORTER_OTLP_ENDPOINT=http://evently.jaeger:4317
     volumes:
@@ -21,6 +24,9 @@ services:
     build:
       context: .
       dockerfile: src/API/Evently.Ticketing.Api/Dockerfile
+    environment:
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://evently.otel.collector:4318
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
     #environment:
       #- OTEL_EXPORTER_OTLP_ENDPOINT=http://evently.jaeger:4317
     ports:
@@ -50,7 +56,7 @@ services:
     ports:
       - "1433:1433"
   evently.seq:
-    image: datalust/seq:latest
+    image: datalust/seq:2024.3
     container_name: Evently.Seq
     environment:
       - ACCEPT_EULA=Y
@@ -147,3 +153,35 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://admin:admin@evently.mongo:27017/
       ME_CONFIG_BASICAUTH: false
+  evently.otel.collector:
+    # Расширенный образ с коннекторами для экспорта в Loki, Jaeger, Prometheus и др.
+    image: otel/opentelemetry-collector-contrib:latest
+    # Обычный образ Collector
+    #image: otel/opentelemetry-collector:latest
+    container_name: Evently.Otel.Collector
+    #config with settings for collector
+    command: [ "--config=/etc/otel-collector.yaml" ]
+    volumes:
+      - ./.config/collector/otel-collector.yaml:/etc/otel-collector.yaml:ro
+    ports:
+      - "8889:8889"
+  evently.loki:
+    image: grafana/loki:3.5
+    container_name: Evently.Loki
+    #ports:
+    #  - "3100:3100"
+    volumes:
+      - ./.containers/.loki:/loki
+  evently.grafana:
+    image: grafana/grafana:12.1.3
+    container_name: Evently.Grafana
+    depends_on:
+      - evently.loki
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./.containers/grafana:/var/lib/grafana

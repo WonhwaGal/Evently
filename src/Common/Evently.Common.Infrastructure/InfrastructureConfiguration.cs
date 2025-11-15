@@ -186,16 +186,16 @@ public static class InfrastructureConfiguration
                     .AddEntityFrameworkCoreInstrumentation(options => options.SetDbStatementForStoredProcedure = false)
                     .AddRedisInstrumentation()
                     .AddSource(MassTransit.Logging.DiagnosticHeaders.DefaultListenerName)
-                    .AddSqlClientInstrumentation(options => options.SetDbStatementForText = true)
+                    .AddSqlClientInstrumentation(options => options.SetDbStatementForText = true);
                 //tracing.AddOtlpExporter();
-                .AddOtlpExporter(o => o.Endpoint = new Uri("http://evently.jaeger:4317"))
-                .AddOtlpExporter(o =>
-                {
+                /*.AddOtlpExporter(o => o.Endpoint = new Uri("http://evently.jaeger:4317"))
+                //.AddOtlpExporter(o =>
+                //{
                     o.Endpoint = new Uri("http://evently.seq:5341/ingest/otlp/v1/traces");
                     o.Protocol  = OpenTelemetry.Exporter.OtlpExportProtocol.HttpProtobuf;
-                });
-            });
-            //.UseOtlpExporter();
+                });*/
+            })
+            .UseOtlpExporter();
 
         // Настроить ведение журнала OpenTelemetry
         loggingBuilder.AddOpenTelemetry(options =>

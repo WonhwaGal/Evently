@@ -22,8 +22,8 @@ builder.Host.UseSerilog((context, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(context.Configuration)
         .WriteTo.OpenTelemetry(options =>
         {
-            options.Endpoint ="http://evently.seq:5341/ingest/otlp";
-            options.Protocol = OtlpProtocol.HttpProtobuf;
+            //options.Endpoint ="http://evently.seq:5341/ingest/otlp";
+            //options.Protocol = OtlpProtocol.HttpProtobuf;
             options.ResourceAttributes = new Dictionary<string, object>
             {
                 ["service.name"] = DiagnosticsConfig.ServiceName
