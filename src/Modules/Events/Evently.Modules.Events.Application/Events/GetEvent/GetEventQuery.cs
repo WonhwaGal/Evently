@@ -5,5 +5,5 @@ public sealed record GetEventQuery(Guid EventId) : ICachedQuery<EventResponse?>
 {
     public string CacheKey => $"event-{EventId}";
 
-    public TimeSpan? Expiration => TimeSpan.FromMinutes(2);
+    public TimeSpan? Expiration => TimeSpan.FromSeconds(1);
 }

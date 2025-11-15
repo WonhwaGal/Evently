@@ -1,4 +1,5 @@
-﻿using Evently.Common.Application.Caching;
+﻿using System.Diagnostics.Metrics;
+using Evently.Common.Application.Caching;
 using Evently.Common.Application.Clock;
 using Evently.Common.Application.Data;
 using Evently.Common.Application.EventBus;
@@ -7,6 +8,7 @@ using Evently.Common.Infrastructure.Caching;
 using Evently.Common.Infrastructure.Clock;
 using Evently.Common.Infrastructure.Data;
 using Evently.Common.Infrastructure.EventBus;
+using Evently.Common.Infrastructure.Metrics;
 using Evently.Common.Infrastructure.Outbox;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -203,5 +205,8 @@ public static class InfrastructureConfiguration
             options.IncludeScopes = true;           // Включить области
             options.IncludeFormattedMessage = true; // Включить форматированные сообщения
         });
+        
+        services.AddSingleton<Meter>(_ => new Meter(serviceName, "1.0.0"));
+        services.AddSingleton<AppMetrics>();
     }
 }

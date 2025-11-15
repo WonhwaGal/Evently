@@ -10,8 +10,18 @@ receivers:
 exporters:
   otlphttp/seq:
     endpoint: http://evently.seq:5341/ingest/otlp
+  otlp/jaeger:
+    endpoint: evently.jaeger:4317
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: 0.0.0.0:8889
   otlphttp:
     endpoint: http://evently.loki:3100/otlp
+  otlp/tempo:
+    endpoint: evently.tempo:4317
+    tls:
+      insecure: true
   
   
 service:
@@ -19,3 +29,9 @@ service:
     logs:
       receivers: [otlp]
       exporters: [otlphttp/seq, otlphttp]
+    traces:
+      receivers: [ otlp ]
+      exporters: [ otlp/tempo, otlphttp/seq, otlp/jaeger ]
+    metrics:
+      receivers: [ otlp ]
+      exporters: [ prometheus ]

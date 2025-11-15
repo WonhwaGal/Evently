@@ -8,10 +8,15 @@ using Evently.Modules.Events.Domain.Events;
 namespace Evently.Modules.Events.Application.Events.GetEvent;
 
 internal sealed class GetEventQueryHandler(
+    IEventRepository eventRepository,
     IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetEventQuery, EventResponse?>
 {
     public async Task<Result<EventResponse?>> Handle(GetEventQuery request, CancellationToken cancellationToken)
     {
+#pragma warning disable CA2016
+        await eventRepository.GetAsync(request.EventId);
+#pragma warning restore CA2016
+        
         await using DbConnection dbConnection = await dbConnectionFactory.OpenConnectionAsync(cancellationToken);
 
         const string sql =

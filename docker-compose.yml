@@ -185,3 +185,21 @@ services:
       - "3000:3000"
     volumes:
       - ./.containers/grafana:/var/lib/grafana
+  evently.tempo:
+    image: grafana/tempo:latest
+    container_name: Evently.Tempo
+    #ports:
+    #  - "4317:4317"   # OTLP gRPC
+    #  - "4318:4318"   # OTLP HTTP
+    #  - "3200:3200"   # Tempo UI / API
+    command: [ "-config.file=/etc/config.yaml" ]
+    volumes:
+      - ./.config/tempo/tempo.yaml:/etc/config.yaml
+      - ./.containers/tempo/traces:/var/tempo/traces
+  evently.prometheus:
+    image: prom/prometheus:latest
+    container_name: Evently.Prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./.config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
